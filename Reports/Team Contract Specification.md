@@ -97,7 +97,6 @@ Assigning specific roles can help streamline team operations. Below, define any 
 **c. Assistant to the Team Leader:** Landen Johnson
 
 - **Responsibilities:**
-  - Checks and Balances
   - Will assume team leader responsibilities if team leader cannot attend meetings
   - Must address himself as "Assistant Team Leader"
   
