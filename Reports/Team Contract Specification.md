@@ -40,7 +40,7 @@
 - **Expectation:** Regarding team meetings:
   - **Frequency:** The team will meet on the day we do not have to attend Capstone and outside of this time as needed.
   - **Attendance:** Members are expected to attend all meetings; absences should be communicated in advance.
-  - **Preparation:** Members should come prepared, having completed any agreed-upon tasks or research and be prepared to                          take notes.
+  - **Preparation:** Members should come prepared, having completed any agreed-upon tasks or research and be prepared to take notes.
 
 ### **5. Conduct**
 
@@ -53,11 +53,11 @@
 
 - **Expectation:** The team will:
   - Address conflicts promptly through open dialogue.
-  - Use the following approaches to resolve issues:
+  - Use the following approach to resolve issues:
     1. Discuss the issue privately between involved parties.
     2. If unresolved, bring the issue to the team for discussion.
     3. Seek input from the instructor if necessary.
-    4. Team members will participate in a closest to the pin challenge with one shot on Hole 3 at Golden Eagle Golf Course. 
+    4. Team members will participate in a closest to the pin challenge with one shot on Hole 3 at Golden Eagle Golf Course with the winner determining the                final decision. 
 
 ### **7. Deadlines**
 
@@ -74,10 +74,10 @@ Assigning specific roles can help streamline team operations. Below, define any 
 **a. Team Leader/Coordinator:** Brandon Zerkovich
 
 - **Responsibilities:**
-  - Schedule and coordinate team meetings.
+  - Schedule and coordinate team meetings as well as meetings with supervisor and customer.
   - Facilitate meetings to ensure all voices are heard.
   - Monitor project timelines and milestones.
-  - Must correct Landen by saying "Assistant to the Team Leader"
+  - Must correct Landen by saying "Assistant to the Team Leader" when he refers to himself as "Assistant Team Leader"
 - **Powers Granted:**
   - Authority to make minor decisions to keep the project on track after team consultation.
 - **Expectation Changes:**
@@ -88,7 +88,7 @@ Assigning specific roles can help streamline team operations. Below, define any 
 - **Responsibilities:**
   - Take detailed notes during meetings.
   - Distribute meeting minutes to all team members within 24 hours.
-  - Must correct Landen by saying "Assistant to the Team Leader"
+  - Must correct Landen by saying "Assistant to the Team Leader" when he refers to himself as "Assistant Team Leader"
 - **Powers Granted:**
   - May request clarifications during meetings to ensure accurate record-keeping.
 - **Expectation Changes:**
@@ -98,11 +98,9 @@ Assigning specific roles can help streamline team operations. Below, define any 
 
 - **Responsibilities:**
   - Checks and Balances
-  - Will assume team leader responsibilities when team leader cannot attend
-  - Can only talk with Pitbull voice
-  - Must say "Assistant Team Leader"
-- **Powers Granted:**
-  - Super Speed
+  - Will assume team leader responsibilities if team leader cannot attend meetings
+  - Must address himself as "Assistant Team Leader"
+  
 - **Expectation Changes:**
   -   In addition to regular duties, the Assistant to the Team Leader will assist the Team Leader with handling organizational tasks but remains equally responsible for project work.
 
