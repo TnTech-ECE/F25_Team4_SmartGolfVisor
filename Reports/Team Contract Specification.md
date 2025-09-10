@@ -77,7 +77,6 @@ Assigning specific roles can help streamline team operations. Below, define any 
   - Schedule and coordinate team meetings as well as meetings with supervisor and customer.
   - Facilitate meetings to ensure all voices are heard.
   - Monitor project timelines and milestones.
-  - Must correct Landen by saying "Assistant to the Team Leader" when he refers to himself as "Assistant Team Leader"
 - **Powers Granted:**
   - Authority to make minor decisions to keep the project on track after team consultation.
 - **Expectation Changes:**
@@ -88,7 +87,6 @@ Assigning specific roles can help streamline team operations. Below, define any 
 - **Responsibilities:**
   - Take detailed notes during meetings.
   - Distribute meeting minutes to all team members within 24 hours.
-  - Must correct Landen by saying "Assistant to the Team Leader" when he refers to himself as "Assistant Team Leader"
 - **Powers Granted:**
   - May request clarifications during meetings to ensure accurate record-keeping.
 - **Expectation Changes:**
@@ -98,8 +96,6 @@ Assigning specific roles can help streamline team operations. Below, define any 
 
 - **Responsibilities:**
   - Will assume team leader responsibilities if team leader cannot attend meetings
-  - Must address himself as "Assistant Team Leader"
-  
 - **Expectation Changes:**
   -   In addition to regular duties, the Assistant to the Team Leader will assist the Team Leader with handling organizational tasks but remains equally responsible for project work.
 
