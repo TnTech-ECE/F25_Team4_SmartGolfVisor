@@ -38,7 +38,7 @@
 ### **4. Meetings**
 
 - **Expectation:** Regarding team meetings:
-  - **Frequency:** The team will meet on the day we do not have to attend Capstone and outside of this time as needed.
+  - **Frequency:** The team will meet each week on Wednesday at 4:00PM and outside of this time as needed.
   - **Attendance:** Members are expected to attend all meetings; absences should be communicated in advance.
   - **Preparation:** Members should come prepared, having completed any agreed-upon tasks or research and be prepared to take notes.
 
