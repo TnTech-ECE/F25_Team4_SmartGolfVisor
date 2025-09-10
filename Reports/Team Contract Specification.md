@@ -105,3 +105,5 @@ Assigning specific roles can help streamline team operations. Below, define any 
 By typing our names below, we acknowledge that we have read, understand, and agree to abide by the terms of this Teamwork Contract.
 
 Andrew Goostree, Bryce Hughes, Landen Johnson, Michael Madigan, Brandon Zerkovich, Ryan Zerkovich
+
+
