@@ -1,0 +1,119 @@
+# Smart Golf Visor — Meeting Summary (Two Meetings)
+
+## Overview
+- **Project theme:** “Smart Golf Visor” — integrate a **launch monitor** with a **wearable/AR display** to show shot metrics (ball speed, spin, distance, shot shape) and log data for post-round review.  
+- **Meeting purpose(s):** Align on solution direction, scope vs. budget, deliverable structure (proposal → conceptual design), and standards/constraints expected by faculty/IAB.  
+- **Participants:** Student team (6), mentor/alum (“Speaker 2”), Prof. Storm (course lead).  
+- **Due date:** **Project Proposal due Sept 29** (sign-off required).
+
+---
+
+## Key Decisions
+- **Primary approach:** Launch monitor → phone/tablet → visor/AR glasses HUD.  
+- **AR tiering (priority order):**  
+  1. Launch monitor → AR glasses (ideal, budget permitting)  
+  2. Launch monitor → phone/tablet display (fallback)  
+  3. Phone-in-VR shell for proof-of-concept  
+  4. Cart camera only (low priority)  
+- **Initial display content:** Ball speed, spin, carry/total, shot shape (basic labels if needed).  
+- **Data handling:** Display + log to device (likely phone).  
+- **Budget stance:** Plan for a **$500–$1,100** launch monitor. Avoid subscriptions.
+
+---
+
+## Objectives
+1. **Metrics ingestion** — reliably receive shot data.  
+2. **Comms & latency** — phone ↔ visor link with ~1–2 s acceptable delay.  
+3. **HUD display** — sunlight-readable outdoor overlay.  
+4. **Data logging** — store per-shot info (club, spin, carry, time, hole).  
+5. **Constraints & standards** — RF, power, environmental, course policy compliance.  
+6. **Verification plan** — show visor values match monitor/app within tolerance.
+
+---
+
+## Scope & Architecture
+- **Hardware:** Launch monitor, phone/tablet, AR glasses or visor, battery.  
+- **Compute/MCU:** Prefer phone as processor; fallback MCU (ESP32 + display).  
+- **Data flow:** Monitor → phone SDK/API → parse → BLE/Wi-Fi → visor HUD + log.  
+- **Storage:** Local DB/CSV on phone; optional sync to laptop/cart PC.
+
+---
+
+## Constraints & Standards
+- **RF & exposure:** Use 2.4 GHz BLE/Wi-Fi, meet SAR/power limits.  
+- **Power & wiring:** NEC compliance if custom packs/cabling.  
+- **Course policies:** Coordinate w/ course manager.  
+- **Environmental:** Sunlight-readable, durable, weather safe.  
+- **No subscriptions:** Must operate without recurring cost.
+
+---
+
+## Survey of Existing Solutions
+- **Market:** Garmin, SkyTrak, Full Swing, Topgolf/indoor sim systems.  
+- **Literature:** IEEE papers on trajectory/sphere tracking (golf, tennis, ping pong).  
+- **Target references:** ~13–15 total (products, market, academic).
+
+---
+
+## Verification & Measures of Success
+- **Accuracy check:** Within ±1–2 mph (ball speed), ±2–3% (carry).  
+- **Latency:** HUD update ≤2 s.  
+- **Uptime:** Stable display/logging over 9-hole test.  
+- **Usability:** Readable in sunlight, comfortable to wear.
+
+---
+
+## Budget
+- **Launch monitor:** $500–$1,100.  
+- **AR display:** If >budget, use phone VR shell ($20) for POC.  
+- **Taxes:** Add ~6% (~$60 per $1k).  
+- **No monthly subscriptions.**  
+- If monitor is donated/loaned → reallocate funds to visor/display hardware.
+
+---
+
+## Roles & Contributions
+- Each section shows **all members’ contributions** (shared writing/editing).  
+- Background blurbs for each member; gaps (e.g., CV/ML, BT) → plan **training**.  
+- Certifications (LinkedIn Learning, etc.) earn credibility with IAB.
+
+---
+
+## Timeline & Gantt (high-level)
+- **Now → Sept 29:** Draft proposal (problem, specs, survey, measures, architecture, budget, Gantt).  
+- **Oct:** Conceptual design → lock solution, define subsystems, test plan.  
+- **Nov–Dec:** POC build (phone HUD + comms/logging).  
+- **Next term:** AR glasses hardware, field testing, polish.
+
+---
+
+## Follow-Ups / Action Items
+- [ ] Select **launch monitor short-list** (API/SDK access verified).  
+- [ ] Confirm w/ Storm: **one vs. multiple solutions** allowed in proposal.  
+- [ ] Contact **course manager** for RF/power/electronics rules.  
+- [ ] Decide **display path** (AR glasses vs. phone VR shell POC).  
+- [ ] Define **verification tolerances** (accuracy, latency).  
+- [ ] Draft **constraints/standards list** (RF, NEC, environmental, safety).  
+- [ ] Build **reference set** (target 13–15 solid sources).  
+- [ ] Prototype **data schema** (CSV/SQLite).  
+- [ ] Assign writing sections & contribution tracking.  
+- [ ] Start **Gantt chart**.
+
+---
+
+## Unknowns / To Confirm
+- Which **launch monitor** (data access, latency, fields)?  
+- **AR hardware** (programmable + within budget)?  
+- **Latency budget** (≤2 s target, confirm acceptable).  
+- **Course rules** for electronics.  
+- **Storage approach** (CSV vs. SQLite; local vs. sync).  
+- Proposal: **one solution only or multiple options**?
+
+---
+
+## Stretch Features (if time allows)
+- Club gapping database.  
+- Environmental corrections (temp, pressure, altitude).  
+- Impact location visualization.  
+- Pace-of-play tracker (hole timing).  
+- Shot-shape labels.
