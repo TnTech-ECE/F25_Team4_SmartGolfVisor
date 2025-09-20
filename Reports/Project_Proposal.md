@@ -38,18 +38,14 @@ This proposal will cover the following:
 6. **Broader Implications, Ethics, & Responsibility** — Global, economic, environmental, societal impacts; ethical issues (privacy, fairness, accessibility); mitigation strategies; responsibilities of engineering team.
 
 ## Formulating the Problem
-
-Formulating the problem or objective involves clearly defining it through background information, specifications, and constraints. Think of it as "fencing in" the objective to make it unambiguously clear what is and is not being addressed and why.
-
-Questions to consider:
-- Who does the problem affect (i.e. who is your customer)?
-- Why do we need this solution?
-- What challenges necessitate a dedicated, multi-person engineering team?
-- Why aren’t off-the-shelf solutions sufficient?
+This section of the project proposal will start off by covering the background information that will detail what the team has found and will help them make informed decisions for the project. It will then be followed up by the specifications that the team was given by their customer and will end off by discussing the constraints for this project. Both the specifications and constraints will help with narrowing down the design parameters.
 
 ### Background
 
-Provide context and details necessary to define the problem clearly and delineate its boundaries.
+The objective of the Smart Golf Visor is to create a system that is capable of processing information from a launch monitor and camera, and will display this information to a piece of eyewear in real-time. This piece of eyewear can either be augmented reality glasses, an over-the-head headset, or a see-through wearable eye visor. This system's process will almost entirely be hands-free on the consumer's end with the only exception being for the user to set down and pick up the launch monitor. Below is a more detailed explanation of the components that componenets that will be used in this system.
+
+#### *Launch Monitor*
+A launch monitor is a device that uses either cameras and radar sensors to measures crucial data points of a golf swing like ball speed, spin rate, launch angle, etc. Because of its ability to gather this information, a launch monitor is a crucial piece of equiptment for this project. There are a few options of launch monitors that can be used for this project....
 
 ### Specifications and Constraints
 
@@ -90,9 +86,10 @@ Provide a budget proposal with justifications for expenses such as software, equ
 
 ### Personel
 
-This team consists of six electrical engineering students who all share some similar skills but also possesses unique skills from one another.
+This team consists of six electrical engineering students who all share some similar skills but also possesses unique skills from one another. While some skills in this project are met by at least one team member, there are some skills gaps noticed within the team. One skill gap is image signal processing which will be used with tracking the ball from the camera system. For this project to be successful, the team will take the time to learn this as well as any other skills gap that are made apparent. 
 
-Brandon Zerkovich was chosen to be the leader of this team and his responsibilities include delegating tasks amongst the team and making sure that deadlines will be met by each individual. Brandon skills include C and C++ programming languages and power system analysis. These skills will help with the microcontroller and the battery system that will be used for this project.
+#### *Team Members*
+Brandon Zerkovich was chosen to be the leader of this team and his responsibilities include delegating tasks amongst the team and making sure that deadlines will be met by each individual. Brandon's skills include C and C++ programming languages and power system analysis. These skills will help with the microcontroller and the powering system that will be used for this project.
 
 Landen Johnson...
 
@@ -104,9 +101,11 @@ Bryce Hughes...
 
 Michael Madigan...
 
-While many of the skills in this project is met by at least one team member, there are some skills gaps noticed within the team. One skill gap is digital signal processing which will be used with tracking the ball from the camera system. In for this project to be successful, the team will learn this...
+#### *Supervisor*
+The supervisor that was chosen for this project is J.C. Williams. J.C. Williams has done work with radar technologies, digital and image signal processing, and computer vision. All of these subjects relate to what will be done in this project and also includes some subjects that the group has skill gaps in. This team values the knowledge and mentorship that he will provide during this project.
 
-The supervisor that was chosen for this project is J.C. Williams. J.C. Williams has done extensive work with radar technologies, digital signal processing, image signal processing, and computer vision.
+#### *Instructor*
+The instructor for this project is Dr. Storm Johnson. He will act essentially as the project manager where he will oversee and approve all documentation and reports that the team writes. He will also oversee the assembly and testing of the project. The team will have weekly meetings with Storm to discuss weekly progress, decisions made from the group, and any conflicts or problems the team experiences.
 
 ### Timeline
 
