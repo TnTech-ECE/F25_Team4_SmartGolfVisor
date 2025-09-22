@@ -91,7 +91,7 @@ This team consists of six electrical engineering students who all share some sim
 #### *Team Members*
 Brandon Zerkovich was chosen to be the leader of this team and his responsibilities include delegating tasks amongst the team and making sure that deadlines will be met by each individual. Brandon's skills include C and C++ programming languages and power system analysis. These skills will help with the microcontroller and the powering system that will be used for this project.
 
-Landen Johnson...
+Landen Johnson has experience in related course to c++, power systems, and mechatronics. He has past internship experiences relating to control systems in the utility industry, as well as communication systems. These internships also gave him experiecne in testing equipment to make sure it operates as it should. These skills will help with the communication aspects of the project and the later testing. However, he has no experience in PCB design and computer engineering coursework.
 
 Ryan Zerkovich...
 
