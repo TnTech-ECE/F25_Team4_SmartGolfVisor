@@ -29,24 +29,32 @@ The objective of the Smart Golf Visor is to create a system that is capable of p
 A launch monitor is a device that most commonly uses either a camera-based or a radar-based system to measure crucial data points of a golf swing like ball speed, ball distance, launch angle, etc. 
 
 Launch monitors that use a camera-based system use high-speed cameras that capture images of the club and ball at impact. The amount of images captured can be as low as 2 and as much as 200+[1]. The system then takes those images and compares the data of the launch conditions to a ball-flight model to determine the distance and flight of the ball. The advantage of using this system is that it can take direct measurements of the launch conditions without being interfered by any conditions that may affect the flight of the ball downrange like wind. The accuracy of this monitor comes down to the quantity and quality of the pictures taken. Below is a picture of what a monitor using a camera-based system looks like. 
+
 ![image](https://hackmd.io/_uploads/H1wrtkAslx.png)
 
 
 Launch monitors with a radar-based system work the oppposite way as one with a camera-based system. They use doppler radar to emit radio waves that reflect off the ball and club after impact and gets recieved back to the monitor. This allows for the flight of the ball to be determined after impact. It then uses the flight data by putting it into an algorithm to then calculate and measure the launch conditions that caused that flight[1]. The advantage of this system is that it is able to show where and how far the ball has traveled. The accuracy of this monitor comes down to quality of the radar as well as the correctness of the algorithm. Below is a picture of a monitor that uses a radar-based system.
+
 ![image alt](https://hackmd.io/_uploads/SkcY4yRiex.png)
+
 Because of the ability to gather shot information, a launch monitor is a crucial piece of equiptment for this project. Either one of these launch monitor systems can be used for this project.
 
 #### *Display*
 The display will be a projection onto a lens that will show the data metrics gathered from the launch monitor. It may possibly also project a tracing of the shot from an additional camera system. The display will come from a transparent, micro-OLED display which is common with near-eye display technology. A transparent OLED display works by generating light pixels on a clear subtrate like glass. The self-emissive microscopic pixels are spaced to permit see-through visibility, balancing image brightness and transparency for a seamless augmented experience[2]. Some advantages that this display has are fast refresh rates, low power consumption, and no backlight[3]. Below is a picture of what the display may look like.
+
 ![image](https://hackmd.io/_uploads/rJqsxZRjex.png)
+
 The display is made to be wired to a microcontroller where it will receive its signal to the display for a correct and accurate projection. 
 
 #### *Powering System*
 The powering system of the visor will involve a battery that will be used to power all components which will include the microcontroller and display. There are a few options of rechargable batteries that can be used for this system. One option is to use Lithium-ion polymer (LiPo) batteries which are known for their lightweight design. LiPos provide higher specific energies than other lithium batteries, often used in systems where weight is an important factor[4]. They also have a flexible design where they can be bought in a variety of shapes and sizes which allows for more options on battery placement in the visor.
+
 ![image](https://hackmd.io/_uploads/S1bBZl0oex.png)
 
 The other option of battery that can be used is a Lithium-ion coin cell battery. These batteries are known to have a longer lifespan than LiPo batteries which would require for less frequent replacements but they do not have a flexible design like LiPos.
+
 ![image](https://hackmd.io/_uploads/ByEUSlAjxx.png)
+
 The use of rechargable batteries for this powering system will require a specialized charging circuit so that constant current and voltage will be supplied and ensure a safe charge. The use of non-rechargable batteries is also an option and would eliminate the requirement for a specialized charging circuit. This would require the individual to have to carry spare batteries for the event of a dead battery.
 
 ### Specifications and Constraints
@@ -106,6 +114,7 @@ The budget for the wearable smart golf visor is a tentative estimate and will be
 Subsystem categories include: launch monitor (primary sensing), visor display (AR optics and interface hardware), compute/bridge (smartphone or embedded processor and firmware), power and I/O (battery, PD hub, cabling, and connectors), mechanical integration (visor mount, enclosure, and fastening), software (HUD application, drivers, and tooling), and field accessories (stand, alignment aids, and protection). Low and high contingency allowances are included to account for price variability, component substitutions, and minor design changes; these bounds are used to gauge potential project cost.
 
 After estimating the likely components within each subsystem, the suggested cost for designing and building the wearable golf visor HUD is summarized in the figure, with contingency applied as separate line items where appropriate. Assumptions include no mandatory subscriptions for baseline operation and one complete system per unit. Substitutions are permitted if alternatives meet performance and interface requirements.
+
 ![budget scenarios pic](https://hackmd.io/_uploads/r1qHXAe3ee.png)
 
 ### Personel
