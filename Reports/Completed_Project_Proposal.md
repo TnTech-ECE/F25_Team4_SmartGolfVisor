@@ -108,21 +108,63 @@ In addition to industry standards:
 
 ## Survey of Existing Solutions
 
+#### Launch Monitors
 There are several launch monitors commercially available that provide accurate measurements for ball speed, ball distance, launch angle, spin rate, and smash factor. These devices are widely used for training purposes and in golf simulators.
-One example is the Garmin Approach R10, which delivers over a dozen swing and ball metrics while also recording video of the golfer’s swing [10]. Another more advanced and expensive option is the Full Swing KIT launch monitor, which provides 16 club and ball metrics with faster processing and patented radar technology [11]. These products demonstrate the range of features available, from consumer-friendly devices to professional-grade systems.
-While these solutions excel at measuring swing and ball data, they rely on external screens such as phones, tablets, or computers to display results. Adding a linked real-time display through augmented reality (AR) glasses would create a fully immersive experience. With this approach, the user could view their performance data seamlessly during play, without interrupting their rhythm to check another device.
+
+One example is the Garmin Approach R10, which is known for its high peformance-to-price ratio. It is designed to deliver over a dozen swing and ball metrics while also recording video of the golfer’s swing [10]. The benefits provided are its compact and lightweight design, strong battery life where it can last up to 10 hours on a single charge, and more accessible cost compared to high-end launch monitors. The notable drawbacks of this monitor is its limited tracking for putting and short game and its issue with delivering accurate spin rate. 
+
+Another more advanced and expensive example is the Full Swing KIT launch monitor, which provides 16 club and ball metrics with faster processing and patented radar technology [11]. The benefits of using a more advanced monitor are the ability to gather more comprehensive data metrics like horizontal launch angles and apex height, uses built in video to capture swing, and its ability for short game tracking. A major drawback though is the expensive cost and the requirement of a subscription to access its complete capabilities. These products demonstrate the range of features available, from consumer-friendly devices to professional-grade systems. There are many commercially availiable launch monitors that are accuarate however the data display metrics can impact pace of play and the rhythm of the golfer by causing them to stop and study the data on a phone or small built in display.
+
+#### AI Swing Coach
+AI swing coach softwares use artificial intelligence and computer vision to analyze a golfer's swing and provide them feedback. The software captures the swing data on video by a camera usually on a smartphone or high-end launch monitor. The benefits of using this is the ability to gain personalized feedback without having to spend money on private lessons, convience of using it anytime and anywhere without needing a coach present, and improve both beginning and advanced players' game. The drawbacks of using this is the limited context the software is able to comprehend of a player's physical limitations and the requirement of additional subscriptions. These programs also require time for processing and the use of a phone to view the analyzation between each shot. Using them on the course is not practical due to the decrease pace of play it it will lead to during a round.
+
+#### Smart Glasses
+There are a variety of smart glasses commercially availiable with the Rokid Max and Xreal Air 2 Pro being two examples. Both of these products have many capibilities and are used as a daily life enhancer. 
+
+The Rokid Max smart glasses display at a 120 Hz refresh rate and a 600 nits percieved brightness. It also allows for easy conectivity with devices with USB-C DisplayPort and OTG. The XREAL Air Pro 2 has a 120 Hz display as well and a 500 nits percieved brightness, and connects via USB-C video output. Both these glasses have a weight of 75 grams and many added comfort features. The glasses both also have easy access to interfacing for custom HUD displays.
+
+
+The drawbacks for both of these glasses are the same as they are used as a daily entertainment and not configured for assisting golfers. A notable drawback for the XREAL Air Pro 2 glasses is that it only offer a 47 degree field-of-view which is considered relatively narrow compared to other smart glasses. A notable drawback the Rokid Max glasses has is its including no support for farsighted individuals.
+
+
+#### Insights and Gaps
+
+While launch monitors excel at data accuracy and AI apps offer advanced feedback, both depend on external screens such as phones or tablets. Smart glasses introduce hands-free visualization but lack sport-specific applications. This creates a clear gap in the market for a hybrid solution that combines precise launch data collection with a wearable, real-time AR display.
+
+#### Takeaways
+
+1. Adopt radar or vision-based data collection methods from current launch monitors.
+2. Apply the usability concepts from existing smart glasses for hands-free feedback.
+3. Address the major gap: an integrated system allowing golfers to view real-time swing metrics without disrupting play.
+
+
 In summary, although the market offers many reliable options for swing and ball flight analysis, there is not a wearable interface that presents these metrics directly to the user. This gap creates an opportunity for a unique solution that combines accurate data tracking with an immersive, real-time display.
 
 
 
 ## Measures of Success
 
-The success of this project will be evaluated based on two primary metrics:
+The success of this project will be evaluated based on three primary metrics:
 1.	The ability of the glasses to accurately and reliably display swing and ball-flight data in real time.
 2.	The overall practicality and ease of use of the glasses during a round of golf.
-The first item of success is Data Display Functionality. For the glasses to be successful, they must reliably display swing and ball-flight metrics from the launch monitor in real time. This aspect will be measured by connecting the glasses to an existing launch monitor and verifying that all relevant metrics (ball speed, ball distance, launch angle, spin rate, and smash factor) are displayed correctly with minimal delay. The target for the first iteration is for the glasses to display metrics with a latency between 3 to 5 seconds.
-The second item of success lies within the glasses’ practicality and ease of use during golfing. The glasses must be lightweight, comfortable, and unobtrusive, allowing the golfer to wear them throughout a round without distraction. The team will test this aspect by conducting trial sessions with golfers and collecting feedback on comfort, usability, and impact on pace of play using a  1 to 5 scale 5 being a perfect product. 
-In summary, the project will be considered successful if the prototype glasses can both accurately display swing and ball metrics in real time and demonstrate practicality for golfers through positive user feedback throughout the life of the product.
+3.	The meeting of industry and team standards.
+
+The first item of success is Data Display Functionality. For the glasses to be successful, they must reliably display swing and ball-flight metrics from the launch monitor in real time. This aspect will be measured by connecting the glasses to an existing launch monitor and verifying that all relevant metrics (ball speed, ball distance, launch angle, spin rate, and smash factor) are displayed correctly with minimal delay. The target for the first iteration is for the glasses to display metrics with a latency between 3 to 5 seconds. While maintaining consistant for 10 trials. This data will be verified by the golfer and the data displayed on the launch monitor. Measure number one will satisify these specifications. The data metrics used in the display shall include ball speed, ball distance, launch angle, spin rate, and smash factor. These are regarded to be the most important data metrics to display for both an amateur and experienced golfer.
+
+The second item of success lies within the glasses’ practicality and ease of use during golfing. The glasses must be lightweight, comfortable, and unobtrusive, allowing the golfer to wear them throughout a round without distraction. The team will test this aspect by conducting trial sessions with golfers and collecting feedback on comfort, usability, and impact on pace of play using a  1 to 5 scale 5 being a perfect product. Measure two will satisfy this specifications, The battery life of the headset shall last a minimum of 9 holes, but ideally a full round of 18 holes. Based on the skill level of the golfer, the time frame that it will take to complete 9 holes can take anywhere from a minimum of 2 hours to a maximum of 3 hours [6]. For 18 holes, it would take anywhere from 4 to 6 hours to complete, and the system shall also be portable allowing the user to have the option of using it for set training purposes or for match play. 
+
+The third measure of success will be by meeting the following four industry constraints as well as two additional constraints set by our team
+1. Any Bluetooth-based wireless transfer of information shall comply with IEEE 802.15.1 standard that defines how Personal Area Network (PAN) devices wirelessly connect and transfer management information within a 10 meter radius.
+2. The use of a Lithium Ion or Lithium Polymer battery as a power source shall comply with IEC 62133 safety regulations to ensure safe battery operation within extreme temperatures, electrical faults, and mechanical stresses.
+3. Any image projection onto the glass's lense shall comply with ISO 15004-2. eye safety standards that determines the group hazard level of optical radiation within wavelength range of 250 nm to 2500 nm.
+4. The electronic components within the visor shall be IP-67 Rated providing dirt protection for objects greater than 1mm diameter and water protection for depths of 15 centimeters to 1 meter.
+In addition to industry standards the team standards are:
+5. The display shall not obstruct the view of the golfer to ensure safety and improved performance.
+6. The display shall be capable of maintaining a clear and readable display.
+
+These requirements will be tested by our team in a lab setting to verify.
+
+In summary, the project will be considered successful if the prototype glasses can both accurately display swing and ball metrics in real time and demonstrate practicality for golfers through positive user feedback throughout the life of the product, and finally if all specifications and standards are met.
 
 
 
@@ -137,10 +179,12 @@ The budget for the wearable smart golf visor is a tentative estimate and will be
 
 Main subsystem categories include: launch monitor (primary sensing), visor display (wearable AR eyewear serving as a USB-C/HDMI display sink), and powering the system (I/O, battery, PD hub, BMS, cabling, and connectors). Low and high contingency allowances are included to account for price variability, component substitutions, and minor design changes; these bounds are used to gauge potential project cost. 
 
+The launch monitor is the core instrument producing shot kinematics. Its portable setup, suitable for the driving range, practice net, and on-course use, allows the user to see real-time metrics. Spending half of the budget on the launch monitor will ensure the accuracy of the shot projection and other metrics for the user. The visor display is head-worn AR eyewear acting as a USB-C/HDMI wired link. This provides a bounded, repeatable video path with frame-accurate updates, optics and placement are specified for daylight legibility, minimal occlusion, and safe cable routing. Spending approximately a third of the budget on the AR glasses will ensure a high quality display to read the metrics given from the launch monitor. Power/ I/O provides stable USB-C short cables and strain relief preserve voltage margin and prevent disconnects during swing, and the battery’s BMS supplies over-current and thermal protection. Small integration consumables (connectors, adapters, cable clips) are included within power/ I/O. The price for the power system allows the system to run for the entire round of golf.
+
 After estimating the likely components within each subsystem, the suggested cost for designing and building the wearable golf visor is summarized in  Figure[7], with contingency applied as separate line items where appropriate. Assumptions include no mandatory subscriptions for baseline operation and one complete system per unit. 
 
 <p align="center">
-  <img width="400" height="400" src="https://hackmd.io/_uploads/SkO2v4nngg.png">
+  <img width="800" height="800" src="https://hackmd.io/_uploads/H1lkp2a3ee.png">
 </p> 
 
  <p align="center"> Figure 7: Smart Golf Visor Budget </p>
