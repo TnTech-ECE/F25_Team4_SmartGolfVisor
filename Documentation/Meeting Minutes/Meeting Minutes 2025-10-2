@@ -1,0 +1,135 @@
+# Smart Golf AR Glasses — Proposal Review Meeting Notes
+
+**Repository context:** Tennessee Tech University — Senior Design  
+**Meeting Type:** Written proposal feedback session  
+**Attendees (inferred):** Mentor/Reviewer (Speaker 1), Landen, Brandon, Ryan, additional EE team members  
+**Duration:** ~33 minutes  
+**Source:** `Tennessee Tech University 5.m4a` (transcribed)
+
+---
+
+## Purpose
+Review and refine the written project proposal prior to resubmission, emphasizing consistency, clarity, grading alignment, and technical completeness.
+
+---
+
+## Major Guidance
+
+### Metrics & Consistency
+- Maintain one canonical list of performance metrics **everywhere** (intro, specs, survey, success).
+- Suggested five: **ball speed, club head speed, launch angle, spin rate, smash factor**.
+- Pick 3/5/7/etc. **once** and use that **consistently**.
+
+### Tone & Style
+- Use **third person** (“the team”, “the project team”), not “we/us/our”.
+- Prefer **assertive** phrasing: “This section **covers** …” (avoid “will start off…”).
+- Remove vague terms (“almost,” “too much,” “a little”); replace with measurable/explicit wording.
+- Keep **list formatting consistent** across the document.
+- Fix **run-ons, capitalization**, and **spacing** around IEEE citations.
+
+### Accessibility Wording
+- Be precise: e.g., “larger/high-contrast text for users who have difficulty reading fine text,” and “**minimum field-of-view occlusion**.”  
+- Avoid ambiguous use of “visually impaired.”
+
+### Figures & Citations
+- Reference every figure in text (“as shown in **Figure X**”).
+- Center captions: `Figure X: Title (Source)`.
+- Use proper IEEE bracket spacing (no stray spaces).
+
+### Evaluation / Measurements of Success
+- Map **each spec → a measurable verification** (bulleted).
+- Treat **user satisfaction** as **qualitative, ongoing feedback** unless you add a numeric instrument.
+- Define **latency** target aligned with a ~**5 s** shot routine.
+
+### Specs & Constraints — **“Shall”** Statements (Critical)
+- Write **bulleted SHALL statements** in both **Specs** and **Constraints**.
+  - Example: “The display **shall** present ball speed, club head speed, launch angle, spin rate, and smash factor.”
+- Add standards as constraints with **what** they constrain:
+  - **IEEE 802.15.1** (Bluetooth communications characteristics),
+  - **IEC** (relevant safety/EMC as applicable),
+  - **IP67** (dust/water ingress protection).
+
+### Background Depth (Technical)
+- Mention typical **power rails** (3.3 V / 5 V / 12 V) for candidate MCUs/displays (don’t lock to one).
+- Note likely **interfaces** (I²C, SPI).
+- Launch monitors:
+  - **Image-based**: cameras estimate kinematics.
+  - **Radar-based**: **Doppler radar** measures motion.
+- Keep descriptions concise and direct.
+
+### Power System Choices
+- Compare **LiPo** vs **Li-ion (18650)**: availability, mass/volume, integration effort, safety.
+- Rechargeables require a **BMS** (charging, protection, balancing).
+- Consider **battery placement** (e.g., rear strap counterbalance) for ergonomics.
+
+### Globalization & Education
+- Support **language selection** and **unit conversion** (yards/meters).
+- Frame STEM impact as **connecting non-STEM users to the engineering design process**.
+
+### Team, Budget, and Management
+- Plan ~**6 subsystems** with clear owners; align wording with staffing.
+- In budget, define acceptable **substitutions** and **conditions** (performance/interface parity).
+- Team bios: highlight **common coursework** + **distinct internships**; state **relevant skills** (e.g., test & evaluation, comms).
+
+---
+
+## Text Fix Patterns (Use Throughout)
+- “How **we** will measure success” → “**Measurements of success include…**”
+- “This section **will start off by covering** …” → “**This section covers…**”
+- “**Either one of these** launch monitors” → “**Both radar-based (Doppler) and image-based launch monitors** …”
+- “Ensure the display does **not block too much** view” → “**Ensure minimum field-of-view occlusion**.”
+
+---
+
+## Decisions / Agreements (Implicit)
+- Use one **canonical metrics list** across all sections.
+- Specs & Constraints use **bulleted SHALL statements** (grading key).
+- **User feedback** treated as **qualitative** unless instrumented numerically.
+- Add **BMS** mention; include **LiPo vs 18650** tradeoffs; note **IP67**.
+- Set a numeric **latency** threshold (derived from ~5 s routine).
+
+---
+
+## Open Questions / Follow-ups
+- Clarify with **Storm**: expectations for evaluation (qualitative vs numeric rubrics).
+- Standards bullets: finalize clauses/aspects (e.g., Bluetooth data rate/power/privacy) and **IP67** definition.
+- Battery safety framing (thermal events, protection strategy).
+- Confirm **subsystem count** and owner mapping.
+
+---
+
+## Action Items (GitHub-Style Checklist)
+
+- [ ] **Metrics:** Harmonize the metrics list across intro/specs/survey/success. (**Writing Lead**)
+- [ ] **Specs & Constraints:** Convert to **bulleted SHALL** statements; add **IP67**; refine standards bullets with what they constrain. (**Specs Lead**)
+- [ ] **Power Section:** Add **BMS** paragraph and **LiPo vs 18650** comparison; note **battery placement** concept. (**Power Lead**)
+- [ ] **Evaluation:** 1-to-1 mapping from **spec → measurement**; define **latency** threshold. (**Test & Eval Lead**)
+- [ ] **Editing Pass:** Standardize lists, fix run-ons/caps, enforce third person, correct IEEE spacing, ensure figure captions & in-text refs. (**Editing Lead**)
+- [ ] **Background:** Add typical voltages (3.3/5/12 V) and I²C/SPI mention; keep open-ended. (**Systems Lead**)
+- [ ] **Accessibility:** Tighten wording (text size/contrast, minimum FOV occlusion). (**UX/Accessibility Lead**)
+- [ ] **Team Bios:** Emphasize shared coursework + distinct internships; specify applicable skills. (**Each Member**, coordinated by **PM**)
+- [ ] **Faculty Check:** Confirm with **Storm** the evaluation expectations (qual vs numeric). (**PM**)
+
+---
+
+## Risks & Mitigations
+- **Spec inconsistency** → Single source-of-truth metrics list + cross-checks.
+- **Vague language** → Assertive wording + measurable thresholds.
+- **Power/safety gaps** → Include **BMS**, **IP67**, and concise safety notes.
+- **Formatting penalties** → Final **IEEE format** review (citations, figures, lists).
+
+---
+
+## Phrases to Reuse (Proposal & Slides)
+- “**Lightweight, comfortable, and unobtrusive**—can be worn for a full round without distraction.”
+- “Provides **professional-level data** previously unavailable outside expensive facilities, enabling **faster skill development**.”
+- “**Commercially available** options exist, but none satisfy the **on-glasses, real-time display** requirement; a **custom system** is required.”
+
+---
+
+## Next Steps
+- Apply edits (Specs/Constraints, Evaluation mapping) before resubmission.
+- Finalize metrics and latency target; propagate consistently.
+- Insert missing figures/captions; fix formatting/citations.
+
+---
