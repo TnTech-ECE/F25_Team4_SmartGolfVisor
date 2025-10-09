@@ -1,0 +1,108 @@
+
+
+Smart Golf Visor Project — Subsystem Planning Meeting Minutes
+
+Date: October 9, 2025
+Time: 30 minutes
+Location: TTU Library
+Attendees: Andrew Goostree, Landen Johnson, Bryce Hughes, Ryan Zerkovich, Brandon Zerkovich, Michael Madigan
+Meeting Facilitator:  Brandon Zerkovich
+
+
+⸻
+
+1. Meeting Objective
+
+The objective of this meeting was to divide and assign subsystem responsibilities for the Smart Golf Visor Project.
+The meeting focused on identifying each team member’s area of interest, aligning individual strengths with project needs, and defining preliminary tasks for each subsystem.
+
+⸻
+
+2. Discussion Summary
+
+2.1 Overview of Project Subsystems
+
+Brandon led the meeting by presenting the main functional areas of the Smart Golf Visor.
+The group reviewed the proposed subsystems:
+	•	Data Acquisition and Interface
+	•	Visor Powering System
+	•	Visor Design
+	•	Communications
+	•	HUD Display
+	•	App/Software
+
+The goal was to ensure clear ownership and accountability for each subsystem while maintaining cross-team collaboration for integration and testing.
+
+⸻
+
+2.2 Interest-Based Role Assignment
+
+Each team member was asked about their interests and preferred technical focus area. Subsystem ownership was then assigned based on both interest and technical background to promote balanced workload and engagement.
+
+Andrew Goostree — Data Acquisition and Interface
+	•	Develop the system to acquire data from the launch monitor’s API
+	•	Implement processes for retrieving accurate real-time shot data
+	•	Store previous shot data for later analysis and review
+	•	Generate automated coaching suggestions based on acquired data
+
+Landen Johnson — Visor Powering System
+	•	Select an appropriate battery to power the visor system
+	•	Design and develop a rechargeable battery circuit
+	•	Implement a Battery Management System (BMS) for safe and efficient power regulation
+
+Bryce Hughes — Visor Design
+	•	Design the physical structure and layout of the visor
+	•	Identify and integrate the correct lens for the display system
+	•	Determine placement of all components (OLED display, microcontroller, battery, BMS, etc.)
+
+Ryan Zerkovich — Communications
+	•	Develop communication protocol from the launch monitor to the app/software
+	•	Establish the communication link from the app/software to the microcontroller
+	•	Write and implement microcontroller firmware for data processing and communication
+
+Brandon Zerkovich — HUD Display
+	•	Design and implement the heads-up display (HUD) for the visor
+	•	Display real-time shot metrics, coaching feedback, and ball trajectory direction
+
+Michael Madigan — App/Software
+	•	Design and develop the companion app/software interface for the system
+	•	Create an intuitive user experience for viewing performance metrics and coaching insights
+	•	Integrate connectivity between the launch monitor, visor, and stored shot data
+	•	Include functionality for session tracking, history review, and personalized feedback
+
+⸻
+
+3. Action Items and Next Steps
+
+Action Item	Assigned To	Deadline	Notes
+Research launch monitor API specifications and data formats	Andrew Goostree	[Set Date]	Focus on Garmin R10 BLE telemetry data
+Select appropriate battery and calculate expected power consumption	Landen Johnson	[Set Date]	Include safety margin for continuous 2–3 hr use
+Develop initial visor CAD model and component placement	Bryce Hughes	[Set Date]	Coordinate with electrical team for size and placement
+Begin protocol design for data transfer and firmware outline	Ryan Zerkovich	[Set Date]	Align communication standards with software and hardware
+Create mockup of HUD layout and shot metric visualization	Brandon Zerkovich	[Set Date]	Include real-time feedback and trajectory visuals
+Begin designing companion app wireframe	Michael Madigan	[Set Date]	Emphasize connectivity and intuitive interface
+
+
+⸻
+
+4. Integration Planning
+
+Emphasized the need for subsystem integration testing once initial prototypes are complete.
+Cross-team checkpoints will be established to ensure smooth data flow and communication between the visor hardware, display, and app.
+
+⸻
+
+5. Next Meeting
+	•	Topic: Review subsystem progress and discuss hardware/software interfacing
+	•	Tentative Date: 10-9
+	•	Action: Each member will present an initial design draft or concept for their subsystem
+
+⸻
+
+6. Summary
+
+The meeting successfully divided the project into six core subsystems with clear ownership.
+Each team member was assigned tasks aligned with their interests and technical strengths, setting the stage for efficient parallel development.
+The team agreed to maintain regular progress updates to ensure consistent integration and alignment across all subsystems.
+
+
