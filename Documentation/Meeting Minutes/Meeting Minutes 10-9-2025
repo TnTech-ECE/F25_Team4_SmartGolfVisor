@@ -1,0 +1,213 @@
+Smart Golf Visor — Conceptual Design Working Session (Meeting Minutes)
+1. Meeting Meta
+
+
+Near-term deadlines:
+
+Conceptual Design submission: Monday, October 27, 2025
+
+Detailed Design: late November 2025 (target week of Nov 24, 2025; confirm with instructor)
+
+Note: Some sign-offs may extend into Capstone II (confirm process with instructor)
+
+2. Purpose
+
+Align on Conceptual Design expectations for the 10/27/2025 submission.
+
+Identify critical dependencies (launch-monitor API access) and documentation standards.
+
+Establish next steps toward Detailed Design (late November).
+
+3. Key Decisions & Guidance
+
+Subsystems
+
+Keep HUD Display and App as distinct subsystems.
+
+Clearly define interfaces and responsibilities for each block.
+
+Block Diagrams
+
+Top-level: One block per subsystem; every connection must have a labeled input and output.
+
+Atomic (per subsystem): Drill down to bands and protocols (e.g., “Bluetooth 2.4 GHz” → “BLE” → “GATT characteristics”; “Wi-Fi 5 GHz” → “802.11ac”; I²C/SPI/UART; MCU pins where known).
+
+Operational User Flow
+
+App launch → device discovery/sync → user settings → shot captured → monitor computes metrics → HUD renders → data stored → coaching suggestions generated.
+
+Power & Protection
+
+Battery: target LiPo ~3000 mAh for ≈ 6 hours runtime (≥ 18 holes).
+
+Topology: e.g., 2S1P (state explicitly) and select a matching 2S BMS with balance leads for each series node.
+
+Rails: provision 12 V, 5 V, and 3.3 V; document buck/boost regulation paths to each load.
+
+Protection: inline fusing 0.5–1.0 A per vendor guidance; include reverse-polarity/ESD where sensible.
+
+Standards & Safety
+
+Device is face-worn; research and cite safety/EMC and relevant AR/NEC guidance.
+
+Prefer LiPo (lower energy density vs cylindrical Li-ion) with justification.
+
+Budget
+
+Begin listing candidate parts (battery, BMS, MCU/SoC, display/optics, radios) with unit prices; if undecided, use averages and conservative totals.
+
+Application Approach
+
+Primary: Android app.
+
+Alternative: local web app (HTML/ESP32-hosted) for rapid control/UX; ensure a clean, minimal UI.
+
+Shall Statements
+
+Restate previous shalls; analyze ≥ 3 solution approaches (including chosen path).
+
+Justify selection (cost, latency, integration risk, schedule).
+
+Last window to revise shalls based on API reality.
+
+Sign-off Reality
+
+Some sign-offs may slide to Capstone II; seek explicit instructor guidance.
+
+4. Risks, Dependencies, Mitigations
+
+R1 — Launch-monitor API access (critical path)
+
+Risk: Approval delay; limited fields; proprietary formats.
+
+Mitigation: Weekly vendor contact (every 7 days) via sales + engineering; ask for (a) exact metrics exposed (e.g., ball speed, spin rate, launch angle) and (b) data formats/schemas. If access is blocked, pivot to an open-API device.
+
+R2 — Workload imbalance
+
+Risk: Comms/API may exceed other tracks.
+
+Mitigation: Designate a floater/backup engineer in the doc.
+
+R3 — Analytics validation
+
+Risk: Insufficient math basis for coaching/trajectory.
+
+Mitigation: Use projectile/ballistics modeling (differential equations) to estimate flight/landing from measured metrics.
+
+5. Required Artifacts for the 10/27/2025 Submission
+
+Introduction (graded heavily).
+
+Restated shall statements with multi-option analysis (≥ 3).
+
+Top-level block diagram with all I/O labeled.
+
+Atomic subsystem diagrams (protocols, bands, MCU pins, power rails).
+
+User-flow operational chart (end-to-end).
+
+Standards & safety section (face-worn device, protection).
+
+Preliminary budget (candidate parts + current prices; conservative totals).
+
+6. Action Items (numbered, owner, deadline)
+
+Call the launch-monitor vendor to confirm metrics and data formats; continue weekly until approval.
+
+Owner: Bryce (Visor/API) + Comms team
+
+Start: 10/14/2025
+
+Cadence: Every 7 days until approved
+
+Draft the top-level block diagram (all subsystems; labeled I/O).
+
+Owner: Subsystem leads
+
+Due: 10/20/2025
+
+Create atomic subsystem diagrams (2.4/5 GHz, BLE/Wi-Fi protocol, I²C/SPI/UART, MCU pins where known).
+
+Owner: Each subsystem owner
+
+Due: 10/23/2025
+
+Define power architecture (rails 12 V/5 V/3.3 V, buck/boost paths, topology e.g., 2S1P, BMS selection, fuses 0.5–1.0 A).
+
+Owner: Landen (Power/BMS)
+
+Due: 10/23/2025
+
+Standards & safety scan for face-worn electronics; document applicable guidance.
+
+Owner: Power + Visor + App
+
+Due: 10/24/2025
+
+Build user-flow chart (app ↔ monitor ↔ glasses; settings/capture/display/storage/coaching).
+
+Owner: App + HUD (Brandon)
+
+Due: 10/24/2025
+
+Identify candidate parts and prices; update the budget (include links/notes).
+
+Owner: All subsystem owners
+
+Due: 10/25/2025
+
+Re-validate shall statements based on API realities; propose edits if needed.
+
+Owner: Entire team
+
+Due: 10/25/2025
+
+Assign a floater/backup to the heaviest subsystem (likely Comms/API).
+
+Owner: Team lead
+
+Due: 10/18/2025
+
+Begin ballistics/trajectory reference search (Google Scholar/IEEE Xplore).
+
+Owner: HUD/Analytics (Brandon + support)
+
+Due: 10/21/2025
+
+Decide app path (Android vs local web app) and produce a wireframe.
+
+Owner: App team
+
+Due: 10/22/2025
+
+Standardize diagramming tool (Visio or draw.io/Lucid); set a style guide (fonts, arrowheads, labels).
+
+Owner: Teamwide
+
+Due: 10/16/2025
+
+7. Parking Lot / Open Questions
+
+What is the API approval timeline and who is the vendor point of contact?
+
+Which metrics are guaranteed vs derived (from available fields)?
+
+What is the final display/optics path (to be locked during Detailed Design)?
+
+Are there institutional/departmental standards specific to face-worn devices that must be cited?
+
+8. Next Milestones
+
+Conceptual Design due 10/27/2025.
+
+Detailed Design target late November 2025 (week of Nov 24; confirm).
+
+Expectation that some sign-offs may move to Capstone II (confirm).
+
+9. Notes & Reminders
+
+Over-define now, trim later.
+
+Top-level diagram should be presentation-ready; atomic diagrams should be build-ready.
+
+Even a minimal UI should look clean and intentional; polish pays off during reviews.
