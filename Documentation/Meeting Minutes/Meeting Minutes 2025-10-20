@@ -1,0 +1,55 @@
+**Project:** Capstone – Golf Visor  
+**Institution:** Tennessee Tech University  
+**Date:** [10-20-2025]  
+**Participants:** Team Members 
+
+---
+
+## Discussion Topics
+
+### 1. Launch Monitor Options
+- Garmin was discussed as the primary candidate.
+- Concern raised over many launch monitors being private, subscription-based, or not Android compatible.
+- Several monitors found only worked indoors and weren’t portable.
+- A DIY build-your-own option was mentioned (e.g., GIY project), but noted it would require significant subsystem effort.
+
+### 2. Data Access & Integration
+- Aim is to collect metrics (spin rate, ball speed, etc.) and export them from a launch monitor.
+- GS Pro was discussed as a potential API/simulation software platform; it is open source.
+- Discussion around Garmin’s app allowing data export to platforms like Google Drive or OneDrive, but export must be done manually after each session, not per shot.
+- The need for an app to automate session handling and data relay was emphasized.
+
+### 3. Device Compatibility
+- SC4 Pro was reviewed; may include desired metrics (spin axis, side spin), but uncertainty remains about its app/API access.
+- Some models have on-screen data but no app communication, complicating integration.
+- USB data access was suggested but not confirmed.
+
+### 4. App vs Web App Architecture
+- Discussion on whether to build a native Android app vs a web-based app.
+- Web app would rely on cloud infrastructure and persistent internet connection; may increase latency and power consumption.
+- Native Android app would simplify Bluetooth communication and data handling locally.
+
+### 5. Project Hardware and Budget Adjustments
+- Decision to consolidate to one microcontroller instead of one per module to reduce cost by ~$150.
+- Current budget standing at around $1,050.
+
+### 6. Technical Planning
+- Block diagram planning started, team agreed to collaborate to avoid errors.
+- Discussion on how to represent subsystems such as power and communication in the diagram.
+
+### 7. API Understanding
+- Clarification provided: API serves as a communication protocol between devices and software.
+- Uncertainty expressed around how to access and utilize device APIs on Android.
+
+### 8. Next Steps & Meetings
+- Next meeting scheduled with JC for design review and approval.
+- JC approval is required before submission to the stakeholder or store.
+- Noted that one additional week was granted for the submission.
+
+---
+
+## Action Items
+- Further research Garmin SC4 Pro’s app and potential for API or data extraction.
+- Begin development or prototyping of Android or web app for data relay.
+- Finalize and clean up the block diagram collaboratively.
+- Prepare for JC design approval review before final submission.
