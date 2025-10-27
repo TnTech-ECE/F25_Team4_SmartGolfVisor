@@ -1,0 +1,107 @@
+# Smart Golf Visor — Meeting Minutes (New Recording 15.m4a)
+
+## Quick Summary
+Team will **pivot away from Garmin/closed-API** approach due to approvals risk and timeline uncertainty, and **adopt an open-source launch monitor** as the project’s primary sensing subsystem. Emphasis shifts to getting a **working prototype by early April** (Capstone 2 milestone), with clear ownership of the launch monitor build, stronger **power budgeting**, and **document refinements** (trade studies, standards, figures).
+
+---
+
+## Attendees (per transcript)
+- Faculty advisors/reviewers: Speaker 1, Speaker 4  
+- Team members: Speaker 2, Speaker 3 (others implied)
+
+---
+
+## Key Decisions
+1. **Drop Garmin/closed access path.** Paperwork + approvals timeline is prohibitive and uncertain; risk of non-approval is high.  
+2. **Adopt open-source launch monitor.**  
+   - Use available **software, 3D print files, parts list, and budget** from the chosen repo.  
+   - **Verify and, if needed, improve** any circuits/regulators and mechanicals for our use case (outdoor, portable).  
+3. **Make Launch Monitor its own subsystem (possibly two):**  
+   - **Enclosure/mechanics** and **electronics/firmware/power/comms** can be separated if resourcing requires.  
+   - Assign a clear **owner** responsible for assembly, verification, and integration (Bryce was suggested/volunteered in discussion).  
+4. **Power System scope:** Power subsystem covers **visor AND launch monitor** (two physical devices, one conceptual power subsystem).  
+5. **Prototype priority:** **Working launch-monitor prototype first**, then visor/HUD/cloud features.
+
+---
+
+## Requirements & Guidance Captured
+
+### Power & Energy
+- Design around **1S Li-ion/LiPo** with **parallel cells (e.g., 1S-xP)** for capacity/current; explicitly justify the choice.  
+- Provide **runtime targets**: minimum 9 holes, max 18; **overshoot** the time assumption for safety.  
+- Compute **Wh** from estimated loads (include **converter efficiencies** and **ripple** considerations).  
+- Consider **~6000 mAh** battery as a healthy cushion (contextual suggestion).  
+- Launch monitor may need its **own pack** (or dedicated rail) depending on draw.  
+- Consider **ancillary solar** to trickle-backcharge when deployed outdoors (optional, budget-dependent).
+
+### Open-Source Monitor Adaptation
+- Treat repo as a **baseline**, not a black box:  
+  - **Analyze regulators** (efficiency, ripple), thermal, enclosure, weather resistance.  
+  - Modify AC/wall-powered designs to **portable battery** architecture for field use.  
+  - Use **PETG/ABS** or other weather-resistant materials for printed parts; check Makerspace filament options.
+
+### Documentation Improvements
+- **Trade studies:** Unify format; add **semi-trade study** for multiple open-source options to justify the chosen base.  
+- **Standards:** When citing IEEE/FCC/battery/safety standards, include **specific numeric limits** (freq bands, TX power, temp limits, Wh, etc.) and **map each** to the subsystem where it applies.  
+- **Block diagrams & flowcharts:**  
+  - Hardware diagram is strong; address small edits.  
+  - Rework **gray “comms” diagrams** to add missing info.  
+  - Over-define connections now; we can prune later.  
+- **Figures & tables:** Avoid gray-on-black; prefer **high-contrast**. Clean snips (no stray Excel highlights/cursors).  
+- **Language:** Be **assertive**—use **min–max** specs; avoid “it would be nice.”  
+- **Comparative analysis:** Make this section robust; it **drives** subsystem choices.
+
+### Fabrication & Testing
+- **3D printing:** Use **Makerspace**; flag **Capstone priority**; consider budgeting **filament** (and material choice) if needed.  
+- **Testing:** Plan for **many trials** and **large sample sizes** in Capstone 2. Recruit **testers** early. Capture video/data.
+
+---
+
+## Milestones & Dates
+- **“The 3rd” due date (per transcript):** document submission checkpoint. *(Likely Nov 3; confirm internally.)*  
+- **Early April (Capstone 2):** **Minimal working prototype due** (must pass this for schedule health).  
+- **Finals:** Capstone **report** + **expo** dependent on earlier prototype completion and testing runway.
+
+---
+
+## Risks & Mitigations
+- **Risk:** Open-source design underperforms in outdoor use.  
+  - *Mitigation:* Early verification of sensors, power rails, and enclosure; weather-resistant materials; field tests.  
+- **Risk:** Power shortfall and runtime misses.  
+  - *Mitigation:* Conservative Wh estimates, 1S-xP capacity cushion, solar trickle optional, separate packs if needed.  
+- **Risk:** Schedule slip on printing/assembly.  
+  - *Mitigation:* Submit prints **early**, parallelize (enclosure vs. electronics), assign clear owners.
+
+---
+
+## Action Items
+| # | Action | Owner | Due |
+|---|---|---|---|
+| A1 | **Select** open-source launch-monitor repo; perform **mini trade study** vs. 1–2 alternatives; recommend baseline. | (Assign) | ASAP |
+| A2 | Update **hardware block diagrams** to reflect open-source monitor and dual-device power split. | (Assign) | ASAP |
+| A3 | Rework **comms flowcharts** (gray ones) with clearer I/O and sequence. | (Assign) | ASAP |
+| A4 | **Power budget v1**: hole-time assumptions (≥18 holes overshoot), Wh calc per load, regulator **efficiency & ripple** notes, propose **1S-xP** capacity. | (Assign) | ASAP |
+| A5 | Decide **battery materials/packaging** and connector strategy for **monitor vs. visor** (two physical devices). | (Assign) | ASAP |
+| A6 | Verify **standards** list with **specific numeric limits**; map each to subsystems in document. | (Assign) | Next draft |
+| A7 | Clean up **figures/tables** (contrast, cropping, remove Excel highlights). | (Assign) | Next draft |
+| A8 | Assign **Launch Monitor Owner** (assembly, verification, integration). Consider splitting into **Enclosure** and **Electronics/FW** owners. | (Team; Bryce suggested) | Immediate |
+| A9 | Submit **print jobs** at Makerspace; mark **Capstone**; confirm material (PETG/ABS). | (Assign) | Early queue |
+| A10 | Plan **tester recruiting** and **data collection protocol** for Capstone 2. | (Assign) | Before prototype ready |
+| A11 | Submit revised document to advisor for **pre-review**, then to reviewer (Speaker 1). | (Assign) | **By “the 3rd”** |
+
+---
+
+## Open Questions
+- Confirm **exact due date** for the “3rd” (month/day).  
+- Finalize **who** owns Launch Monitor (and whether to split into two sub-owners).  
+- Confirm **Makerspace filament** options (PETG/ABS) and any budget for filament.  
+- Decide on **solar backcharge** feature (nice-to-have vs. in-scope).
+
+---
+
+## Next Steps (Immediate)
+1. Lock the **open-source baseline** and update all diagrams.  
+2. Produce a **first-pass power budget** with Wh and 1S-xP justification.  
+3. Refactor **trade studies** and **standards** sections with concrete numbers and mappings.  
+4. Assign **owners** and kick off **printing** and **monitor assembly**.  
+5. Submit the **cleaned draft** for advisor review **before the 3rd**.
