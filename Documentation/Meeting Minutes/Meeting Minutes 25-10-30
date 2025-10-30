@@ -1,0 +1,58 @@
+# Smart Golf Visor — Meeting Minutes (from “New Recording 16.m4a”)
+
+## Purpose
+Discuss display options, power subsystem needs, controller selection, and near-term deliverables for Detailed Design.
+
+## Key Decisions & Agreements
+- **Display is “just a display” (not a projector).**
+- **Two candidate micro-displays under consideration:**
+  - **0.49" panel:** requires multiple rails (≈1.8 V, +5.4 V, –5.4 V) and external power generation.
+  - **0.39" panel:** needs only 5 V and 1.8 V; includes onboard PCB that handles conversions.
+- **Controller:** leaning toward an **ESP32 (P4 dev board)** variant that already has **Bluetooth** (and possibly Wi-Fi), to avoid extra modules.
+- **MIPI lane mismatch identified:** display expects **4-lane MIPI**, some ESP32 options provide **2-lane**. A **signal conversion/bridge** may be required.
+- **Timeline:** team will produce a **timeline** and proceed toward **Detailed Design** (schematics, diagrams, BOM).
+
+## Technical Discussion Summary
+- **Power/Display Rails**
+  - **0.49":** needs buck for 1.8 V, boost for +5.4 V, and inverting DC-DC for –5.4 V (AVDD).
+  - **0.39":** integrated board simplifies power (5 V + 1.8 V).
+- **Driver/Interface**
+  - Displays available with **MIPI** interfaces; some versions include interface boards that still require correct power rails.
+  - Consider **HDMI-to-MIPI** or other **bridge** solutions if lane count or protocol is incompatible.
+- **Integration Approach**
+  - Short-term: wire-up or small **carrier/adapter PCB** for reliable pinout and rails.
+  - Long-term: evaluate **custom PCB** for cleaner integration; look for **existing Gerbers** as a starting point (KiCad import).
+- **Compute Board**
+  - ESP32 dev board with onboard **BT/Wi-Fi** is preferred to reduce parts and wiring.
+- **Detailed Design Scope**
+  - Move from conceptual to **schematics**, **interface diagrams**, **BOM**, and **analysis** demonstrating constraints are met.
+
+## Dependencies & Inputs Needed
+- **Exact component spec sheets** (display variant, ESP32 board, regulators/PMICs) so power draw (mW) can be totaled accurately.
+- **Confirmation of final display choice** (0.39" vs 0.49") to lock power architecture.
+- **Decision on MIPI bridging strategy** (2-lane → 4-lane conversion, or alternative interface).
+
+## Action Items
+1. **Power Lead (Landen):**
+   - Compile **battery sizing** once all component **spec sheets** and power draws are confirmed.
+   - Draft recommended **power tree** for the chosen display (rails, converters, protections).
+2. **Display/Hardware Lead:**
+   - **Confirm the display module** (0.39" vs 0.49") and whether it ships with an interface/power board.
+   - Investigate **MIPI lane conversion** or alternative bridge (e.g., HDMI-to-MIPI), and document options.
+   - Search for **reference Gerber files** for a minimal carrier to simplify wiring; share with the team.
+3. **Compute/Embedded Lead:**
+   - Validate **ESP32 dev board** capabilities (BT/Wi-Fi, MIPI compatibility, available I/O).
+   - Document the **interface plan** from ESP32 → display (protocol, lanes, bridges).
+4. **All:**
+   - Provide **spec sheets/links** for assigned components in a shared folder for power budgeting.
+   - Draft the **project timeline** with milestones to Detailed Design sign-off.
+
+## Risks & Open Questions
+- **Interface risk:** 2-lane ESP32 vs 4-lane display; feasibility, cost, and latency of bridges.
+- **Power complexity:** If the 0.49" is chosen, added rails increase design complexity, PCB effort, and potential noise sources.
+- **Schedule dependency:** Awaiting **advisor feedback**; turnaround may affect Detailed Design pacing.
+
+## Next Steps
+- Finalize **display selection** and **bridge strategy**.
+- Complete **spec sheet collection** → **power budget** → **battery capacity recommendation**.
+- Produce **schematics**, **block/interface diagrams**, and **BOM** for Detailed Design draft.
