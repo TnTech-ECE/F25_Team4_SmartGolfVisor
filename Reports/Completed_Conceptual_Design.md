@@ -17,8 +17,8 @@ The Smart Golf Visor gives golfers a visual display of real-time shot metrics on
 5) The launch monitor shall be able to wirelessly communicate shot metrics to the app.
 
 In addition to these customer-defined specifications, the product must also abide by some the following standards:
-1) Any Bluetooth-based wireless transfer of information shall comply with the IEEE 802.15.1 standard that defines Personal Area Network (PAN) devices. Class 2 devices are characterized by approximately a 10 meter radius and a maximum transmit power of +4dBm (approximately 2.5 mW).  Wireless transmission shall operate within a 2.402 GHz to 2.480 GHz frequency band.
-2) The use of a Lithium Ion or Lithium Polymer cells as part of a battery unit shall comply with IEC 62133 safety regulations to ensure safe operation within extreme Conditions. The battery shall operate safely within 0–60 °C and include protection against electrical faults such as overcharge at 1.4× rated charge current, over-discharge below 2.5 V per cell, and short-circuit currents up to the rated maximum.
+1) Any Bluetooth-based wireless transfer of information shall comply with the IEEE 802.15.1  standard that defines Personal Area Network (PAN) devices. Class 2 devices are characterized by approximately a 10 meter radius and a maximum transmit power of +4dBm (approximately 2.5 mW).  Wireless transmission shall operate within a 2.402 GHz to 2.480 GHz frequency band.[1]
+2) The use of a Lithium Ion or Lithium Polymer cells as part of a battery unit shall comply with IEC 62133 safety regulations to ensure safe operation within extreme Conditions. The battery shall operate safely within 0–60 °C and include protection against electrical faults such as overcharge at 1.4× rated charge current, over-discharge below 2.5 V per cell, and short-circuit currents up to the rated maximum. [2]
 3) Any image projection onto the lenses or glass shall comply with the ISO 15004-2 eye safety standard that determines the group hazard level of optical radiation within wavelength range of 250 nm to 2500 nm. For continuous operation over the duration of a golf round (~4 hours), retinal and corneal irradiance shall remain below the following approximate limits:
 
     A. UV (250–400 nm): ≤ 0.021 mW/cm²
@@ -29,12 +29,14 @@ In addition to these customer-defined specifications, the product must also abid
 
     D. IR (1400–2500 nm): ≤ 3.47 mW/cm²
 
-    These limits account for exposure duration, wavelength, and illuminated area of the eye, ensuring safe operation during normal use.
-4) The electronic components within the visor shall be IP-67 Rated providing dirt protection for objects greater than 1mm diameter and water protection for depths of 15 centimeters to 1 meter.
+    These limits account for exposure duration, wavelength, and illuminated area of the eye, ensuring safe operation during normal use. [3]
+4) The electronic components within the visor shall be IP-67 Rated providing dirt protection for objects greater than 1mm diameter and water protection for depths of 15 centimeters to 1 meter. [4]
 
 In addition to the industry standards, the following constraints address the safety and usability:
 1) The display shall not obstruct the view of the golfer to ensure safety and improved performance.
 2) The display shall be capable of maintaining a clear and readable display.
+
+## Comparative Analysis of Potential Solutions
 
 ## Comparative Analysis of Potential Solutions
 
@@ -57,24 +59,23 @@ The launch monitor subsystem provides the primary sensing for the wearable golf 
 
 ##### Possible Solutions
 The following are possible options: 
-1) A **Do-It-Yourself (DIY) Photometric PiTrac-style monitor** built on a Raspberry Pi with dual Mobile Industry Processor Interface (MIPI) global-shutter cameras and infrared (IR) strobing, which publishes shot results locally over JavaScript Object Notation (JSON) or WebSocket
-2) **Garmin Approach R10**
+1) A **Do-It-Yourself (DIY) Photometric PiTrac-style monitor** built on a Raspberry Pi with dual Mobile Industry Processor Interface (MIPI) global-shutter cameras and infrared (IR) strobing, which publishes shot results locally over JavaScript Object Notation (JSON) or WebSocket [6]
+2) **Garmin Approach R10** [5]
  
-The **DIY PiTrac-style photometric monitor** uses the PiTrac design that is built on a Raspberry Pi with dual Mobile Industry Processor Interface (MIPI) global-shutter cameras and infrared (IR) strobing that exposes results through a local web server or Golf Simulator Pro (GSPro) Open Connect JSON over Transmission Control Protocol (TCP). This allows the project to terminate the data directly in its own bridge, normalize fields, and forward to the visor HUD without subscriptions or vendor cloud services. It also enables inspection of intermediate data for calibration and test.
+The **DIY PiTrac-style photometric monitor** [6] uses the PiTrac design that is built on a Raspberry Pi with dual Mobile Industry Processor Interface (MIPI) global-shutter cameras and infrared (IR) strobing that exposes results through a local web server or Golf Simulator Pro (GSPro) Open Connect JSON over Transmission Control Protocol (TCP). This allows the project to terminate the data directly in its own bridge, normalize fields, and forward to the visor HUD without subscriptions or vendor cloud services. It also enables inspection of intermediate data for calibration and test.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/ByqSZQHy-g.jpg" alt="PiTrac DIY Launch Monitor">
+  <img src="https://hackmd.io/_uploads/ByqSZQHy-g.jpg" alt="PiTrac DIY Launch Monitor" width="700">
   <br>
-  <strong>Figure 1: DIY PiTrac Launch Monitor</strong>
+  <em>Figure 1: DIY PiTrac Launch Monitor</em>
 </p>
 
-
-The second option is the **Garmin Approach R10** which is a commercial Doppler-radar monitor. It offers a mature, portable device that measures ball and club metrics for indoor nets and outdoor ranges. However, Garmin documents usage through the Garmin Golf application and simulator integrations and does not publish a free, public shot-telemetry API. Some simulator and virtual-play functions are tied to a Garmin Golf membership.
+The second option is the **Garmin Approach R10** [5] which is a commercial Doppler-radar monitor. It offers a mature, portable device that measures ball and club metrics for indoor nets and outdoor ranges. However, Garmin documents usage through the Garmin Golf application and simulator integrations and does not publish a free, public shot-telemetry API. Some simulator and virtual-play functions are tied to a Garmin Golf membership.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/HyILfXBJbe.jpg" alt="Garmin Approach R10">
+  <img src="https://hackmd.io/_uploads/HyILfXBJbe.jpg" alt="Garmin Approach R10" width="700">
   <br>
-  <strong>Figure 2: Garmin Approach R10</strong>
+  <em>Figure 2: Garmin Approach R10</em>
 </p>
 
 ###### **Trade Study: Launch Monitor Selection**
@@ -88,8 +89,7 @@ The weighting rationale for this trade study prioritizes practical integration, 
 - **Vendor Support / Maturity (10 %)** measures product reliability and availability of technical support.
 
 <p align="center">
-  <strong>Table I</strong>
-  <br>
+  <strong>Table I</strong><br>
   Launch Monitor Trade Study
 </p>
 
@@ -97,11 +97,11 @@ The weighting rationale for this trade study prioritizes practical integration, 
 |:--------------|:--------------:|:----------------------------------:|:--------------------------------:|
 | Data/API Accessibility | 25 | 5 | 2 |
 | Integration with Visor HUD | 20 | 5 | 3 |
-| Cost  | 15 | 5 | 3 |
+| Cost | 15 | 5 | 3 |
 | Build Effort / Calibration Required | 10 | 3 | 5 |
 | Portability / Field Robustness | 10 | 4 | 5 |
 | Simulator / Third-Party Path | 10 | 5 | 3 |
-| Vendor Support  | 10 | 3 | 5 |
+| Vendor Support | 10 | 3 | 5 |
 | **Weighted Total** | **100** | **4.45** | **3.55** |
 
 ##### Decision
@@ -141,36 +141,32 @@ The selection of wired communication protocol depends on bandwidth, latency, and
 ###### Microcontroller  
 For the visor system to support wireless connectivity, it shall require a microcontroller. This selection depends on processing speed, communcation capabilities, software complexity and pre-built wireless module. The following are possible options to consider: 
 1) **Raspberry Pi Zero W** 
-2) **ESP32-S3**
-3) **ESP32-P4** 
+2) **ESP32-S3** 
 
-The **Raspberry Pi Zero W** offers moderate performance with a single-core ARM11 processor, computing at speeds of 1 GHz. It includes built-in Bluetooth 4.1 (speeds up to 1 Mbps), serial communications (**SPI**, **I²C**, and **UART**), and **MIPI** interfacing. However, it requires a full operating system (Linux), which increases software complexity.
+The **Raspberry Pi Zero W**  offers moderate performance with a single-core ARM11 processor, computing at speeds of 1 GHz. It includes built-in Bluetooth 4.1 (speeds up to 1 Mbps), serial communications (**SPI**, **I²C**, and **UART**), and **MIPI** interfacing. However, it requires a full operating system (Linux), which increases software complexity.[7]
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/SkxSyOzJWg.png" alt="Raspberry Pi Zero W">
+  <img src="https://hackmd.io/_uploads/SkxSyOzJWg.png" alt="Raspberry Pi Zero W" width="700">
   <br>
-  <strong>Figure 3: Raspberry Pi Zero W</strong>
+  <em>Figure 3: Raspberry Pi Zero W</em>
 </p>
 
-
-The **ESP32-S3** has high performance featuring a dual-core 32-bit Xtensa processor capable of handling speeds up to 240 MHz. It includes serial communication (**SPI**, **I2C**, and **UART**) and built-in Bluetooth 5 Low Energy, allowing for faster speeds (up to 2 Mbps) and lower power consumption. However, the **ESP32-S3** has no **MIPI** support which would require two TC358778X MIPI-to-Parallel Bridge ICs to interface with the displays. Additionally, the ESP32-S3 can run bare-metal firmware or a real-time operating system, eliminating the need for a full operating system. 
+The **ESP32-S3** [8] has high performance featuring a dual-core 32-bit Xtensa processor capable of handling speeds up to 240 MHz. It includes serial communication (**SPI**, **I2C**, and **UART**) and built-in Bluetooth 5 Low Energy, allowing for faster speeds (up to 2 Mbps) and lower power consumption. However, the **ESP32-S3** has no **MIPI** support which would require two TC358778X MIPI-to-Parallel Bridge ICs to interface with the displays. Additionally, the ESP32-S3 can run bare-metal firmware or a real-time operating system, eliminating the need for a full operating system. [8]
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/Bk4t1dz1Ze.png" alt="ESP32-S3">
+  <img src="https://hackmd.io/_uploads/Bk4t1dz1Ze.png" alt="ESP32-S3" width="700">
   <br>
-  <strong>Figure 4: ESP32-S3</strong>
+  <em>Figure 4: ESP32-S3</em>
 </p>
 
-
-The **ESP32-P4** has the highest performance capability of the three options due to its Dual-core 32-bit RISC-V processor capable for speeds up to 400 MHz. It has **MIPI** and serial communications (**SPI**, **I2C**, and **UART**) to interact with the display hardware but does not include built-in Bluetooth. The **ESP32-P4-WIFI6** is a development board that provides the pre-built BLE module for the **ESP32-P4**.
+The **ESP32-P4**  has the highest performance capability of the three options due to its Dual-core 32-bit RISC-V processor capable for speeds up to 400 MHz. It has **MIPI** and serial communications (**SPI**, **I2C**, and **UART**) to interact with the display hardware but does not include built-in Bluetooth. [9] The **ESP32-P4-WIFI6** is a development board that provides the pre-built BLE module for the **ESP32-P4**. [9]
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/rkWox_G1bx.png" alt="ESP32-P4">
+  <img src="https://hackmd.io/_uploads/rkWox_G1bx.png" alt="ESP32-P4" width="700">
   <br>
-  <strong>Figure 5: ESP32-P4</strong>
+  <em>Figure 5: ESP32-P4</em>
 </p>
 <br>
-
 
 ###### Trade Study : Microcontroller
 The weighting rationale prioritizes ergonomic performance and ease of integration for a wearable augmented-reality device. 
@@ -181,33 +177,32 @@ The weighting rationale prioritizes ergonomic performance and ease of integratio
 - **Built-in Wireless Module (10 %)** provides convenient onboard connectivity without heavily impacting overall performance.
 
 <p align="center">
-  <strong>Table II</strong>
-  <br>
+  <strong>Table II</strong><br>
   Microcontroller Trade Study
 </p>
 
-| Criterion                     | Weight (%) | Raspberry Pi Zero W | ESP32-S3 | ESP32-P4 |
-|-------------------------------|:----------:|:-----------------:|:--------:|:--------:|
-| Processing Performance        | 30         | 3                | 4        | 5        |
-| Communication Capability      | 25         | 4                | 4        | 5        |
-| Power Efficiency              | 20         | 2                | 4        | 4        |
-| Software / OS Complexity      | 15         | 2                | 4        | 4        |
-| Built-in Wireless Module      | 10         | 4                | 5        | 3        |
-| **Weighted Total (100%)**     | **100**    | **3.05**         | **4.25** | **4.45** |
+| **Criterion** | **Weight (%)** | **Raspberry Pi Zero W** | **ESP32-S3** | **ESP32-P4** |
+|:--------------|:--------------:|:-----------------------:|:-------------:|:-------------:|
+| Processing Performance | 30 | 3 | 4 | 5 |
+| Communication Capability | 25 | 4 | 4 | 5 |
+| Power Efficiency | 20 | 2 | 4 | 4 |
+| Software / OS Complexity | 15 | 2 | 4 | 4 |
+| Built-in Wireless Module | 10 | 4 | 5 | 3 |
+| **Weighted Total (100%)** | **100** | **3.05** | **4.25** | **4.45** |
 
 
 ##### Decision
 
 Based on the evaluation of wireless protocols, wired communication interfaces, and microcontroller options and trade study, the following are the desired choices:
 1) **Bluetooth Wireless Communication Protocol**
-2) ** SPI Serial Communication and MIPI DSI Protocol**
+2) **SPI Serial Communication and MIPI DSI Protocol**
 3) **ESP32-P4**
 
 **Bluetooth Wireless Communication Protocol** provides simplified device networking and lower power consumption. The low range and bandwidth fit within the smart golf visor functionality.
 
 **SPI serial communication** provides the high speed bandwidth and lower latency to match the HUD display's peripheral. This is crucial for the time-sensitive HUD updates. **MIPI DSI** protocol was chosen for the display interface to support high-speed, low-power transmission of graphics data
 
-The **ESP32-P4** was selected as the primary controller for the visor system. Its dual-core RISC-V processor operating at up to 400 MHz provides sufficient computational capability for real-time data processing, while its native support for **MIPI** enables direct interfacing with the OLED display without the need for additional bridge ICs. With the **ESP32-P4-WIFI6** development board, it also provides built-in bluetooth module to recieve the shot metrics transmitted by the app.
+The **ESP32-P4** [9] was selected as the primary controller for the visor system. Its dual-core RISC-V processor operating at up to 400 MHz provides sufficient computational capability for real-time data processing, while its native support for **MIPI** enables direct interfacing with the OLED display without the need for additional bridge ICs. With the **ESP32-P4-WIFI6** [9] development board, it also provides built-in bluetooth module to recieve the shot metrics transmitted by the app.
 ### Power
 
 ##### Overview
@@ -230,18 +225,19 @@ Two main rechargeable battery chemistries were considered for this subsystem:
 1) **Lithium-Polymer (Li-Po)** 
 2) **Lithium-Ion (Li-ion)** 
 
-The **Li-Po pouch cell** exhibits an energy density between 150–200 Wh/kg, offering a very light and thin form factor ideal for compact wearable applications. While it requires a Battery Management System (BMS) for safe operation, it remains thermally stable and reliable, with a cycle life of approximately 300–600 cycles and moderate cost. Its flat, flexible shape makes it especially advantageous for the visor, as it can integrate flush with the rear-mounted housing.
+The **Li-Po pouch cell** exhibits an energy density between 150–200 Wh/kg, offering a very light and thin form factor ideal for compact wearable applications. While it requires a Battery Management System (BMS) for safe operation, it remains thermally stable and reliable, with a cycle life of approximately 300–600 cycles and moderate cost. Its flat, flexible shape makes it especially advantageous for the visor, as it can integrate flush with the rear-mounted housing [10].
 
-The **Li-ion cylindrical cells** (such as 18650 or 21700 formats) offer slightly higher energy density (180–250 Wh/kg) and longer life (500–800 cycles) with high discharge capability. However, their cylindrical structure adds bulk and weight, making them less practical for integration into a curved visor design.  
-LiFePO₄ cells provide exceptional safety and long life (1000+ cycles) but lower energy density (90–140 Wh/kg) and nominal voltage (~3.2 V), which complicates converter design.  
-NiMH batteries, while very safe, are heavy and have the lowest energy density (60–120 Wh/kg), leading to shorter runtimes and poor compactness for wearable use.
+The **Li-ion cylindrical cells** (such as 18650 or 21700 formats) offer slightly higher energy density (180–250 Wh/kg) and longer life (500–800 cycles) with high discharge capability. However, their cylindrical structure adds bulk and weight, making them less practical for integration into a curved visor design [11].  
+
+LiFePO₄ cells provide exceptional safety and long life (1000+ cycles) but lower energy density (90–140 Wh/kg) and nominal voltage (~3.2 V), which complicates converter design [12].  
+
+NiMH batteries, while very safe, are heavy and have the lowest energy density (60–120 Wh/kg), leading to shorter runtimes and poor compactness for wearable use [13].
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/H1zW3EEJZg.jpg" alt="Common battery formats — 18650 Li-ion vs flat Li-Po pouch">
+  <img src="https://hackmd.io/_uploads/H1zW3EEJZg.jpg" alt="18650 Li-ion vs Li-Po pouch" width="700">
   <br>
-  <strong>Figure 6: Common battery formats — 18650 Li-ion (left) vs flat Li-Po pouch (right)</strong>
+  <em>Figure 6: Common battery formats — 18650 Li-ion (left) vs flat Li-Po pouch (right).</em>
 </p>
-
 
 **Result:**  
 The **Li-Po battery** provides the best balance of weight, capacity, and integration flexibility. Its rectangular pouch design enables compact placement within the visor’s rear housing while maintaining safe operation between **0–60 °C**. This makes Li-Po the optimal chemistry for the Smart Golf Visor’s power subsystem.
@@ -254,18 +250,20 @@ The selection is based around output range, efficiency, and application. To conv
 4) **Inverting converters**
 5) **Buck-Boost converter**
 
-**Linear LDO regulators** deliver fixed voltages such as 1.8 V or 3.3 V, providing simple implementation and low noise at the expense of efficiency (50–70 %), making them best suited for low-current rails.  
-**Buck (step-down) converters** achieve 85–95 % efficiency when the input voltage exceeds the desired output. However, they are less effective when the Li-Po voltage drops close to 3.0 V.  
+**Linear LDO regulators** deliver fixed voltages such as 1.8 V or 3.3 V, providing simple implementation and low noise at the expense of efficiency (50–70 %), making them best suited for low-current rails [14].  
+
+**Buck (step-down) converters** achieve 85–95 % efficiency when the input voltage exceeds the desired output. However, they are less effective when the Li-Po voltage drops close to 3.0 V [15]. 
+
 **Boost (step-up) converters** reach 88–93 % efficiency and are essential for maintaining a stable 5.0–5.5 V output for the OLED analog rail (AVDD), even under battery discharge conditions.  
-**Inverting converters** provide around 85–90 % efficiency and are required to generate the OLED’s −5 V analog rail (AVEE) for proper display operation.  
-Finally, a **buck-boost converter** efficiently regulates 3.3 V output (90–93 %) across the full Li-Po discharge range (2.9–4.2 V), ensuring stable power to the ESP32-P4 and IMU regardless of battery condition.
+**Inverting converters** provide around 85–90 % efficiency and are required to generate the OLED’s −5 V analog rail (AVEE) for proper display operation [16].  
+
+Finally, a **buck-boost converter** efficiently regulates 3.3 V output (90–93 %) across the full Li-Po discharge range (2.9–4.2 V), ensuring stable power to the ESP32-P4 and IMU regardless of battery condition [17].
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/Hk1g0V4kbx.png" alt="Typical buck-boost converter topology">
+  <img src="https://hackmd.io/_uploads/Hk1g0V4kbx.png" alt="Buck-Boost Converter Topology" width="700">
   <br>
-  <strong>Figure 7: Typical buck-Typical buck-boost converter topology used for MCU and logic rails</strong>
+  <em>Figure 7: Typical buck-boost converter topology used for MCU and logic rails.</em>
 </p>
-
 
 **Recommended Configuration:**  
 - **3.3 V Buck-Boost Converter:** Powers the ESP32-P4 and IMU logic rail.  
@@ -286,21 +284,19 @@ The weighting rationale prioritizes runtime efficiency and system stability for 
 - **Cost (10 %)** considers affordability within the project’s material budget.
 
 <p align="center">
-  <strong>Table III</strong>
-  <br>
+  <strong>Table III</strong><br>
   Battery and Converter Integration Trade Study
 </p>
 
 | **Criterion** | **Weight (%)** | **Li-Po + Multi-Converter (Chosen)** | **Li-ion + Single Buck-Boost** | **LiFePO₄ + Boost** |
-|:--|:--:|:--:|:--:|:--:|
+|:--------------|:--------------:|:------------------------------------:|:------------------------------:|:--------------------:|
 | Energy Density | 25 | 5 | 4 | 3 |
 | Weight / Form Factor | 20 | 5 | 3 | 3 |
 | Efficiency | 20 | 5 | 4 | 4 |
-| Safety (IEC 62133 / NEC 480)** | 15 | 4 | 4 | 5 |
+| Safety (IEC 62133 / NEC 480) | 15 | 4 | 4 | 5 |
 | Complexity | 10 | 3 | 4 | 3 |
 | Cost | 10 | 4 | 4 | 3 |
 | **Weighted Total** | **100** | **4.65** | **3.95** | **3.70** |
-
 
 ##### Decision
 The final power solution will include:
@@ -328,32 +324,29 @@ The following are possible options:
 The **Existing Sports-Glasses Frame** uses a commercially available sports-glasses platform as the base frame. The frame offers high-impact polycarbonate construction, UV protection, and built-in ergonomic shaping designed for outdoor athletics. It provides immediate wearability, minimal design effort, and proven comfort. Minor modifications—such as adding a clamp-mounted HUD pod, rear electronics sleeve, and cable routing—can be performed without affecting the eyewear’s integrity or balance.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/ry0ZcSr1Zg.jpg" alt="Ready-made sports-glasses frame">
+  <img src="https://hackmd.io/_uploads/ry0ZcSr1Zg.jpg" alt="Uvex Hypershock Sports Glasses Frame" width="700">
   <br>
-  <strong>Figure 8: Ready-made sports-glasses frame (e.g., Uvex Hypershock) used as the visor’s base structure</strong>
+  <em>Figure 8: Ready-made sports-glasses frame (e.g., Uvex Hypershock [18]) used as the visor’s base structure.</em>
 </p>
 <br>
-
 
 A fully **Custom 3D-Printed Frame** produced from ABS/PC or CF-Nylon allows total design freedom, with integrated optical mounts and internal wiring channels. While this yields optimized geometry, it introduces longer prototyping times, tighter tolerance demands for optical alignment, and potential surface-finish issues that can affect comfort.  
-
 <p align="center">
-  <img src="https://hackmd.io/_uploads/HJM6qrSyZl.jpg" alt="Custom 3D-printed Visor Frame" style="border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/HJM6qrSyZl.jpg" alt="Custom 3D-Printed Visor Frame Options" width="700">
   <br>
-  <strong>Figure 9: Custom 3D-printed Visor Frame options used for prototype development</strong>
-</p>
-
-
-Repurposing an **existing augmented-reality eyewear** product (such as Vufine V2 or Rokid Max) could provide ready-made optics and housings, but these devices limit access to internal hardware, firmware, and mechanical modification. Integration with custom electronics is highly constrained, and costs are substantially higher. 
-
-<p align="center">
-  <img src="https://hackmd.io/_uploads/SJ9HjSBy-g.jpg" alt="Commercial AR-glasses platform">
-  <br>
-  <strong>Figure 10: Example of a commercial AR-glasses platform (Rokid Max)</strong>
+  <em>Figure 9: Custom 3D-printed visor frame options used for prototype development.</em>
 </p>
 <br>
 
 
+Repurposing an **existing augmented-reality eyewear** product (such as Vufine V2 [19] or Rokid Max [20]) could provide ready-made optics and housings, but these devices limit access to internal hardware, firmware, and mechanical modification. Integration with custom electronics is highly constrained, and costs are substantially higher. 
+
+<p align="center">
+  <img src="https://hackmd.io/_uploads/SJ9HjSBy-g.jpg" alt="Rokid Max AR Glasses" width="700">
+  <br>
+  <em>Figure 10: Example of a commercial AR-glasses platform (Rokid Max [16]).</em>
+</p>
+<br>
 
 #### Trade Study: Visor Frame  
 The weighting rationale prioritizes ergonomic performance and ease of integration for a wearable augmented-reality device.  
@@ -365,13 +358,12 @@ The weighting rationale prioritizes ergonomic performance and ease of integratio
 - **Durability (10 %)** measures long-term resilience under outdoor conditions.  
 
 <p align="center">
-  <strong>Table IV</strong>
-  <br>
+  <strong>Table IV</strong><br>
   Visor Frame Trade Study
 </p>
 
 | **Criterion** | **Weight (%)** | **Sports-Glasses Frame** | **Custom 3D Frame** | **Commercial AR Base** |
-|:--|:--:|:--:|:--:|:--:|
+|:--------------|:--------------:|:------------------------:|:-------------------:|:-----------------------:|
 | Ergonomic Comfort | 30 | 5 | 4 | 3 |
 | Integration Flexibility | 25 | 4 | 5 | 2 |
 | Weight & Balance | 25 | 5 | 4 | 3 |
@@ -379,6 +371,7 @@ The weighting rationale prioritizes ergonomic performance and ease of integratio
 | Durability | 10 | 5 | 4 | 4 |
 | **Weighted Total (100%)** | **100** | **4.75** | **4.35** | **2.95** |
 
+---
 
 ##### Decision  
 The **existing sports-glasses frame** (specifically the Uvex Hypershock or equivalent) is selected as the base for the Smart Golf Visor.  This solution provides the best combination of ergonomic comfort, low weight, durability, and manufacturability while requiring minimal fabrication effort. The proven sports-frame geometry already conforms to human-factor safety and comfort standards, allowing the team to focus design resources on optical and electronic integration.  
@@ -400,7 +393,7 @@ Each approach offers distinct tradeoffs in development complexity, hardware inte
 ##### Possible Solutions
 
 ###### Native Mobile Application
-A **native app** would be developed specifically for Android or iOS platforms using environments such as Android Studio (Java/Kotlin) or Xcode (Swift).  
+A **native app** would be developed specifically for Android or iOS platforms using environments such as Android Studio (Java/Kotlin) [21] or Xcode (Swift) [22].  
 
 **Native apps** provide direct access to Bluetooth, device sensors, and local storage. They can maintain persistent connections with the launch monitor and ESP-32 visor, enabling low-latency data streaming.
 
@@ -436,7 +429,7 @@ The weightings for the trade study criteria were chosen to reflect the relative 
 </p>
 
 | **Criterion** | **Weight (%)** | **Native Mobile App** | **Desktop App** | **Web-Based App (PWA)** |
-|----------------|:--------------:|:-------------------:|:---------------:|:-----------------------:|
+|----------------|----------------|----------------------|------------------|--------------------------|
 | **Development Complexity** | 25% | 2 | 3 | 4 |
 | **User Accessibility & Portability** | 35% | 4 | 2 | 5 |
 | **Cost** | 20% | 2 | 3 | 5 |
@@ -450,7 +443,7 @@ After evaluating the alternatives, the **web-based application** is selected as 
 A **web-based application** offers several advantages that make it the most practical and effective solution for this project. It provides cost efficiency by eliminating the need for separate Android and iOS builds, reducing both development and maintenance expenses. Its accessibility and ease of deployment allow users to launch the app instantly from any modern smartphone or laptop without the need for downloads or installations—an ideal feature for field environments like driving ranges where quick setup and minimal friction are essential. Through the Web Bluetooth API, the app can directly connect to BLE-enabled launch monitors and the ESP-32 visor without requiring a native bridge, enabling real-time data processing and immediate transmission to the visor display. The system’s cloud connectivity ensures seamless integration with remote databases and analytics services via HTTPS, supporting session storage, history tracking, and personalized coaching feedback accessible from any device. Additionally, its scalability and maintainability stem from centralized server updates, guaranteeing that all users operate on the latest version without manual intervention or app store approvals. Finally, by leveraging modern web technologies such as React, Tailwind, and Web Bluetooth, the platform delivers an intuitive, mobile-responsive user experience that captures the functionality of a native app while maintaining the simplicity and universality of a browser-based interface.
 
 While native and desktop applications provide certain technical advantages, they introduce unnecessary complexity, platform dependency, and deployment challenges.  
-A **web-based Progressive Web App** offers the most balanced solution — providing broad device compatibility, low cost, real-time Bluetooth communication, and portability within a single system.  
+A **Progressive Web App** offers the most balanced solution — providing broad device compatibility, low cost, real-time Bluetooth communication, and portability within a single system.  
 
 
 ### Heads-Up Display
@@ -468,28 +461,29 @@ The selection of the display will depend on factors such as outdoor brightness a
 **Micro-OLED** displays offer exceptional contrast ratios and deep black lights, resulting in excellent visual clarity under moderate lighting conditions however, their brightness typically ranges from 1,000 to 5,000 nits, which can be limiting in direct sunlight. They offer extremely fast response times (under 1 ms) and support high refresh rates that range between 60 and 120 Hz making them ideal for displaying dynamic data metrics. In terms of cost, **Micro-OLEDs** typically range from $80 to $200 depending on the resolution and refresh rate, offering a solid balance between image quality, responsiveness and affordability for near-eye displays.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/BJiQgi7yZx.png" alt="Micro-OLED Display" style="width:20%; border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/BJiQgi7yZx.png" alt="Micro-OLED Display" width="300">
   <br>
-  <strong>Figure 11: Micro-OLED Display</strong>
+  <em>Figure 11: Micro-OLED Display</em>
 </p>
-
+<br>
 
 **Micro-LED** displays deliver the highest brightess often exceeding 10,000 nits making them the best option for outdoor visibility and direct sunlight operation. Like **Micro-OLED**, **Micro-LEDs** feature under 1 ms response times and can provide refresh rates above 120 Hz providing superior visual stability. However, the cost is very high due to its complex manufacturing process where one display typically ranges from $500 to over $1,000. **Micro-LED** technology offers unmatched brightness and durability, but is evident it is less practical for cost-sensitive and developmental projects.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/SJGlNs7kZe.png" alt="Micro-LED Display" style="width:30%; border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/SJGlNs7kZe.png" alt="Micro-LED Display" width="300">
   <br>
-  <strong>Figure 12: Micro-LED Display</strong>
+  <em>Figure 12: Micro-LED Display</em>
 </p>
-
+<br>
 
 **Micro-LCD** panels rely on a backlight and can achieve brightness levels between 2,000 and 8,000 nits making them an acceptable option for outdoor use under moderate sunlight. However, they offer lower contrast ratios and less vivid colors because the pixels do no generate their own light like for the other two displays. Response times are also slower where it typically ranges from 2-10 ms with refresh rates between 60 and 90 Hz, which can cause minor motion blur. They are the most cost-effective with prices ranging from $10 to $80 per module and are a widely available option. This makes them suitable for low-cost prototypes with low expected optimal performance.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/H1ftUj71We.png" alt="Micro-LCD Display" style="width:50%; border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/H1ftUj71We.png" alt="Micro-LCD Display" width="300">
   <br>
-  <strong>Figure 13: Micro-LCD Display</strong>
+  <em>Figure 13: Micro-LCD Display</em>
 </p>
+<br>
 
 #### **Trade Study: Display**
 
@@ -498,17 +492,16 @@ The weighting rationale prioritizes ergonomic performance and ease of integratio
 - **Response Time & Refresh Rate (35 %)** provides smooth, real-time visuals with minimal latency during head and eye movements.
 - **Cost (25 %)** balances performance and affordability, ensuring the chosen display is feasible for development while still delivering high-quality visual performance.
 <p align="center">
-  <strong>Table VI</strong>
-  <br>
+  <strong>Table VI</strong><br>
   Display Trade Study
 </p>
 
-| **Criterion**                 | **Weight (%)** | **Micro-OLED** | **Micro-LED** | **Micro-LCD** |
-|-------------------------------|:-------------:|:--------------:|:-------------:|:-------------:|
-| Outdoor Brightness & Contrast | 40            | 4              | 5             | 3             |
-| Response Time & Refresh Rate  | 35            | 5              | 5             | 3             |
-| Cost                          | 25            | 4              | 1             | 5             |
-| **Weighted Total (100%)**     | **100**       | **4.40**       | **3.80**      | **3.40**      |
+| **Criterion** | **Weight (%)** | **Micro-OLED** | **Micro-LED** | **Micro-LCD** |
+|:--------------|:--------------:|:--------------:|:-------------:|:-------------:|
+| Outdoor Brightness & Contrast | 40 | 4 | 5 | 3 |
+| Response Time & Refresh Rate | 35 | 5 | 5 | 3 |
+| Cost | 25 | 4 | 1 | 5 |
+| **Weighted Total (100%)** | **100** | **4.40** | **3.80** | **3.40** |
 
 
 ###### Tracking Sensor
@@ -521,10 +514,11 @@ The tracking sensor will be selected based on key factors such as accuracy respo
 **IMUs** are compact, lightweight sensors that combine accelerometers, gyroscopes and sometimes magnetometers to measure linear acceleration, angular velocity, and orientation. IMUs offer strong response times with latency typically being around 1 to 5ms making them highly responsive for real-time applications. Accuracy is determined using root mean square error (RMSE), which quantifies the average difference between the sensor's measurements and the true values. Typical **IMU** RMSE values are around 1.4 to 4.4 degress and positional errors average around 35 mm indicating small deviations fomr actual motion. **IMUs** are highly robust in outdoor environments because they do not rely on lighting or line-of-sight however, they can experience cumulative drift over time which may reduce long-term position accuracy without periodic calibration. Their combination of accuracy, responsiveness, and environmental robustness makes them a good options for real-time visor tacking in outdoor environments.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/rydHth7ybe.png" alt="IMU Tracking Sensor" style="width:50%; border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/rydHth7ybe.png" alt="IMU Tracking Sensor" width="300">
   <br>
-  <strong>Figure 14: IMU Tracking Sensor</strong>
+  <em>Figure 14: IMU Tracking Sensor</em>
 </p>
+<br>
 
 
 
@@ -532,29 +526,30 @@ The tracking sensor will be selected based on key factors such as accuracy respo
 **Camera tracking systems** determine the position and orientation by analyzing data from one or more cameras. They achieve high accuracy by detecting and tracking distinctive visual features in the environemnts, often using multiple cameras. This allows angular errors to be as low as 1 to 5 degress and positional errors under 10 mm in ideal conditions. However, camera systems are highly sensitive to outdoor environmental factors such as sunglight, glare, shadows, and occlusions which can significantly degrade both accuracy and responsiveness. The response also tend to be slower with it typically being around 10 to 50 ms. While camera systems excel in controlled indoor environments, their effectiveness in outdoor enviroments is limited making them a less reliable option.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/HJRL9nXk-x.png" alt="High-speed Camera Tracking Sensor" style="width:50%; border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/HJRL9nXk-x.png" alt="High-speed Camera Tracking Sensor" width="300">
   <br>
-  <strong>Figure 15: High-speed Camera Tracking Sensor</strong>
+  <em>Figure 15: High-speed Camera Tracking Sensor</em>
 </p>
-
+<br>
 
 #### **Trade Study: Tracking Sensor**
 The weighting rationale for this trade study is based on the performance requirements of an outdoor tracking system for augmented-reality applications:
 - **Accuracy (45 %)**  ensures precise motion and orientation tracking, which is essential for maintaining alignment between the digital overlay and the user’s real-world view.
 - **Responsiveness (40 %)** provides minimal latency and smooth tracking performance during fast head movements.
 - **Environmental Robustness (15 %)** ensures reliable operation in varying outdoor lighting and weather conditions without performance degradation.
+
 <p align="center">
-  <strong>Table VII</strong>
-  <br>
+  <strong>Table VII</strong><br>
   Tracking Sensor Trade Study
 </p>
 
-| **Criterion**                 | **Weight (%)** | **IMU** | **Camera-Based Tracking** |
-|:------------------------------|:-------------:|:-------:|:------------------------:|
-| Accuracy                      | 45            | 4       | 5                        |
-| Latency                       | 40            | 5       | 3                        |
-| Environmental Robustness      | 15            | 5       | 2                        |
-| **Weighted Total (100%)**     | **100**       | **4.55**| **3.85**                 |
+| **Criterion** | **Weight (%)** | **IMU** | **Camera-Based Tracking** |
+|:--------------|:--------------:|:-------:|:------------------------:|
+| Accuracy | 45 | 4 | 5 |
+| Latency | 40 | 5 | 3 |
+| Environmental Robustness | 15 | 5 | 2 |
+| **Weighted Total (100%)** | **100** | **4.55** | **3.85** |
+
 
 ##### Decision
 After evaluating multiple displays and tracking sensor technologies, the following options were selected:
@@ -922,15 +917,15 @@ It shall also interface with the Communications subsystem by receiving input dat
 ##### *Tracking Sensor*
 The tracking sensor shall be an Inertial Measurement Unit (IMU) responsible for measuring the visor’s acceleration, angular velocity, and orientation. The IMU collects three-axis data from its onboard accelerometer, gyroscope, and magnetometer, corresponding to motion along the x, y, and z axes. The sensor’s data is read using an SPI interface by a function called SPIReadWord(x) that retrieves 16-bit values from the IMU’s data registers. This enables accurate tracking of the visor’s position and ensures that the HUD graphics remain properly aligned with the user’s field of view during movement. The IMU shall receive a regulated 3.3 V DC input power signal from the power subsystem and shall transmit motion and orientation data to the ESP32 microcontroller via an SPI serial communication interface.
 
-Possible IMU options include the Adafruit ICM-20948 9DoF, Seeed Grove 9DoF IMU, and DFRobot 10DOF Module, each offering accelerometer, gyroscope, and magnetometer sensors totaling nine degrees of freedom.
+Possible IMU options include the Adafruit ICM-20948 9DoF [23], Seeed Grove 9DoF IMU [24], and DFRobot 10DOF Module [25], each offering accelerometer, gyroscope, and magnetometer sensors totaling nine degrees of freedom.
 
 ##### *Display*
 The display shall provide the projection of the HUD graphic interface. It shall maintain high clarity and fast response to minimize disorientation or lag between real-world motion and virtual graphics. To ensure this, the display shall have a minimum resolution of 1080p and a minimum refresh rate of 60 frames per second (fps).The display shall communicate with the microcontroller via a MIPI-DSI input serial communcation interface. 
 
 The HUD shall utilize a micro-OLED display, known for its fast response time, high pixel resolution, and strong contrast ratio—ideal for augmented reality applications. There are two possibile methods for implementing this display: using a transparent display which is a physical screen that allows light to pass through it or using an optical combiner that blends virtual images onto the real world view by reflecting a projected image onto a transparent lens. While transparent displays can support augmented reality, they are typically used for larger-scale applications such as heads-up windshields or public information displays. Optical combiners, on the other hand, are optimized for compact, near-eye systems such as smart glasses. For this application, a display setup utilizing an optical combiner is the most suitable approach. Potential display options compatible with an optical combiner include:
 
-* 0.39″ Micro-OLED Display (1920 × 1080, MIPI, I2C)
-* 0.49″ Micro OLEDoS Display (1920 × 1080, 1800 nits, 90 Hz, MIPI)
+* 0.39″ Micro-OLED Display (1920 × 1080, MIPI, I2C) [26]
+* 0.49″ Micro OLEDoS Display (1920 × 1080, 1800 nits, 90 Hz, MIPI) [27]
 
 Both displays require a 1.8 V DC input to power the VDDI I/O supply but differ in their main input voltage requirements. The 0.39″ Micro-OLED Display requires a 5 V DC input to power its internal analog circuitry, which generates the necessary voltages for the OLED panel. In contrast, the 0.49″ Micro OLEDoS Display does not integrate analog power circuitry internally. Therefore, it requires an external 5.3–5.5 V DC input to power AVDD (the positive supply voltage) and a -4 to -5.5 V DC input to power AVEE. These voltages shall be supplied by the power subsystem.
 
@@ -988,6 +983,7 @@ The operation of the Heads-Up Display is illustrated in the flowchart below.
 
  ## Ethical, Professional, and Standards Considerations
 
+### Broader Impacts
 
 ### Broader Impacts
 
@@ -1026,41 +1022,35 @@ The operation of the Heads-Up Display is illustrated in the flowchart below.
 ---
 
 <p align="center">
-  <strong>Table XIV</strong>
-  <br>
+  <strong>Table VI</strong><br>
   Standards & How They Inform Design
 </p>
 
-| Area                       | Standard / Guidance                                               | Relevance to The Design                              | Design Impact                                                                                              |
-|----------------------------|------------------------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| **Bluetooth link**         | IEEE 802.15.1 [7]                                               | PAN connectivity to phone/monitor                  | RF band noted (2.4 GHz), coexistence testing, pairing UX constraints                                      |
-| **Battery safety**         | IEC 62133-2 (rechargeable cells) [6]; **NEC Article 480**; **NESC Part 1, Section 12** | Safe cell selection, wiring, and pack behavior      | BMS w/ OV/UV/OCP/OTP; fuse on pack; charge temp window; wiring gauge per NEC; protective enclosure       |
-| **Eye/optical safety**     | ISO 15004-2 (ophthalmic—light hazard) [18]                     | Near-eye luminance & spectral safety               | Luminance & exposure limits ≤ 2,000 nits; exposure under 10,000 lux                                      |
-| **Ingress**                | IEC 60529 (IP rating) [6]                                       | Dust/sweat/light rain robustness                   | Target **IP54–IP67**; test dust & splash conditions                                                      |
-| **Usability & accessibility** | ISO 9241-112 (ergonomics / informative) [5], WCAG principles (informative) [4] | Readability and inclusive design                   | Enhanced contrast, large text options, and intuitive navigation for all users                              |
-| **Eye protection (not PPE)** | ANSI Z87.1 (informational only) [9]                             | Clarify non-safety eyewear classification          | Explicitly state the device is **not PPE** and not certified for impact resistance                        |
-| **Wiring & power conductors** | **NEC/NESC low-voltage sections** [17]                           | Wire size, insulation, and fault protection       | Proper conductor sizing (AWG rating), insulation class, and inline fusing to prevent short circuits or thermal failure |
-| **Converter efficiency**   | IEC 62301 [16]                                                  | Power-saving requirements for electronics          | Target ≥ 85% efficiency across converters to reduce standby losses and extend battery life               |
-
+| Area | Standard / Guidance | Relevance to The Design | Design Impact |
+|---|---|---|---|
+| **Bluetooth link** | IEEE 802.15.1  | PAN connectivity to phone/monitor | RF band noted (2.4 GHz), coexistence testing, pairing UX constraints |
+| **Battery safety** | IEC 62133-2 (rechargeable cells) [28]; **NEC Article 480**; **NESC Part 1, Section 12** | Safe cell selection, wiring, and pack behavior | BMS w/ OV/UV/OCP/OTP; fuse on pack; charge temp window; wiring gauge per NEC; protective enclosure |
+| **Eye/optical safety** | ISO 15004-2 (ophthalmic—light hazard)  | Near-eye luminance & spectral safety | Luminance & exposure limits ≤ 2,000 nits; exposure under 10,000 lux |
+| **Ingress** | IEC 60529 (IP rating) [4] | Dust/sweat/light rain robustness | Target **IP54–IP67**; test dust & splash conditions |
+| **Usability & accessibility** | ISO 9241-112 (ergonomics / informative) [29], WCAG principles (informative) | Readability and inclusive design | Enhanced contrast, large text options, and intuitive navigation for all users |
+| **Eye protection (not PPE)** | ANSI Z87.1 (informational only) [30] | Clarify non-safety eyewear classification | Explicitly state the device is **not PPE** and not certified for impact resistance |
+| **Wiring & power conductors** | **NEC/NESC low-voltage sections** | Wire size, insulation, and fault protection | Proper conductor sizing (AWG rating), insulation class, and inline fusing to prevent short circuits or thermal failure |
+| **Converter efficiency** | IEC 62301 [31] | Power-saving requirements for electronics | Target ≥ 85% efficiency across converters to reduce standby losses and extend battery life |
 
 ---
 
 <p align="center">
-  <strong>Table XV</strong>
-  <br>
+  <strong>Table VII</strong><br>
   Ethical-Risk Register & Mitigations We Implement
 </p>
 
-| Risk                        | Why It Matters                                  | Mitigation Built Into the Design                                                                 |
-|------------------------------|------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| **Distraction while swinging** | Could reduce performance or lead to user accidents | Minimal overlay during pre-shot & swing; no full-screen alerts during swing                     |
+| Risk | Why It Matters | Mitigation Built Into the Design |
+|---|---|---|
+| **Distraction while swinging** | Could reduce performance or lead to user accidents | Minimal overlay during pre-shot & swing; no full-screen alerts during swing |
 | **Over-bright / hazardous optical output** | Prolonged exposure can cause eye strain or discomfort | Cap max perceived brightness; verify vs. ISO 15004-2 manufacturer specs; adhere to hazard group compliance |
-| **Thermal hot spots on skin** | Could cause discomfort or minor injury        | Implement thermal budget; isolate pack; maintain surface ≤ 41 °C; add ventilation if needed     |
-| **Battery misuse/fault**      | May cause fire or venting hazard              | Use protected 1S pack with BMS, inline fuse, NEC/NESC-compliant wiring, and enclosure relief    |
-| **Data privacy**              | Risk of unwanted data capture or sharing      | Default local storage; encryption and deletion controls; transparent user consent interface    |
-
-
-
+| **Thermal hot spots on skin** | Could cause discomfort or minor injury | Implement thermal budget; isolate pack; maintain surface ≤ 41 °C; add ventilation if needed |
+| **Battery misuse/fault** | May cause fire or venting hazard | Use protected 1S pack with BMS, inline fuse, NEC/NESC-compliant wiring, and enclosure relief |
+| **Data privacy** | Risk of unwanted data capture or sharing | Default local storage; encryption and deletion controls; transparent user consent interface |
 
 ## Resources
 
@@ -1180,47 +1170,74 @@ Bryce Hughes has prior experience in field engineering, system testing, and sold
 </p>
 
 ## References
+[1] IEEE Standards Association, *IEEE 802.15.1 Standard for Wireless Personal Area Networks (PAN),* 2023. [Online]. Available: https://standards.ieee.org
 
+[2] “IEC 62133: Safety Testing for lithium ion batteries,” intertek, https://www.intertek.com/batteries/iec-62133/ (accessed Oct. 14, 2025).
 
-[1] IEEE, “IEEE code of ethics | IEEE,” IEEE Advancing Technology for Humanity, https://www.ieee.org/about/corporate/governance/p7-8 (accessed Sep. 18, 2025). 
+[3] “ISO 15004-2:2024,” ISO, https://www.iso.org/standard/79919.html (accessed Oct. 27, 2025).
 
-[2] “Lithium Polymer Battery Protection Technology: How to prevent overheating and explosion risks,” myliontech, https://myliontech.com/en/lithium-polymer-battery-protection-technology-how-to-prevent-overheating-and-explosion-risks/ (accessed Oct. 18, 2025). 
+[4] “Ingress Protection (IP) ratings,” IEC, https://www.iec.ch/ip-ratings (accessed Oct. 14, 2025).
 
-[3] “CC and CV charging of Lithium Polymer Battery,” Lithium_Polymer_Battery_net, https://www.lithium-polymer-battery.net/cc-and-cv-charging-of-lithium-polymer-battery/ (accessed Oct. 17, 2025).
+[5] Garmin Ltd., *Approach R10 Launch Monitor Specifications,* 2024. [Online]. Available: https://www.garmin.com/en-US/p/695391/pn/010-02356-00/#specs
 
-[4] M. Cooper, “Web content accessibility guidelines (WCAG) 2.1,” W3C, https://www.w3.org/TR/WCAG21/ (accessed Oct. 17, 2025). 
-
-[5] ISO, “Ergonomics of human-system interaction,” ISO, https://www.iso.org/obp/ui/#iso:std:iso:9241:-112:ed-2:v1:en (accessed Oct. 17, 2025). 
-
-[6] “IEC 62133: Safety Testing for lithium ion batteries,” intertek, https://www.intertek.com/batteries/iec-62133/ (accessed Oct. 14, 2025). 
-
-[7] “IEEE SA - IEEE Standard for Information technology-- local and metropolitan area networks-- specific requirements-- part 15.1A: Wireless Medium Access Control (MAC) and Physical Layer (PHY) specifications for Wireless Personal Area Networks (WPAN),” IEEE Standards Association, https://standards.ieee.org/ieee/802.15.1/3513/ (accessed Oct. 14, 2025). 
-
-[8] “Ingress Protection (IP) ratings,” IEC, https://www.iec.ch/ip-ratings (accessed Oct. 14, 2025). 
-
-[9] B. Kelechava, “ANSI/ISEA Z87.1-2020: Current standard for safety glasses - ANSI BLOG,” The ANSI Blog, https://blog.ansi.org/ansi/ansi-isea-z87-1-2020-safety-glasses-eye-protection/ (accessed Oct. 14, 2025).
-
-[10] Samainstage, “IEEE launches new standard to address ethical concerns during systems design,” IEEE Standards Association, https://standards.ieee.org/news/ieee-7000/ (accessed Sep. 24, 2025).
-
-[11] ESP32-C3 series Datasheet version 2.2, https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf (accessed Oct. 19, 2025). 
-
-[12] ESP32-S3 series Datasheet version 2.0, https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf (accessed Oct. 19, 2025). 
-
-[13] Preliminary ESP32-P4 series Datasheet pre-release v0.5, https://www.espressif.com/sites/default/files/documentation/esp32-p4_datasheet_en.pdf (accessed Oct. 19, 2025). 
-
-[14] Streamlit and Streamlit Cloud web application documentation,
-https://docs.streamlit.io/ (accessed Oct. 20, 2025)
-
-[15] Wangfred, “How to make a heads-up display glasses: A comprehensive DIY guide,” INAIRSPACE, https://inairspace.com/blogs/learn-with-inair/how-to-make-a-heads-up-display-glasses-a-comprehensive-diy-guide?srsltid=AfmBOooBdnwXlWmnyAdKJQRSVs1zUNqJjkFWid4B2v0YD2_p1Ywq6vZF (accessed Oct. 19, 2025).
-
-[16] “IEC 62301:2011,” IEC, https://webstore.iec.ch/en/publication/6789 (accessed Oct. 24, 2025). 
-
-[17] W. T. W. Guy, “The Ultimate Guide to Wire Ampacity and NEC Basics,” Wire & Cable Your Way Blog, https://blog.wireandcableyourway.com/the-ultimate-guide-to-wire-ampacity-and-nec-basics (accessed Oct. 27, 2025). 
-
-[18] “ISO 15004-2:2024,” ISO, https://www.iso.org/standard/79919.html (accessed Oct. 27, 2025).
-
-[19] “PiTrac: The DIY Golf Launch Monitor,” Hackaday.io, https://hackaday.io/project/195042-pitrac-the-diy-golf-launch-monitor
+[6] “PiTrac: The DIY Golf Launch Monitor,” Hackaday.io, https://hackaday.io/project/195042-pitrac-the-diy-golf-launch-monitor
  (accessed Oct. 15, 2025).
+
+[7] Raspberry Pi, Raspberry Pi Zero W Datasheet, ElectronicsDatasheets, [Online]. Available: https://www.electronicsdatasheets.com/manufacturers/raspberry-pi/parts/raspberry-pi-zero-w.
+
+[8] Espressif Systems, ESP32-S3 Series Datasheet v2.0, [Online]. Available: https://documentation.espressif.com/esp32-s3_datasheet_en.pdf.
+
+[9] Espressif Systems, ESP32-P4 Chip Revision v1.3 Datasheet, [Online]. Available: https://documentation.espressif.com/esp32-p4-chip-revision-v1.3_datasheet_en.pdf.
+
+[10] R. McMahon, “Li-ion vs Li-Po batteries cut-off protection,” Electrical Engineering Stack Exchange, Available: https://electronics.stackexchange.com/questions/557702/li-ion-vs-li-po-batteries-cut-off-protection, accessed Nov. 3, 2025.
+
+[11] Bioenno Power LLC, “The pros and cons of lithium-ion batteries: A deep dive,” Bioenno Power Blog, Available: https://www.bioennopower.com/blogs/news/the-pros-and-cons-of-lithium-ion-batteries-a-deep-dive, accessed Nov. 3, 2025.
+
+[12] L. Pan, “Understanding the pros and cons of LiFePO₄ batteries vs alternatives,” Large Battery Blog, Available: https://www.large-battery.com/blog/lifepo4-batteries-vs-other-types-pros-cons/, accessed Nov. 3, 2025.
+
+[13] K. Araujo, “Lithium vs NiMH battery packs,” Epec Engineered Technologies – Build to Print Electronics, Available: https://www.epectec.com/batteries/lithium-vs-nimh-battery-packs.html, accessed Nov. 3, 2025.
+
+
+[14] B. Schweber, “Understanding the advantages and disadvantages of linear regulators,” DigiKey Electronics, Available: https://www.digikey.com/en/articles/understanding-the-advantages-and-disadvantages-of-linear-regulators, accessed Nov. 3, 2025.
+
+[15] Texas Instruments, TPS62743/TPS627431 – 300/400 mA High Efficiency Buck Converter with Ultra-Low Quiescent Current, Rev. B, Mar. 2021. Available: https://www.ti.com/product/TPS62743
+
+[16] Texas Instruments, TPS61022 – 8-A Boost Converter with 0.5-V Ultra-Low Input Voltage, Rev. D, Jul. 2021. Available: https://www.ti.com/product/TPS61022
+
+[17] Analog Devices, LTC3119 – 18 V, 5 A Synchronous Buck-Boost DC/DC Converter, Linear Technology Corp., Rev. B, 2017. Available: https://www.analog.com/en/products/ltc3119.html
+
+[18] Uvex Hypershock Safety Glasses, Technical Specifications, Honeywell / Uvex, [Online]. Available: https://prod-edam.honeywell.com/content/dam/honeywell-edam/sps/his/en-us/products/head-eye-face-protection/documents/eye/UX_uvex-hypershock_uvex_hypershock_technical_specifications.pdf. Accessed: Nov. 3, 2025.
+
+[19] Vufine+ Wearable Display, Vufine Inc., Vufine+ Wearable Display, [Online]. Available: https://store.vufine.com/products/vufine-wearable-display-2. Accessed: Nov. 3, 2025.
+
+[20] Rokid Inc., *Rokid Max AR Glasses Specifications,* 2024. [Online]. Available: https://www.rokid.com/max
+
+[21] "Android Studio Developer's Suite"
+https://developer.android.com/studio (accessed Nov. 3 2025)
+
+[22] "Xcode Developer Homepage"
+https://developer.apple.com/xcode/ (accessed Nov. 3 2025)
+
+[23] Adafruit TDK Invensense ICM-20948 9- DOF IMU created by Bryan Siepert, https://cdn-learn.adafruit.com/downloads/pdf/adafruit-tdk-invensense-icm-20948-9-dof-imu.pdf (accessed Nov. 3, 2025).
+
+[24] AnilM3, “Arduino imu: Pitch & roll from an accelerometer,” The C Continuum, https://theccontinuum.com/2012/09/24/arduino-imu-pitch-roll-from-accelerometer/ (accessed Nov. 3, 2025).
+
+[25] MPU-9250 product specification revision 1.1, https://invensense.tdk.com/wp-content/uploads/2015/02/PS-MPU-9250A-01-v1.1.pdf (accessed Nov. 3, 2025).
+
+[26] Shopify, https://cdn.shopify.com/s/files/1/0264/7629/files/DM-OLED14R-678N_Datasheet.pdf?v=1723010001 (accessed Nov. 3, 2025).
+
+[27] Shopify, https://cdn.shopify.com/s/files/1/0264/7629/files/DM-OLED14R-678N_Datasheet.pdf?v=1723010001 (accessed Nov. 3, 2025).
+
+[28] “IEC 62133: Safety Testing for lithium ion batteries,” intertek, https://www.intertek.com/batteries/iec-62133/ (accessed Oct. 14, 2025).
+
+[29] ISO 9241-112, Ergonomics of human-system interaction — Part 112: Principles for the presentation of information, 2nd ed., International Organization for Standardization, [Online]. Available: https://www.iso.org/obp/ui/#iso:std:iso:9241:-112:ed-2:v1:en.
+
+[30] ANSI/ISEA Z87.1‑2020: American National Standard for Occupational and Educational Personal Eye and Face Protection Devices, American National Standards Institute Blog, “ANSI/ISEA Z87.1‑2020: Current Standard for Safety Glasses,” Apr. 20, 2020. [Online]. Available: https://blog.ansi.org/ansi/ansi-isea-z87-1-2020-safety-glasses-eye-protection/.
+
+[31] “IEC 62301:2011,” IEC, https://webstore.iec.ch/en/publication/6789 (accessed Oct. 24, 2025).
+
+[32] IEEE, “IEEE code of ethics | IEEE,” IEEE Advancing Technology for Humanity, https://www.ieee.org/about/corporate/governance/p7-8 (accessed Sep. 18, 2025).
+
 
 ## Statement of Contributions
 
