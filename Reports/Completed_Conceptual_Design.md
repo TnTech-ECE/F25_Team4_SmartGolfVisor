@@ -38,98 +38,508 @@ In addition to the industry standards, the following constraints address the saf
 
 ## Comparative Analysis of Potential Solutions
 
-This section evaluates multiple feasible solution paths, identifies design trade-offs, defines decision criteria, and justifies the final selection based on stakeholder needs, specifications, and constraints.
+This section evaluates multiple design pathways for each of the major subsystems of the Smart Golf Visor, which include the Launch Monitor, Communications, Power, Visor Design, App/Software, and Heads-Up Display. For each subsystem, an overview is provided to discuss its functional significance and the key factors influencing the design selection. Potential solutions are then identified and compared, followed by a trade study that analyzes relevant performance metrics and existing products related to each design pathway. Each subsection concludes with a justified final design decision based on the comparative analysis.
 
-### 1. Solution Space Overview
-The team assessed two key decision areas: the **data transmission path** (launch monitor → processing → display) and the **near-eye display architecture**(NDA). Both influence latency, power, and integration complexity.
+#### Trade Study Rating Scale
+Each design option was rated on a simple 1–5 scale to keep the comparisons consistent and easy to understand. The criteria for the scores are described below:
+- A score of **1** means the option performs poorly or doesn’t meet the core design goals
+- A score of **3** means is a workable option that meets expectations,  
+- A score of **5** means it fully exceeds expectations.  
+- Scores in between reflect how close each option comes to hitting the project’s key targets based on actual data, testing, or vendor specs.  
 
-#### End-to-End Data Path Architectures
-**Option A — Visor-Only Link:** The visor’s onboard microcontroller unit (MCU) directly pairs with the launch monitor using Bluetooth Low Energy (BLE). It parses incoming data packets and renders heads-up display (HUD) metrics locally, reducing dependency on external devices but increasing visor power use.
+Using this scale makes it easier to compare options that differ in complexity, cost, or performance while keeping the trade study objective and transparent.
 
-**Option B — Smartphone Bridge (Selected):** A mobile app connects to the launch monitor (BLE or Transmission Control Protocol—TCP), normalizes shot metrics (ball speed, carry distance, launch angle, spin rate, and smash factor), and transmits only essential metrics to the visor. This reduces visor complexity, cost, and power draw while improving maintainability.
+### Launch Monitor
 
-**Option C — Cloud Relay:** Data routes through the cloud before reaching the visor. While simplifying local pairing, this introduces latency and requires network access.
-
-**Option D — Fully Embedded Vision System:** The visor integrates onboard sensing and processing. Though autonomous, this design carries higher power, weight, and development risk.
-
-#### Near-Eye Display Approaches
-**Option A — Off-the-Shelf Augmented Reality (AR) Glasses:** The app renders the HUD as video output to AR glasses (USB-C/HDMI). This option is proven and simple but limits customization and ergonomics.
-
-**Option B — Custom Dual Micro Organic Light-Emitting Diode (Micro-OLED) + MCU (Selected):** Custom visor using Micro-OLED displays driven by an ESP32-class MCU, allowing precise optical control, minimal occlusion, and low latency.
-
-**Option C — Waveguide Module:** Compact optics with excellent sunlight legibility but has high integration complexity, and a high pricing.
-
-**Option D — See-Through Thin-Film Transistor/Liquid Crystal on Silicon (TFT/LCOS):** Heavier, higher power, and slower response, making it less suitable for the visor design.
-
-### 2. Decision Criteria and Weights
-1. End-to-end latency (25%) — HUD response ≤ 500 milliseconds 
-2. Safety and view occlusion (15%) — unobstructed sightlines; ISO 15004-2 compliance.
-3. Integration complexity and schedule risk (20%) — dependency on vendor interfaces.
-4. Power/runtime (15%) — ≥ 9 holes (target 18).
-5. Cost realism (15%) — within COTS budget.
-6. Standards compliance (10%) — BLE PAN, IEC 62133.
-
-Weighting Rationale
-These percentages reflect each factor’s impact on performance, safety, and feasibility. End-to-end latency (25%) is weighted highest since fast HUD response is vital for real-time data display. Integration risk (20%) follows due to dependence on vendor interfaces. Safety and view occlusion (15%) ensure ISO 15004-2 compliance and clear sightlines. Power/runtime (15%) supports at least a 9-hole round. Cost realism (15%) keeps the design within the COTS budget, while standards compliance (10%) maintains adherence to BLE PAN and IEC 62133 requirements.
-
-3. Architecture Trade Study
-### 3. Architecture Trade Study  
-| **Opt.** | **Lat.** | **Occl.** | **Compl.** | **Power** | **Cost** | **Std.** | **Total** |
-|:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| **A – Visor-only Link** | 4 | 4 | 2 | 2 | 3 | 4 | 3.15 |
-| **B – Smartphone Bridge** | 4 | 4 | 4 | 4 | 4 | 4 | **4.00** |
-| **C – Cloud Relay** | 2 | 4 | 3 | 3 | 3 | 4 | 3.00 |
-| **D – Fully Embedded** | 5 | 3 | 1 | 1 | 2 | 4 | 2.75 |
-
-Result: Option B — Smartphone Bridge ranks highest, balancing latency, efficiency, cost, and integration simplicity.
-
-4. Display Trade Study (Qualitative Summary)
-
-Table X. Display Options Evaluation (Numeric Rating 1–5)
-Scale: 5 = Excellent / Very High / Optimized • 1 = Poor / Very Low / Not Preferred
-
-| **Opt.** | **Daylight** | **Lat.** | **Risk** | **Comfort** | **Cost** | **Verdict** |
-|:--|:--:|:--:|:--:|:--:|:--:|:--|
-| **E – Off-Shelf AR** | 4 | 5 | 5 | 3 | 4 | **4 – Feasible, limited control** |
-| **F – Custom OLED** | 5 | 5 | 3 | 5 | 4 | **5 – Selected** |
-| **G – Waveguide** | 5 | 4 | 2 | 5 | 3 | **4 – Backup option** |
-| **H – TFT/LCOS** | 2 | 4 | 3 | 2 | 2 | **2 – Not preferred** |
-
-Result: Option F — Custom Micro-OLED Visor best supports clarity, latency, ergonomic comfort, and cost balance.
-
-### 5. Key Design Considerations
-- **Human Factors:** Minimal occlusion, adjustable brightness, and clean HUD layout to reduce distraction.
-- **Latency:** Maintain total system latency below 500 ms.
-- **Energy Efficiency:** Phone handles compute-heavy tasks to reduce visor power draw.
-- **Compliance:** Meets IEEE 802.15.1, IEC 62133, ISO 15004-2.
-- **Vendor Modularity:** Smartphone bridge supports future multi-monitor integration.
-
-### 6. Chosen Solution and Justification
-**Selected Solution:** *Option B + Option F — Smartphone Bridge with Custom Micro-OLED Visor.*
-- **Metrics (Spec #1):** Normalizes and transmits key metrics for high-speed, crisp HUD display.
-- **Data Review (Spec #2):** App supports post-round analysis and coaching.
-- **Runtime (Spec #3):** Efficient OLEDs and offloaded computation meet runtime targets.
-- **Portability (Spec #4):** Lightweight, compact visor with mobile app integration.
-- **Wireless Communications (Spec #5):** BLE and TCP compliant with PAN standards.
-
-**Risks and Mitigations:**
-
-Vendor Protocol Changes: These could cause data ingestion failure; this risk is mitigated by maintaining adaptable API layers, performing regression testing, and ensuring backward compatibility.
-
-Daylight Washout: This could reduce readability; it is mitigated by using a high-contrast HUD theme and adaptive brightness.
-
-Cable Snags: These could cause safety hazards; they are mitigated by using magnetic breakaway connectors and strain-relieved routing.
-
-Bluetooth Low Energy (BLE) Interference: This could cause packet loss or latency; it is mitigated through dynamic channel tuning and automatic reconnection.
-
-Battery Aging: This could shorten runtime; it is mitigated by using high-capacity cells and replaceable battery options.
-
-Summary: The smartphone bridge and custom OLED visor design offer optimal performance, usability, and safety while maintaining cost-efficiency.
-
----
+##### Overview
+The launch monitor subsystem provides the primary sensing for the wearable golf visor system. It must capture per-shot ball kinematics and make those data available to the data-acquisition and visor head-up display (HUD) subsystems with low latency and a stable message format.
 
 
+##### Possible Solutions
+The following are possible options: 
+1) A **Do-It-Yourself (DIY) Photometric PiTrac-style monitor** built on a Raspberry Pi with dual Mobile Industry Processor Interface (MIPI) global-shutter cameras and infrared (IR) strobing, which publishes shot results locally over JavaScript Object Notation (JSON) or WebSocket
+2) **Garmin Approach R10**
+ 
+The **DIY PiTrac-style photometric monitor** uses the PiTrac design that is built on a Raspberry Pi with dual Mobile Industry Processor Interface (MIPI) global-shutter cameras and infrared (IR) strobing that exposes results through a local web server or Golf Simulator Pro (GSPro) Open Connect JSON over Transmission Control Protocol (TCP). This allows the project to terminate the data directly in its own bridge, normalize fields, and forward to the visor HUD without subscriptions or vendor cloud services. It also enables inspection of intermediate data for calibration and test.
 
+<div align="center">
+  <img src="https://hackmd.io/_uploads/ByqSZQHy-g.jpg" alt="PiTrac DIY Launch Monitor" width="500">
+  <p><em>Figure 1: DIY PiTrac Launch Monitor</em></p>
+</div>
+
+The second option is the **Garmin Approach R10** which is a commercial Doppler-radar monitor. It offers a mature, portable device that measures ball and club metrics for indoor nets and outdoor ranges. However, Garmin documents usage through the Garmin Golf application and simulator integrations and does not publish a free, public shot-telemetry API. Some simulator and virtual-play functions are tied to a Garmin Golf membership.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/HyILfXBJbe.jpg" alt="Garmin Approach R10" width="500">
+  <p><em>Figure 2: Garmin Approach R10</em></p>
+</div>
+
+###### **Trade Study: Launch Monitor Selection**
+The weighting rationale for this trade study prioritizes practical integration, accessibility, and cost-effectiveness for the Smart Golf Visor launch monitor subsystem:
+
+- **Data/API Accessibility (25 %)** emphasizes local access to shot data and support for JSON or GSPro Open Connect formats.
+- **Integration with Visor HUD (20 %)** accounts for low latency and flexible data schemas to ensure smooth real-time display.
+- **Cost (15 %)** ensures the chosen solution fits within the $1,100 system budget.
+- **Build Effort / Calibration Required (10 %)** reflects the time and complexity needed to assemble, calibrate, and maintain the system.
+- **Simulator / Third-Party Path (10 %)** evaluates compatibility with existing golf simulators or other external tools.
+- **Vendor Support / Maturity (10 %)** measures product reliability and availability of technical support.
+
+<div align="center">
+  <p><strong>Table I</strong></p>
+  <p><em>Launch Monitor Trade Study</em></p>
+
+  | **Criterion** | **Weight (%)** | **DIY PiTrac-Style (Photometric)** | **Garmin Approach R10 (Radar)** |
+  |:--------------|:--------------:|:----------------------------------:|:--------------------------------:|
+  | Data/API Accessibility | 25 | 5 | 2 |
+  | Integration with Visor HUD | 20 | 5 | 3 |
+  | Cost | 15 | 5 | 3 |
+  | Build Effort / Calibration Required | 10 | 3 | 5 |
+  | Portability / Field Robustness | 10 | 4 | 5 |
+  | Simulator / Third-Party Path | 10 | 5 | 3 |
+  | Vendor Support | 10 | 3 | 5 |
+  | **Weighted Total** | **100** | **4.45** | **3.55** |
+</div>
+
+##### Decision
+The project will use the **DIY PiTrac-style photometric launch monitor** as the primary sensing source. This choice is justified because it gives the team full local access to per-shot data, allows the data to be normalized and time-stamped inside the project’s own Data Acquisition and Interface subsystem, avoids recurring subscription costs, and aligns with the existing budget (~$436 for the sensing bill of materials). The **Garmin Approach R10** remains a viable comparison or backup device due to its proven field performance and portability, but it will not be the primary integration target because its data path is mediated by the Garmin Golf application and not openly documented for third-party ingestion.
+
+### Communications
+
+##### Overview
+The Communications Subsystem is responsible for reliable data transfer throughout the entire system via wireless and wired connections. The wireless connection allows the app and visor to access the shot metrics captured by the custom-built launch monitor (ball speed, ball distance, launch angle, spin rate, and smash factor), increasing its mobility and easy setup. The wired connections will consist of serial communication protocols that will support the HUD display within the visor. 
+
+##### Possible Solutions
+###### Wireless Communication
+The selection of wireless communication protocol depends primarily on the bandwidth, range, power consumption and network complexity. The two possible wireless options to consider are:
+1) **Wifi**
+2) **Bluetooth**
+
+**Wifi** (2.4 GHz / 5 GHz) offers large bandwidth (54–600 Mbps) with typical ranges around 30-100 meters, making it a great for long-range devices transferring data at high speeds. However, this requires a router for managing device communication through assigning IP addresses to connected devices and handling data packet routing. leading to higher power consumption. This is due to continuous radio activity for maintaining connections, the processing required by the full network stack (IP, TCP/UDP, and encryption protocols), and the high transmission power needed for reliable communication. Instead of requiring a physical router, **Wifi Direct** protocol uses one of the connected devices as a "soft access point" lowering the power consumption. However, it still relies on IP addressing and network protocol handling, making it more complex compared to the following option. 
+
+**Bluetooth** (2.4 GHz)provides moderate bandwidth, typically 1–3 Mbps with operational ranges of approximately 10–30 meters. Unlike **Wi-Fi**, **Bluetooth** does not require a router but instead, devices establish direct connections using a master–slave architecture which simplifies the network's configuration. The power consumption is reduced through limited radio activity, lightweight protocol stacks, and adaptive frequency hopping to mitigate interference. **Bluetooth Low Energy** (BLE) (2.4 GHz) only has a bandwidth up to 2 Mbps but further enhances energy efficiency by allowing devices to enter sleep states between transmissions and minimizing protocol overhead. 
+
+###### Wired Communication
+The selection of wired communication protocol depends on bandwidth, latency, and connection complexity. A few options to consider are:
+
+1) **UART**
+2) **SPI**
+3) **I²C**
+4) **MIPI**
+
+**UART (Universal Asynchronous Receiver/Transmitter)** provides moderate bandwidth capable of 1-3 Mbps, with moderate latency around 10 µs. It consists of a simple two wire connection (TX and RX) for point-to-point communication, requiring minimal pins on the microcontroller. **UART** is robust and energy-efficient for short-range connections. However, **UART** transmits data asychronously creating a higher latency compared to the other options.
+
+**SPI (Serial Peripheral Interface)** provides high bandwidth, capable of greater than 10 Mbps, with very low latency due the sychronous clock. The connection required between devices consists of multiple wires (MISO, MOSI, SCK, and a separate chip-select line per device), increasing the wiring complexity and microcontroller pin usage. **SPI** offers highly reliable, low-latency communication and is suitable for scenarios where multiple sensors require fast, real-time updates. While it consumes slightly more power than **UART** or **I²C** due to continuous clocking and more active pins, it is ideal for high-speed, time-critical data transfer like HUD updates in the visor.
+
+**I²C (Inter-Integrated Circuit)** operates at low to moderate speeds, typically 100 kHz to 1 MHz, with slightly higher latency than **SPI** as it can't transmit and receive data simutaneously. The connection requires a two-wire bus (SDA and SCL) that allows multiple devices to share the same connection via unique addresses, reducing wiring complexity. This makes **I²C** convenient if the visor includes multiple sensors or peripheral devices. Pull-up resistors are required, and the protocol can be sensitive to long wires or electrical noise, which may affect reliability for real-time data.
+
+**MIPI DSI (Display Serial Interface)** is a high-speed, low-latency interface commonly used for connecting displays in mobile and embedded devices. It supports very high data rates (hundreds of Mbps to multiple Gbps) over differential pairs, making it suitable for high-resolution HUDs. **MIPI DSI** is designed for short-range, on-board connections with low power consumption per bit transmitted. Its complexity is higher than **UART**, **I²C**, or **SPI**, requiring specialized hardware support and careful signal routing. **MIPI** could be considered if future designs involve high-resolution displays.
+
+###### Microcontroller  
+For the visor system to support wireless connectivity, it shall require a microcontroller. This selection depends on processing speed, communcation capabilities, software complexity and pre-built wireless module. The following are possible options to consider: 
+1) **Raspberry Pi Zero W** 
+2) **ESP32-S3**
+3) **ESP32-P4** 
+
+The **Raspberry Pi Zero W** offers moderate performance with a single-core ARM11 processor, computing at speeds of 1 GHz. It includes built-in Bluetooth 4.1 (speeds up to 1 Mbps), serial communications (**SPI**, **I²C**, and **UART**), and **MIPI** interfacing. However, it requires a full operating system (Linux), which increases software complexity.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/SkxSyOzJWg.png" alt="Raspberry Pi Zero W" width="500">
+  <p><em>Figure 3: Raspberry Pi Zero W</em></p>
+</div>
+
+
+The **ESP32-S3** has high performance featuring a dual-core 32-bit Xtensa processor capable of handling speeds up to 240 MHz. It includes serial communication (**SPI**, **I2C**, and **UART**) and built-in Bluetooth 5 Low Energy, allowing for faster speeds (up to 2 Mbps) and lower power consumption. However, the **ESP32-S3** has no **MIPI** support which would require two TC358778X MIPI-to-Parallel Bridge ICs to interface with the displays. Additionally, the ESP32-S3 can run bare-metal firmware or a real-time operating system, eliminating the need for a full operating system. 
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/Bk4t1dz1Ze.png" alt="ESP32-S3" width="500">
+  <p><em>Figure 4: ESP32-S3</em></p>
+</div>
+
+
+The **ESP32-P4** has the highest performance capability of the three options due to its Dual-core 32-bit RISC-V processor capable for speeds up to 400 MHz. It has **MIPI** and serial communications (**SPI**, **I2C**, and **UART**) to interact with the display hardware but does not include built-in Bluetooth. The **ESP32-P4-WIFI6** is a development board that provides the pre-built BLE module for the **ESP32-P4**.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/rkWox_G1bx.png" alt="ESP32-P4" width="500">
+  <p><em>Figure 5: ESP32-P4</em></p>
+  <br>
+</div>
+
+###### Trade Study : Microcontroller
+The weighting rationale prioritizes ergonomic performance and ease of integration for a wearable augmented-reality device. 
+- **Processing Performance (30 %)**  ensures real-time responsiveness for AR functions.
+- **Communication Capability (25 %)** supports reliable wireless data exchange.
+- **Power Efficiency (20 %)** maximizes battery life for extended outdoor use.
+- **Software/OS Complexity (15 %)** accounts for ease of integration and reduced development effort. 
+- **Built-in Wireless Module (10 %)** provides convenient onboard connectivity without heavily impacting overall performance.
+
+<div align="center">
+  <p><strong>Table II</strong></p>
+  <p><em>Microcontroller Trade Study</em></p>
+
+  | **Criterion** | **Weight (%)** | **Raspberry Pi Zero W** | **ESP32-S3** | **ESP32-P4** |
+  |:---------------|:--------------:|:-----------------------:|:-------------:|:-------------:|
+  | Processing Performance | 30 | 3 | 4 | 5 |
+  | Communication Capability | 25 | 4 | 4 | 5 |
+  | Power Efficiency | 20 | 2 | 4 | 4 |
+  | Software / OS Complexity | 15 | 2 | 4 | 4 |
+  | Built-in Wireless Module | 10 | 4 | 5 | 3 |
+  | **Weighted Total (100%)**
+</div> 
+
+##### Decision
+
+Based on the evaluation of wireless protocols, wired communication interfaces, and microcontroller options and trade study, the following are the desired choices:
+1) **Bluetooth Wireless Communication Protocol**
+2) ** SPI Serial Communication and MIPI DSI Protocol**
+3) **ESP32-P4**
+
+**Bluetooth Wireless Communication Protocol** provides simplified device networking and lower power consumption. The low range and bandwidth fit within the smart golf visor functionality.
+
+**SPI serial communication** provides the high speed bandwidth and lower latency to match the HUD display's peripheral. This is crucial for the time-sensitive HUD updates. **MIPI DSI** protocol was chosen for the display interface to support high-speed, low-power transmission of graphics data
+
+The **ESP32-P4** was selected as the primary controller for the visor system. Its dual-core RISC-V processor operating at up to 400 MHz provides sufficient computational capability for real-time data processing, while its native support for **MIPI** enables direct interfacing with the OLED display without the need for additional bridge ICs. With the **ESP32-P4-WIFI6** development board, it also provides built-in bluetooth module to recieve the shot metrics transmitted by the app.
+### Power
+
+##### Overview
+The Power Subsystem provides regulated electrical energy for all electronic components within the Smart Golf Visor, including the microcontroller, IMU sensor, and display.
+It must supply clean, efficient, and protected DC power rails derived from a single rechargeable battery source while maintaining safe operation under outdoor and portable conditions.
+This subsystem is critical to overall system reliability, as voltage fluctuations or inefficiency could result in unstable display performance or reduced runtime.
+To ensure uninterrupted operation throughout a typical round of golf, the power system is designed to sustain continuous functionality for at least 18 holes, including margin for colder environments and extended use.
+This subsystem is critical to system reliability since voltage fluctuations or inefficiency could result in unstable display performance or reduced runtime.  
+Therefore, the subsystem must:
+- Support multiple voltage rails (3.3 V logic, 1.8 V display logic, 5.0–5.5 V analog).  
+- Include battery protection and conversion circuitry meeting IEC 6213 and NEC low-voltage safety requirements.  
+- Remain lightweight, compact, and efficient enough for use in a wearable visor design.
+
+
+##### Possible Solutions
+
+###### **Battery Chemistry Comparison**
+
+Two main rechargeable battery chemistries were considered for this subsystem: 
+1) **Lithium-Polymer (Li-Po)** 
+2) **Lithium-Ion (Li-ion)** 
+
+The **Li-Po pouch cell** exhibits an energy density between 150–200 Wh/kg, offering a very light and thin form factor ideal for compact wearable applications. While it requires a Battery Management System (BMS) for safe operation, it remains thermally stable and reliable, with a cycle life of approximately 300–600 cycles and moderate cost. Its flat, flexible shape makes it especially advantageous for the visor, as it can integrate flush with the rear-mounted housing.
+
+The **Li-ion cylindrical cells** (such as 18650 or 21700 formats) offer slightly higher energy density (180–250 Wh/kg) and longer life (500–800 cycles) with high discharge capability. However, their cylindrical structure adds bulk and weight, making them less practical for integration into a curved visor design.  
+LiFePO₄ cells provide exceptional safety and long life (1000+ cycles) but lower energy density (90–140 Wh/kg) and nominal voltage (~3.2 V), which complicates converter design.  
+NiMH batteries, while very safe, are heavy and have the lowest energy density (60–120 Wh/kg), leading to shorter runtimes and poor compactness for wearable use.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/H1zW3EEJZg.jpg" alt="Common battery formats — 18650 Li-ion vs Li-Po pouch" width="500">
+  <p><em>Figure 6: Common battery formats — 18650 Li-ion (left) vs flat Li-Po pouch (right).</em></p>
+</div>
+
+**Result:**  
+The **Li-Po battery** provides the best balance of weight, capacity, and integration flexibility. Its rectangular pouch design enables compact placement within the visor’s rear housing while maintaining safe operation between **0–60 °C**. This makes Li-Po the optimal chemistry for the Smart Golf Visor’s power subsystem.
+
+###### **DC–DC Converter Options**
+The selection is based around output range, efficiency, and application. To convert the Li-Po pack’s 3.7 V nominal output into stable voltages for each subsystem, the following are possible options : 
+1) **Linear LDO regulators**
+2) **Buck (step-down) converters**
+3) **Boost (step-up) converters**
+4) **Inverting converters**
+5) **Buck-Boost converter**
+
+**Linear LDO regulators** deliver fixed voltages such as 1.8 V or 3.3 V, providing simple implementation and low noise at the expense of efficiency (50–70 %), making them best suited for low-current rails.  
+**Buck (step-down) converters** achieve 85–95 % efficiency when the input voltage exceeds the desired output. However, they are less effective when the Li-Po voltage drops close to 3.0 V.  
+**Boost (step-up) converters** reach 88–93 % efficiency and are essential for maintaining a stable 5.0–5.5 V output for the OLED analog rail (AVDD), even under battery discharge conditions.  
+**Inverting converters** provide around 85–90 % efficiency and are required to generate the OLED’s −5 V analog rail (AVEE) for proper display operation.  
+Finally, a **buck-boost converter** efficiently regulates 3.3 V output (90–93 %) across the full Li-Po discharge range (2.9–4.2 V), ensuring stable power to the ESP32-P4 and IMU regardless of battery condition.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/Hk1g0V4kbx.png" alt="Buck-boost converter topology" width="500">
+  <p><em>Figure 7: Typical buck-boost converter topology used for MCU and logic rails.</em></p>
+</div>
+
+
+**Recommended Configuration:**  
+- **3.3 V Buck-Boost Converter:** Powers the ESP32-P4 and IMU logic rail.  
+- **1.8 V LDO:** Supplies the OLED’s digital logic rail (low-current).  
+- **5.4 V Boost Converter:** Drives the OLED’s AVDD analog rail.  
+- **−5.4 V Inverting Converter:** Provides the OLED’s AVEE analog rail.  
+
+This configuration ensures high efficiency, low ripple, and isolation between analog and digital domains, optimizing performance while minimizing heat and noise.
+
+###### **Trade Study: Battery & Converter Integration**
+The weighting rationale prioritizes runtime efficiency and system stability for a wearable, battery-powered device.
+
+- **Energy Density (25 %)** ensures long operation per charge, supporting a full 18-hole round.  
+- **Weight / Form Factor (20 %)** minimizes visor weight for user comfort.  
+- **Efficiency (20 %)** focuses on maximizing usable energy while minimizing conversion losses.  
+- **Safety (15 %)** emphasizes compliance with IEC 62133 and NEC 480 standards for portable Li-ion systems.  
+- **Complexity (10 %)** accounts for ease of integration and circuit management.  
+- **Cost (10 %)** considers affordability within the project’s material budget.
+
+<div align="center">
+  <p><strong>Table III</strong></p>
+  <p><em>Battery and Converter Integration Trade Study</em></p>
+
+  | **Criterion** | **Weight (%)** | **Li-Po + Multi-Converter (Chosen)** | **Li-ion + Single Buck-Boost** | **LiFePO₄ + Boost** |
+  |:--|:--:|:--:|:--:|:--:|
+  | Energy Density | 25 | 5 | 4 | 3 |
+  | Weight / Form Factor | 20 | 5 | 3 | 3 |
+  | Efficiency | 20 | 5 | 4 | 4 |
+  | Safety (IEC 62133 / NEC 480) | 15 | 4 | 4 | 5 |
+  | Complexity | 10 | 3 | 4 | 3 |
+  | Cost | 10 | 4 | 4 | 3 |
+  | **Weighted Total** | **100** | **4.65** | **3.95** | **3.70** |
+</div>
+
+
+##### Decision
+The final power solution will include:
+1) **Single-cell (1S) Li-Po pack** rated **5 000–6 000 mAh** 
+2) **Multi-converter system** implementing:  
+A.  **3.3 V buck-boost** for compute and sensors  
+B.  **1.8 V LDO** for display logic  
+C.  **+5.4 V boost** and **−5.4 V inverter** for OLED analog rails  
+
+This configuration satisfies all identified electrical and mechanical constraints while maintaining high efficiency (target > 90 %) and compliance with IEC 62133 and NEC 480 standards governing portable battery systems.  
+
+Final performance values (including efficiency, thermal margin, and runtime) will be confirmed during detailed design and may be adjusted based on final component selections, particularly the verified battery capacity and converter specifications.
+
+### Visor Design  
+
+##### Overview  
+The Visor Design subsystem serves as the structural and ergonomic foundation for the Smart Golf Visor. It supports the optical engine, electronics sleeve, and cabling while ensuring the heads-up display remains aligned within the golfer’s natural line of sight. The visor must be lightweight, stable during movement, and comfortable for extended outdoor wear. Because this subsystem directly affects user safety and usability, its design prioritizes balance, durability, and compliance with ISO 15004-2 optical safety standards.  
+
+##### Possible Solutions  
+The following are possible options:
+1) **Existing Sports-Glasses Frame**
+2) **Custom 3D-Printed Frame**
+3) **Commercial AR-Glasses Base**
+
+The **Existing Sports-Glasses Frame** uses a commercially available sports-glasses platform as the base frame. The frame offers high-impact polycarbonate construction, UV protection, and built-in ergonomic shaping designed for outdoor athletics. It provides immediate wearability, minimal design effort, and proven comfort. Minor modifications—such as adding a clamp-mounted HUD pod, rear electronics sleeve, and cable routing—can be performed without affecting the eyewear’s integrity or balance.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/ry0ZcSr1Zg.jpg" alt="Ready-made sports-glasses frame" width="500">
+  <p><em>Figure 8: Ready-made sports-glasses frame (e.g., Uvex Hypershock) used as the visor’s base structure.</em></p>
+  <br>
+</div>
+
+A fully **Custom 3D-Printed Frame** produced from ABS/PC or CF-Nylon allows total design freedom, with integrated optical mounts and internal wiring channels. While this yields optimized geometry, it introduces longer prototyping times, tighter tolerance demands for optical alignment, and potential surface-finish issues that can affect comfort.  
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/HJM6qrSyZl.jpg" alt="Custom 3D-printed Visor Frame" width="500">
+  <p><em>Figure 9: Custom 3D-printed Visor Frame options used for prototype development.</em></p>
+  <br>
+</div
+
+
+Repurposing an **existing augmented-reality eyewear** product (such as Vufine V2 or Rokid Max) could provide ready-made optics and housings, but these devices limit access to internal hardware, firmware, and mechanical modification. Integration with custom electronics is highly constrained, and costs are substantially higher. 
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/SJ9HjSBy-g.jpg" alt="Commercial AR-glasses platform (Rokid Max)" width="500">
+  <p><em>Figure 10: Example of a commercial AR-glasses platform (Rokid Max).</em></p>
+  <br>
+</div>
+
+
+
+#### Trade Study: Visor Frame  
+The weighting rationale prioritizes ergonomic performance and ease of integration for a wearable augmented-reality device.  
+
+- **Ergonomic Comfort (30 %)** ensures the visor remains stable and comfortable during use.  
+- **Integration Flexibility (25 %)** accounts for space and accessibility for the HUD, electronics, and cabling.  
+- **Weight and Balance (25 %)** minimizes strain during motion.  
+- **Manufacturability (10 %)** reflects ease of modification and production cost.  
+- **Durability (10 %)** measures long-term resilience under outdoor conditions.  
+
+<div align="center">
+  <p><strong>Table IV</strong></p>
+  <p><em>Visor Frame Trade Study</em></p>
+
+  | **Criterion** | **Weight (%)** | **Sports-Glasses Frame** | **Custom 3D Frame** | **Commercial AR Base** |
+  |:--|:--:|:--:|:--:|:--:|
+  | Ergonomic Comfort | 30 | 5 | 4 | 3 |
+  | Integration Flexibility | 25 | 4 | 5 | 2 |
+  | Weight & Balance | 25 | 5 | 4 | 3 |
+  | Manufacturability | 10 | 5 | 3 | 2 |
+  | Durability | 10 | 5 | 4 | 4 |
+  | **Weighted Total (100 %)** | **100** | **4.75** | **4.35** | **2.95** |
+</div>
+
+
+##### Decision  
+The **existing sports-glasses frame** (specifically the Uvex Hypershock or equivalent) is selected as the base for the Smart Golf Visor.  This solution provides the best combination of ergonomic comfort, low weight, durability, and manufacturability while requiring minimal fabrication effort. The proven sports-frame geometry already conforms to human-factor safety and comfort standards, allowing the team to focus design resources on optical and electronic integration.  
+
+Minor mechanical adaptations—such as a clamp-mounted HUD pod, lightweight rear electronics sleeve, and guided cable channels—will transform the frame into a functional smart visor without compromising the existing form factor. This approach accelerates development, reduces cost, and ensures immediate field usability, aligning directly with stakeholder goals for practicality and reliability.  
+
+
+### App/Software
+##### Overview
+The Smart Golf Visor system requires an application capable of collecting data from a launch monitor, processing performance metrics, generating coaching insights, and transmitting these results to a Bluetooth-enabled visor display. The software platform must be intuitive, portable, and easily maintainable, allowing golfers to use it on the course without specialized hardware.  
+
+Several potential implementation approaches were evaluated:  
+1. **Native mobile application (Android/iOS)**  
+2. **Desktop application**  
+3. **Web-based application (browser-based Progressive Web App)**  
+
+Each approach offers distinct tradeoffs in development complexity, hardware integration, cost, and user accessibility.  
+
+##### Possible Solutions
+
+###### Native Mobile Application
+A **native app** would be developed specifically for Android or iOS platforms using environments such as Android Studio (Java/Kotlin) or Xcode (Swift).  
+
+**Native apps** provide direct access to Bluetooth, device sensors, and local storage. They can maintain persistent connections with the launch monitor and ESP-32 visor, enabling low-latency data streaming.
+
+The **native mobile application** offers several advantages, including full access to Bluetooth Classic and BLE APIs, high performance with low-latency communication, and the ability to function offline while integrating with native notifications or background tasks. However, it also has notable disadvantages: separate development paths are required for Android and iOS, it involves higher maintenance and deployment overhead due to app store updates and platform fees, users must download and install the app manually, and overall development cost and time are increased because of platform-specific design and testing requirements.
+
+**Native apps** are well suited for commercial-grade systems with large budgets but are less ideal for early-stage prototypes or research systems.
+
+###### Desktop Application
+A **desktop application** (e.g., built with Python, Electron, or .NET) could serve as a local control center for data acquisition and analysis. It would offer the greatest computing resources and could directly interface with Bluetooth or USB devices.
+
+The advantages of a **desktop application** include simplified debugging and local file access, the potential for powerful analytics and visualization tools, and suitability for lab environments or coaching centers with stationary setups. However, it also has significant disadvantages: poor portability for golfers on the course, the requirement of a laptop or PC with compatible Bluetooth hardware, lack of optimization for quick, touch-based interactions, and reduced convenience for real-time use during practice sessions.
+
+While technically capable, this option lacks the flexibility and mobility needed for outdoor golf applications.
+
+###### Web-Based Application
+A **web-based application** built with modern browser APIs represents a hybrid solution that balances accessibility and functionality. By leveraging Web Bluetooth, cloud data storage, and responsive web design, the web app can operate directly from a smartphone browser without installation. It acts as a unified interface between the launch monitor, visor hardware, and cloud database.
+
+The **web-based application** offers several advantages, including cross-platform compatibility, allowing it to run on any device with a supported browser, no installation requirements since users can access it via a secure HTTPS link, and automatic updates for all users simultaneously. It also supports BLE communication through the Web Bluetooth API (in Chrome and Edge), simplifies cloud integration via REST or WebSocket protocols, and provides low development cost with easy scalability. However, it has some disadvantages, including limited Bluetooth support on iOS Safari due to BLE restrictions, the requirement for HTTPS and explicit user permissions for device access, and slightly less control over low-level Bluetooth operations compared to **native applications**.
+
+#### Trade Study: Application
+
+The weightings for the trade study criteria were chosen to reflect the relative importance of each factor in delivering a practical, user-friendly solution for the Smart Golf Visor system. 
+- **User accessibility (35%)** was assigned the highest weight because ease of use, portability, and quick deployment are critical for golfers in real-world environments. 
+- **Development complexity (25%)** emphasizes the need for an efficient and maintainable system that minimizes development time and cost while allowing for future updates. 
+- **Cost (20%)** accounts for both initial development expenses and long-term maintenance considerations, ensuring the solution remains economically viable. Finally, 
+- **Performance and Latency (20%)** reflects the importance of responsive, real-time data transfer to support coaching insights and the visor display. 
+
+
+<div align="center">
+  <p><strong>Table V</strong></p>
+  <p><em>Application Trade Study</em></p>
+
+  | **Criterion** | **Weight (%)** | **Native Mobile App** | **Desktop App** | **Web-Based App (PWA)** |
+  |----------------|:--------------:|:------------------:|:---------------:|:----------------------:|
+  | Development Complexity | 25% | 2 | 3 | 4 |
+  | User Accessibility & Portability | 35% | 4 | 2 | 5 |
+  | Cost | 20% | 2 | 3 | 5 |
+  | Performance & Latency | 20% | 5 | 5 | 4 |
+  | **Weighted Total** | **100%** | **3.30** | **3.05** | **4.55** |
+</div>
+
+##### Decision
+After evaluating the alternatives, the **web-based application** is selected as the best overall solution for the Smart Golf Visor system.  
+
+A **web-based application** offers several advantages that make it the most practical and effective solution for this project. It provides cost efficiency by eliminating the need for separate Android and iOS builds, reducing both development and maintenance expenses. Its accessibility and ease of deployment allow users to launch the app instantly from any modern smartphone or laptop without the need for downloads or installations—an ideal feature for field environments like driving ranges where quick setup and minimal friction are essential. Through the Web Bluetooth API, the app can directly connect to BLE-enabled launch monitors and the ESP-32 visor without requiring a native bridge, enabling real-time data processing and immediate transmission to the visor display. The system’s cloud connectivity ensures seamless integration with remote databases and analytics services via HTTPS, supporting session storage, history tracking, and personalized coaching feedback accessible from any device. Additionally, its scalability and maintainability stem from centralized server updates, guaranteeing that all users operate on the latest version without manual intervention or app store approvals. Finally, by leveraging modern web technologies such as React, Tailwind, and Web Bluetooth, the platform delivers an intuitive, mobile-responsive user experience that captures the functionality of a native app while maintaining the simplicity and universality of a browser-based interface.
+
+While native and desktop applications provide certain technical advantages, they introduce unnecessary complexity, platform dependency, and deployment challenges.  
+A **web-based Progressive Web App** offers the most balanced solution — providing broad device compatibility, low cost, real-time Bluetooth communication, and portability within a single system.  
+
+
+### Heads-Up Display
+
+##### Overview
+The Heads-Up Display (HUD) is responsible for generating and projecting a clear graphical interface presenting key data metrics, including ball speed, ball distance, launch angle, spin rate, smash factor, shot direction, and coaching suggestions. It integrates these elements into the user’s real-world view using a combination of hardware, including the display and tracking sensors, which ensure the HUD remains correctly aligned with the user’s line of sight, and supporting software that processes sensor data, manages visualization, and corrects for drift or misalignment.
+
+##### Possible Solutions
+###### Display
+The selection of the display will depend on factors such as outdoor brightness and contrast for visibility, response time and refresh rate, as well as overall cost. The following are possible option for display types commonly used in augmented reality applications:
+1) **Micro-OLED**
+2) **Micro-LED**
+3) **Micro-LCD** 
+
+**Micro-OLED** displays offer exceptional contrast ratios and deep black lights, resulting in excellent visual clarity under moderate lighting conditions however, their brightness typically ranges from 1,000 to 5,000 nits, which can be limiting in direct sunlight. They offer extremely fast response times (under 1 ms) and support high refresh rates that range between 60 and 120 Hz making them ideal for displaying dynamic data metrics. In terms of cost, **Micro-OLEDs** typically range from $80 to $200 depending on the resolution and refresh rate, offering a solid balance between image quality, responsiveness and affordability for near-eye displays.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/BJiQgi7yZx.png" alt="Micro-OLED Display" width="200">
+  <p><em>Figure 11: Micro-OLED Display</em></p>
+</div>
+
+
+**Micro-LED** displays deliver the highest brightess often exceeding 10,000 nits making them the best option for outdoor visibility and direct sunlight operation. Like **Micro-OLED**, **Micro-LEDs** feature under 1 ms response times and can provide refresh rates above 120 Hz providing superior visual stability. However, the cost is very high due to its complex manufacturing process where one display typically ranges from $500 to over $1,000. **Micro-LED** technology offers unmatched brightness and durability, but is evident it is less practical for cost-sensitive and developmental projects.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/SJGlNs7kZe.png" alt="Micro-LED Display" width="300">
+  <p><em>Figure 12: Micro-LED Display</em></p>
+</div>
+
+
+**Micro-LCD** panels rely on a backlight and can achieve brightness levels between 2,000 and 8,000 nits making them an acceptable option for outdoor use under moderate sunlight. However, they offer lower contrast ratios and less vivid colors because the pixels do no generate their own light like for the other two displays. Response times are also slower where it typically ranges from 2-10 ms with refresh rates between 60 and 90 Hz, which can cause minor motion blur. They are the most cost-effective with prices ranging from $10 to $80 per module and are a widely available option. This makes them suitable for low-cost prototypes with low expected optimal performance.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/H1ftUj71We.png" alt="Micro-LCD Display" width="500">
+  <p><em>Figure 13: Micro-LCD Display</em></p>
+</div>
+
+
+#### **Trade Study: Display**
+
+The weighting rationale prioritizes ergonomic performance and ease of integration for a wearable augmented-reality device. 
+- **Outdoor Brightness & Contrast (40 %)**  ensures clear visibility in direct sunlight, which is critical for maintaining display readability and a high-quality user experience on the course
+- **Response Time & Refresh Rate (35 %)** provides smooth, real-time visuals with minimal latency during head and eye movements.
+- **Cost (25 %)** balances performance and affordability, ensuring the chosen display is feasible for development while still delivering high-quality visual performance.
+
+<div align="center">
+  <p><strong>Table VI</strong></p>
+  <p><em>Display Trade Study</em></p>
+
+  | **Criterion** | **Weight (%)** | **Micro-OLED** | **Micro-LED** | **Micro-LCD** |
+  |-------------------------------|:--------------:|:--------------:|:-------------:|:-------------:|
+  | Outdoor Brightness & Contrast | 40 | 4 | 5 | 3 |
+  | Response Time & Refresh Rate  | 35 | 5 | 5 | 3 |
+  | Cost                          | 25 | 4 | 1 | 5 |
+  | **Weighted Total (100%)**     | **100** | **4.40** | **3.80** | **3.40** |
+</div>
+
+
+###### Tracking Sensor
+The tracking sensor will be selected based on key factors such as accuracy responsiveness, and environmental robustness. The following are the two possible options:
+1) **Inerital Measurement Units (IMUs)**
+2) **Cameras**
+
+
+
+**IMUs** are compact, lightweight sensors that combine accelerometers, gyroscopes and sometimes magnetometers to measure linear acceleration, angular velocity, and orientation. IMUs offer strong response times with latency typically being around 1 to 5ms making them highly responsive for real-time applications. Accuracy is determined using root mean square error (RMSE), which quantifies the average difference between the sensor's measurements and the true values. Typical **IMU** RMSE values are around 1.4 to 4.4 degress and positional errors average around 35 mm indicating small deviations fomr actual motion. **IMUs** are highly robust in outdoor environments because they do not rely on lighting or line-of-sight however, they can experience cumulative drift over time which may reduce long-term position accuracy without periodic calibration. Their combination of accuracy, responsiveness, and environmental robustness makes them a good options for real-time visor tacking in outdoor environments.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/rydHth7ybe.png" alt="IMU Tracking Sensor" width="500">
+  <p><em>Figure 14: IMU Tracking Sensor</em></p>
+</div>
+
+**Camera tracking systems** determine the position and orientation by analyzing data from one or more cameras. They achieve high accuracy by detecting and tracking distinctive visual features in the environemnts, often using multiple cameras. This allows angular errors to be as low as 1 to 5 degress and positional errors under 10 mm in ideal conditions. However, camera systems are highly sensitive to outdoor environmental factors such as sunglight, glare, shadows, and occlusions which can significantly degrade both accuracy and responsiveness. The response also tend to be slower with it typically being around 10 to 50 ms. While camera systems excel in controlled indoor environments, their effectiveness in outdoor enviroments is limited making them a less reliable option.
+
+<div align="center">
+  <img src="https://hackmd.io/_uploads/HJRL9nXk-x.png" alt="High-speed Camera Tracking Sensor" width="500">
+  <p><em>Figure 15: High-speed Camera Tracking Sensor</em></p>
+</div>
+
+
+#### **Trade Study: Tracking Sensor**
+The weighting rationale for this trade study is based on the performance requirements of an outdoor tracking system for augmented-reality applications:
+- **Accuracy (45 %)**  ensures precise motion and orientation tracking, which is essential for maintaining alignment between the digital overlay and the user’s real-world view.
+- **Responsiveness (40 %)** provides minimal latency and smooth tracking performance during fast head movements.
+- **Environmental Robustness (15 %)** ensures reliable operation in varying outdoor lighting and weather conditions without performance degradation.
+
+<div align="center">
+  <p><strong>Table VII</strong></p>
+  <p><em>Tracking Sensor Trade Study</em></p>
+
+  | **Criterion** | **Weight (%)** | **IMU** | **Camera-Based Tracking** |
+  |-------------------------------|:--------------:|:-------:|:------------------------:|
+  | Accuracy | 45 | 4 | 5 |
+  | Latency | 40 | 5 | 3 |
+  | Environmental Robustness | 15 | 5 | 2 |
+  | **Weighted Total (100%)** | **100** | **4.55** | **3.85** |
+</div>
+
+
+##### Decision
+After evaluating multiple displays and tracking sensor technologies, the following options were selected:
+1) **Micro-OLED display**
+2) **Intertial Measurement Unit (IMU) tracking sensor**
+
+The **Micro-OLED display** provides the best overall balance of outdoor visibility, response time, refresh rate, and cost making it highly suitable for projecting real time performance metrics in an outdoor augmented reality environment. It delivers sharp visuals, fast refresh performance, and strong color contrast while maintaining reasonable affordability for a wearable prototype.
+
+The **IMU** was chosen for the tracking sensor due to its low latency, accuracy, and environmental robustness. It provides reliable orientation and motion data without being affected by outdoor lighting or line-of-sight ensuring consistent tracking. Although **IMUs** can experience drift over time, this can be minimized through software calibration.
+
+Together, the **Mirco-OLED display** and **IMU** form a lightweight, efficient, and cost-effective combination that supports responsive, high-quality visualization and accurate head tracking for the Smart Golf Visor
 
 ## High-Level Solution
 
@@ -151,161 +561,101 @@ Overall, the Smart Golf Visor design optimizes real-time data acquisition, proce
 
 
 ### Hardware Block Diagram
-<p align="center">
- <img style="display:block;margin:20px right;padding:1px;border:1px #eee;width:900%;" src="https://hackmd.io/_uploads/rkgZRCP0Cxl.png">
-</p> 
+<div align="center">
+  <img src="https://hackmd.io/_uploads/rkTk9hSkZx.png" alt="Smart Golf Visor Hardware Block Diagram" width="900">
+  <p><em>Figure 16: Smart Golf Visor Hardware Block Diagram</em></p>
+</div>
 
-<p align= "center"> 
-  Figure 1: Smart Golf Visor Hardware Block Diagram 
-</p>
 
 ### Operational Flow Chart
-
-
-<p align="center">
-  <img style="display:block;margin:20px right;padding:1px;border:1px #eee;width:900%;" src="https://hackmd.io/_uploads/B1eox-XRgx.png" />
-  </p> 
-
-<p align="center">
-  Figure 2: User Operational Flow Chart
-  </p>
-
-
-
-
+<div align="center">
+  <img src="https://hackmd.io/_uploads/B1eox-XRgx.png" alt="User Operational Flow Chart" width="900">
+  <p><em>Figure 17: User Operational Flow Chart</em></p>
+</div>
 
 ## Atomic Subsystem Specifications
 
-The Smart Golf Visor is composed of six primary subsystems: Launch Monitor, Communications, Physical Visor Design, Visor Powering System, Heads-Up Display, and App/Software Development.
+The Smart Golf Visor is composed of six primary subsystems: Launch Monitor, Communications, Visor Design, Visor Powering System, App/Software Development, and Heads-Up Display.
 
 ### Subsystem 1: Launch Monitor
-**Subsystem Overview and Function**
+#### Subsystem Overview 
 
-This subsystem acquires per-shot telemetry from the PiTrac DIY launch monitor [19] and delivers a normalized shot record to the application and the visor heads-up display (HUD) with sub-second latency. The PiTrac launch monitor runs on a Raspberry Pi and uses two Mobile Industry Processor Interface (MIPI) global-shutter cameras with infrared (IR) strobing to capture the golf ball’s motion. Using an existing launch-monitor plan with accessible data, the system avoids redesigning. This will allow a sensing pipeline, and will rely on PiTrac’s published interfaces to expose a single, versioned message contract to downstream components. The bridge process can receive telemetry through the PiTrac web server’s WebSocket (WS) and Representational State Transfer (REST) interfaces, through a Transmission Control Protocol (TCP) socket that carries Golf Simulator Pro (GSPro) Open Connect JavaScript Object Notation (JSON) messages, or through an internal ActiveMQ message topic. The bridge validates and time-orders all incoming events, converts values to the International System of Units (SI) internally, and publishes a stable Shot record to the HUD.
+The **Launch Monitor subsystem** acquires per-shot telemetry exclusively from the PiTrac do-it-yourself (DIY) launch monitor [19] and delivers a normalized Shot record to the application and the visor head-up display (HUD) with sub-second latency. PiTrac runs on a Raspberry Pi and uses two Mobile Industry Processor Interface (MIPI) global-shutter cameras with infrared (IR) strobing to capture the golf ball’s motion during the first frames of flight. By adopting PiTrac’s existing sensing pipeline and its published local interfaces, the subsystem does not redesign the measurement path; instead, it consumes PiTrac’s output and exposes a single, versioned message to all downstream components. Telemetry is ingested from the PiTrac web server over WebSocket (WS) or Representational State Transfer (REST), or from PiTrac’s Golf Simulator Pro (GSPro) Open Connect stream over Transmission Control Protocol (TCP). The bridge validates and time-orders the incoming messages, converts all values to International System of Units (SI), and publishes a stable Shot record to the HUD.
 
-**Subsystem Operation**
+#### Subsystem Operation
 
-At the start of a session, the bridge selects an ingress method—WebSocket and REST, Open Connect over TCP, verifies the handshake, and transitions to an armed state. When a strike occurs, PiTrac emits one or more shot messages, which the bridge parses and validates. The bridge converts all values to SI units, assigns both a monotonic timestamp and a UTC timestamp, and collapses duplicates within a brief debounce window so that a single, deterministic Shot record represents the swing. The bridge then emits the Shot record on the local WebSocket, and the HUD renders a fixed, high-contrast layout on the visor within the latency budget. Throughout the session, the subsystem monitors heartbeats, records any drops, and reconnects automatically with back-off. At the end of the session, the bridge closes connections, flushes logs, and produces a concise summary for later review.
-**Primary Functions**
+At the start of a session, the bridge chooses how to listen to PiTrac (WebSocket/REST or GSPro Open Connect over TCP). It verifies the link and then enters an armed state. When PiTrac detects a shot, it sends one or more messages. The bridge parses those messages, checks the values, and converts every field to SI units. It assigns two timestamps: a monotonic timestamp for ordering and latency, and a Coordinated Universal Time (UTC) timestamp for logging. It also de-duplicates messages inside a short window so one Shot record represents the swing. That normalized Shot is sent over a local WebSocket to the HUD. The HUD draws a fixed, high-contrast layout on the visor within the latency budget. While the session is running, the subsystem watches link health, rotates logs, and reconnects automatically if the link drops. When the session ends, it closes connections and flushes the logs. The bridge can run as an app on the host (which also drives the wired display), or as a small embedded Linux service that listens for PiTrac traffic and republishes normalized shots to HUD clients on the local network. The subsystem must move telemetry over WS/REST or GSPro Open Connect, must produce exactly one Shot per swing, and must meet an impact-to-HUD time of 500 ms or less at the 95th percentile (about 50 ms for ingest/normalize and about 100 ms for publish-to-paint). It must also preserve ordering with a monotonic clock and must not freeze the user interface.
 
-The subsystem establishes and maintains a reliable data link to PiTrac using either WebSocket and REST, or GSPro Open Connect over TCP.
+The launch monitor requires its own battery and power path so PiTrac can run untethered at the range for 4–6 hours. The load is about 10–12 W (Raspberry Pi 4, two MIPI global-shutter cameras, IR strobe/LED driver, and networking), so the design will use a single 3S (11.1 V nominal, 12.6 V full) Li-ion pack at 6 Ah (~90–100 Wh). A 3S BMS provides over-voltage, under-voltage, over-current, and over-temperature protection and disconnects the pack before low voltage can brown out the Pi. A high-efficiency 12 V → 5 V @ 4 A buck creates the main 5 V rail and is sized so strobe pulses do not pull the rail below 4.8 V; the strobe/COB LED can be isolated with a small buck or local capacitance. Power-up is BMS OK → 5 V enable → Pi boot → cameras/strobe enable. The pack is recharged through a 12.6 V CC/CV USB-C or RC-style charger. With ~90–100 Wh and 85–90% conversion efficiency, this supports ≥6 h in warm conditions (≈5 h in coldo), which covers an 18-hole round with margin. 
 
-The subsystem parses each incoming message and normalizes the fields into a common Shot schema that includes, ball speed, ball distance, launch angle, spin rate, and smash factor along with a visual indication of shot trajectory to golfers.
+#### Interfacing
+ <div align="center">
+  <p><strong>Table VIII</strong></p>
+  <p><em>Launch Monitor and Interfacing</em></p>
 
-The subsystem applies bounds checks, converts all values to SI units, and assigns two timestamps—one from a monotonic clock for ordering and latency measurement, and one in Coordinated Universal Time (UTC) for logging and correlation.
+  | **Interface** | **Connected Subsystem** | **Type** | **Dir.** | **Protocol / Standard** | **Description** |
+  |-------------------------|-----------------------------|---------|-----------|------------------------|-------------------------------------------------------------------------------------------------------|
+  | App / Software | Communications | Wireless Communication | Output | WebSocket (WS) / REST (HTTP + JSON) | Receives real-time shot events over WS and emits normalized Shot records to the HUD/app |
+</div>
 
-The subsystem guarantees that each swing produces exactly one Shot record by performing short-window de-duplication of near-identical messages.
+#### Subsystem “Shall” Statements
 
-The subsystem publishes normalized Shot records to the visor HUD over a local WebSocket using JSON, and it targets an end-to-end latency of no more than 500 milliseconds at the ninety-fifth percentile.
+1. The subsystem **shall** acquire per-shot telemetry from PiTrac using WebSocket and REST, or GSPro Open Connect over TCP.
+2. The subsystem **shall** normalize all inputs to a single Shot schema, shall convert all quantities to SI units, and shall assign both a monotonic timestamp and a UTC timestamp to each record.
+3. The subsystem **shall** ensure one record per swing by de-duplicating near-identical messages within a bounded debounce window.
+4. The subsystem **shall** publish normalized Shot records to the visor HUD through a local WebSocket using a versioned JSON contract.
+5. The subsystem **shall** meet a ninety-fifth-percentile end-to-end latency of no more than 500 milliseconds from impact to on-visor render under nominal conditions.
+6. The subsystem **shall** automatically detect link loss, shall reconnect with exponential back-off, and shall continue operation without user intervention.
+7. The subsystem **shall** record rotating diagnostic logs of raw messages, normalized records, timing measurements, and reconnect events for testing and analysis.
+8. The subsystem **shall** protect all stored credentials and keys using secure storage provided by the operating system.
 
-The subsystem monitors liveness through socket heartbeats, performs automatic reconnection with exponential back-off after faults, and writes rotating diagnostic logs without blocking the data path.
-
-**Platform Options (Bridge Host)**
-
-The bridge may run as an application that terminates the PiTrac stream, provides the local WebSocket to the HUD, and drives the augmented-reality glasses over a wired video link. Alternatively, the bridge may run as an embedded Linux service on a small computer that ingests WebSocket or TCP traffic and republishes normalized Shot records to any HUD client over the local network or an inter-process communication channel.
-
-**Interfacing (Conceptual)**
-
-The PiTrac system sends real-time shot events to the bridge over WebSocket, while REST endpoints provide configuration and history when needed. The GSPro Open Connect path allows the bridge to listen on a TCP port for JSON messages labeled “Ready,” “Shot,” and “Heartbeat,” which are identical to the messages a simulator would receive. After ingest, the bridge publishes a compact, versioned Shot record to the HUD over a local WebSocket. Heartbeats and reconnect logic maintain the link, and rotating log files record raw messages, normalized records, and timing metrics for later analysis.
-
-
-**Performance Targets and Constraints**
-
-The subsystem uses WebSocket and REST, GSPro Open Connect over TCP, to transport telemetry, and it produces one deterministic Shot record per swing. The time from impact to visible HUD update shall not exceed 500 milliseconds at the ninety-fifth percentile, with ingest and normalization completing within approximately 50 milliseconds and publication to paint on the visor completing within approximately 100 milliseconds under nominal conditions. The subsystem must automatically reconnect after link loss, must not freeze the user interface, and must maintain ordering using a monotonic clock.
-
-**Subsystem “Shall” Statements**
-
-1. The subsystem shall acquire per-shot telemetry from PiTrac using WebSocket and REST, or GSPro Open Connect over TCP.
-
-2. The subsystem shall normalize all inputs to a single Shot schema, shall convert all quantities to SI units, and shall assign both a monotonic timestamp and a UTC timestamp to each record.
-
-3. The subsystem shall ensure one record per swing by de-duplicating near-identical messages within a bounded debounce window.
-
-4. The subsystem shall publish normalized Shot records to the visor HUD through a local WebSocket using a versioned JSON contract.
-
-5. The subsystem shall meet a ninety-fifth-percentile end-to-end latency of no more than 500 milliseconds from impact to on-visor render under nominal conditions.
-
-6. The subsystem shall automatically detect link loss, shall reconnect with exponential back-off, and shall continue operation without user intervention.
-
-7. The subsystem shall record rotating diagnostic logs of raw messages, normalized records, timing measurements, and reconnect events for testing and analysis.
-
-8. The subsystem shall protect all stored credentials and keys using secure storage provided by the operating system.
-
- <p align="center"> Table I </p>
-<p align="center">Launch Monitor and Interfacing</p>
-
-
-| Interface               | Connected Subsystem         | Type    | Direction | Protocol / Standard                    | Description                                                                                           |
-|-------------------------|-----------------------------|---------|-----------|-----------------------------------------|-------------------------------------------------------------------------------------------------------|
-| PiTrac WebSocket / REST | PiTrac ⇄ Bridge             | Data    | Input     | WebSocket (WS) / REST (HTTP + JSON)     | Receives real-time shot events over WS; uses REST endpoints for configuration and history as needed. |
-| Open Connect Socket     | PiTrac / Connector ⇄ Bridge | Data    | Input     | TCP (GSPro Open Connect v1, JSON)       | Accepts JSON messages (`Ready`, `Shot`, `Heartbeat`) on a TCP port, identical to simulator feeds.     |
-| Normalize & Commit      | Bridge (internal)           | Process | Output    | Vendor → Common Shot schema (SI units)  | Parses, validates, converts units, assigns monotonic/UTC timestamps, and de-duplicates per strike.    |
-| Publish to HUD          | Bridge ⇄ App/HUD            | Data    | Output    | Local WebSocket (JSON)                  | Emits normalized Shot records to the HUD/app with a sub-second end-to-end latency target.            |
-| HUD Render              | App/HUD ⇄ AR Glasses        | Video   | Output    | USB-C DisplayPort Alt-Mode or HDMI      | Renders a fixed, high-contrast HUD layout and outputs video to the AR glasses over a wired link.      |!
-
-
-
-
-<p align="center">
-  <img src="https://hackmd.io/_uploads/B1Up58KRxe.png" alt="subsystem flowchart">
-</p>
-
-<p align="center">Figure 3: Data Acquisition and Interface Flowchart </p>
+<div align="center">
+  <img src="https://hackmd.io/_uploads/B1Up58KRxe.png" alt="Data Acquisition and Interface Flowchart" width="900">
+  <p><em>Figure 18: Data Acquisition and Interface Flowchart</em></p>
+</div>
 
 ### Subsystem 2: Communications
-**Overview and Function**  
-The communication subsystem transmits the measured data captured by the launch monitor to all relevant subsystems. It utilizes wireless bluetooth and serial communication to ensure reliable data transfer for accurate metric display and data storage for future analysis. This functionality **shall** require a microcontroller for proper communication between devices as well as additional hardware for each possible microcontroller.
+#### Overview and Function 
+The **Communication subsystem** transmits the measured data captured by the launch monitor to all relevant subsystems. It utilizes wireless bluetooth and wired communication to ensure reliable data transfer for accurate metric display and data storage for future analysis.
 
-**Subsystem Operation** 
+#### Subsystem Operation
 
-**Hardware Overview**  
-The communication hardware **shall** interact with the visor design as they will need to be placed in according to the other subsystem's hardware. 
+At the start of a session, the golfer will need to establish a Bluetooth connection from their device with both the custom-built launch monitor and the visor. Following the measurement of the golfer’s swing, the application retrieves the corresponding data from the launch monitor via Bluetooth Low Energy (BLE) communication. Upon receiving the data, the application forwards it to the visor, effectively serving as a data relay. The visor’s embedded microcontroller integrates the received shot metrics with measurements from the onboard IMU (inertial measurement unit) and subsequently drives the HUD (head-up display) output on the mini OLED module.
 
-**Launch Monitor**  
-The launch monitor **shall** communicate with the app via a Bluetooth signal (2.4 GHz). If the selected model does not include built-in Bluetooth, an additional microcontroller with Bluetooth support, as listed below, shall be implemented to provide wireless connectivity
+#### Interfacing
+<div align="center">
+  <p><strong>Table IX</strong></p>
+  <p><em>Interfaces and Signal Definition</em></p>
 
-**Microcontroller**  
-The following are possible microcontroller options: Raspberry Pi Zero W, ESP32-S3, ESP32-P4. 
+  | **Interface** | **Connected Subsystem** | **Type** | **Dir.** | **Protocol / Standard** | **Description** |
+  |-----------------|------------------------|----------|-----------|------------------------|-----------------|
+  | ESP32-P4 | Power System | Power | Input | DC | Receives regulated 3.3 V to operate and up to 500 mA for wireless transmission. |
+  | Selected Launch Monitor | App | Wireless Comm. | Output | Bluetooth (2.4 GHz) | Sends selected data to the app. |
+  | ESP32-P4 | HUD/Display | Serial Comm. | Output | MIPI DSI | Sends HUD graphics to the Micro-OLED displays. |
+  | ESP32-P4 | HUD/Display | Serial Comm. | Input | SPI | Receives acceleration, angular velocity, and orientation data from IMU. |
+</div>
 
-The Raspberry Pi Zero W offers moderate performance with a single-core ARM11 processor, computing at speeds of 1 GHz. It includes built-in Bluetooth 4.1 (speeds up to 1 Mbps), SPI communication (SPI, I2C, and UART), and MIPI interfacing. However, it requires a full operating system (Linux), which increases software complexity and power consumption.
-
-The ESP32-S3 has high performance featuring a dual-core 32-bit Xtensa processor capable of handling speeds up to 240 MHz. It includes serial communication (SPI, I2C, and UART) and built-in Bluetooth 5 Low Energy, allowing for faster speeds (up to 2 Mbps) and lower power consumption. However, the ESP32-S3 has no MIPI support which would require two TC358778X MIPI-to-Parallel Bridge ICs to interface with the displays. Additionally, the ESP32-S3 can run bare-metal firmware or a real-time operating system, eliminating the need for a full operating system. 
-
-The ESP32-P4 has the highest performance capability of the three options due to its Dual-core 32-bit RISC-V processor capable for speeds up to 400 MHz. It has MIPI and serial communications to interact with the display hardware but does not include built-in Bluetooth. One option is the Raytac MDBT42 Bluetooth Low Energy (BLE) module interfacing with the ESP32-P4 via UART. UART is well-suited for this purpose, as BLE data rates are typically below 1 Mbps and can be reliably transmitted and processed using the ESP32-P4. However, the ESP32-P4-WIFI6 is a development board of that provides that BLE wireless capabilities which will reduce cost on extra hardware.
-
-Based on the following considerations: voltage, Bluetooth version, peripheral support, power efficiency, and system integration complexity — the **ESP32-P4** is the most suitable choice for the communication subsystem. However, all provided microcontrollers are capable of being incorporated in the product.
-
-<p align="center">Table II </p>
-  <p align="center"> Interfaces and Signal Definition </p>
-
-| Interface               | Connected Subsystem | Type                   | Direction | Protocol / Standard | Description                                                                      |
-| ----------------------- | ------------------- | ---------------------- | --------- | ------------------- | -------------------------------------------------------------------------------- |
-| **ESP32-P4**| Power System | Power| Input     | DC | Receives regulated 3.3 V to operate and up to 500 mA for wireless transmission.  |
-| **Selected Launch Monitor** | App | Wireless Communication | Output | Bluetooth (2.4 GHz) | Sends selected data to the app.|
-| **ESP32-P4**| HUD/Display| Serial Communication | Output | MIPI DSI | Sends HUD graphic to the Micro-OLED displays.|
-| **ESP32-P4** | HUD/Display | Serial Communication | Input | SPI | Receives acceleration, angular velocity, and orientation data from IMU.|
 
 #### Summary of “Shall” Statements
 
-* The selected launch monitor, app, and visor  **shall** wireless communicate shot metrics via BLE (Bluetooth Low Energy) at 2.4 GHz.
-* The microcontroller **shall** wirelessly receive the shot metrics via BLE (Bluetooth Low Energy) at 2.4 GHz.
-* The microcontroller **shall** be supplied and operate with 3.3V power signal.
-* The IMU **shall** use SPI serial protocol to interface with the selected microcontroller.
-* The mini OLED display **shall** use MIPI DSI to interface with the selected microcontroller.
-* All hardware **shall** be designed to integrate with the Physical Visor Design Subsystem for structural compatibility.
+1. The selected launch monitor, app, and visor  **shall** wireless communicate shot metrics via BLE (Bluetooth Low Energy) at 2.4 GHz.
+2. The microcontroller **shall** wirelessly receive the shot metrics via BLE (Bluetooth Low Energy) at 2.4 GHz.
+3. The microcontroller **shall** be supplied and operate with 3.3V power signal.
+4. The IMU **shall** use SPI serial protocol to interface with the ESP32-P4.
+5. The mini OLED display **shall** use 2-lane MIPI DSI interfacing with the ESP32-P4 due to board restrictions.
+6. All hardware **shall** be designed to integrate with the Physical Visor Design Subsystem for structural compatibility.
 
-<p align="center">
-  <img src="https://hackmd.io/_uploads/HkoFKbi0xx.png" alt="subsystem flowchart">
-</p>
+<div align="center">
+  <img src="https://hackmd.io/_uploads/HkoFKbi0xx.png" alt="Communication Flowchart" width="900">
+  <p><em>Figure 19: Communication Flowchart</em></p>
+</div>
 
-<p align="center">Figure 4: Communication Flowchart </p>
 
 ### Subsystem 3: Visor Design
- 
-Overview and Function
-The visor subsystem provides a wearable heads-up display (HUD) that projects launch-monitor telemetry directly into the golfer’s field of view. It integrates optical, mechanical, and electronic components into a balanced, ergonomic platform that maintains safety, clarity, and comfort. The design ensures minimal visual obstruction, fast response time, and compliance with ISO 15004-2 optical safety standards.
+#### Overview and Function
+The **Visor subsystem** provides a wearable heads-up display (HUD) that projects launch-monitor telemetry directly into the golfer’s field of view. It integrates optical, mechanical, and electronic components into a balanced, ergonomic platform that maintains safety, clarity, and comfort. The design ensures minimal visual obstruction, fast response time, and compliance with ISO 15004-2 optical safety standards.
 
-Exploded Parts List (by Function)
+##### Exploded Parts List (by Function)
 
 Base Frame: Uvex Hypershock safety glasses — structural carrier for optics and mounts.
 
@@ -323,17 +673,11 @@ Cabling and Guides: Strain-relieved, low-profile cables routed for safety and un
 
 Environmental Features: AR coatings, anti-glare film, and moisture-resistant padding.
 
-### Mechanical / Interface Summary  
+#### Operation
 
-| **Part** | **Material** | **Mass (g)** | **Interfaces** |
-|:--|:--|:--:|:--|
-| **Frame clamp** | PA12 / CF-Nylon | ≤ 12 | Frame ↔ HUD |
-| **HUD pod** | ABS / PC | ≤ 25 | OLED, IMU |
-| **Rear sleeve** | Softshell + ABS | ≤ 110 | USB-C, straps |
-| **Elastic straps** | Nylon elastic | ≤ 30 | Temples ↔ sleeve |
-| **Cable set** | FFC / FPC | ≤ 10 | Sleeve ↔ HUD |
+When powered on, the visor initializes its 3.3 V and 1.8 V rails, activates the IMU, and lights the Micro-OLED display. The user adjusts tilt and eye relief (18–22 mm) for a clear, focused image with ≥ 80 % visibility. During use, shot data from the Communications subsystem is projected through the collimating lens and AR-coated combiner, overlaying ball metrics in real time. The IMU stabilizes the display to remain steady with head movement. Power and control electronics housed in the rear sleeve balance weight and manage heat, keeping external surfaces below 41 °C. On shutdown, the system sequentially disables the OLED, IMU, and communications links, then isolates the Li-Po battery for safe storage.
 
-Fit and Ergonomics
+##### Fit and Ergonomics 
 
 The visor provides an adjustable eye relief ranging from 18 to 22 mm, allowing users to achieve optimal focus and comfort.
 
@@ -344,195 +688,157 @@ The eyebox measures at least 8 × 6 mm, ensuring consistent visuals across typic
 The maximum surface temperature remains below 41 °C even after 60 minutes of continuous operation, preventing user discomfort.
 
 The balanced Y-split straps distribute weight evenly across the head, improving comfort and stability during motion.
-Visor Design “Shall” Statements
 
-The visor shall mount a monocular HUD on the right eye with adjustable eye relief and ≥ 80 % visibility.
+#### Interfacing  
+<div align="center">
+  <p><strong>Table X</strong></p>
+  <p><em>Interfaces and Materials</em></p>
 
-The optical engine shall include a Micro-OLED, collimating lens, and AR-coated combiner.
+  | **Part** | **Material** | **Mass (g)** | **Interfaces** |
+  |:--|:--|:--:|:--|
+  | Frame clamp | PA12 / CF-Nylon | ≤ 12 | Frame ↔ HUD |
+  | HUD pod | ABS / PC | ≤ 25 | OLED, IMU |
+  | Rear sleeve | Softshell + ABS | ≤ 110 | USB-C, straps |
+  | Elastic straps | Nylon elastic | ≤ 30 | Temples ↔ sleeve |
+  | Cable set | FFC / FPC | ≤ 10 | Sleeve ↔ HUD |
+</div>
 
-The rear sleeve shall counterbalance the HUD and contain all electronics.
+#### Visor design "shall" statements
 
-Cable routing shall avoid obstructing the golfer’s view.
-
-External surfaces shall remain under 41 °C and be smooth and padded.
-
-The visor shall meet IP5x water and dust resistance requirements.
+1. The visor **shall** mount a monocular HUD on the right eye with adjustable eye relief and ≥ 80 % visibility.
+2. The optical engine **shall** include a Micro-OLED, collimating lens, and AR-coated combiner.
+3. The rear sleeve **shall** counterbalance the HUD and contain all electronics.
+4. Cable routing **shall** avoid obstructing the golfer’s view.
+5. External surfaces **shall** remain under 41 °C and be smooth and padded.
+6. The visor **shall** meet IP5x water and dust resistance requirements.
 
 Physical Layout Disclaimer
 Designs and dimensions are conceptual and may be refined through physical prototyping and ergonomic validation.
 
 
 ### Subsystem 4: Visor Powering System
+#### Overview and Function
+The **Power Subsystem** converts energy from a single-cell LiPo (1S, 3.7 V nominal) into regulated rails for the ESP32-P4 (3.3 V), IMU (3.3 V), and OLED HUD. It provides full protection, safe charging per cited standards, and is designed to last beyond a full round of golf (≥ 18 holes with cold-weather margin) using a 5000–6000 mAh LiPo cell.
 
+The subsystem outputs 3.3 V for logic and sensors, 1.8 V for display logic, 5.0 V for USB accessories or the 0.39″ OLED, and display-specific analog rails:  
+- 0.39″ OLED: Vin 2.5–5.5 V, VDDI 1.65–1.95 V  
+- 0.49″ OLED: AVDD 5.3–5.5 V, AVEE −4 to −5.5 V, VDDI 1.65–1.95 V; power ≈ 468 mW  
 
- #### Overview and Function
-The **Power Subsystem** converts energy from a **single-cell LiPo (1S, 3.7 V nominal)** into clean, regulated rails for the **Compute/Bridge (ESP32-P4 @ 3.3 V)**, **IMU @ 3.3 V**, and the **OLED HUD**. It implements full protection and safe charging consistent with cited standards and is sized to overshoot worst-case field use (≥ 18 holes plus buffer, cold-weather derating per notes). Target cell capacity: **5 000–6 000 mAh**.
+A 1S LiPo BMS provides Over-Voltage (OV), Under-Voltage (UV), Over-Current (OCP), and Over-Temperature (OTP) protections [2]. A USB-C charging path (5 V input) supports CC/CV (Constant Current / Constant Voltage) charging [3], holding constant current until 4.2 V, then constant voltage as current tapers for a safe full charge.  
 
-From the 1S pack, the subsystem generates:
-- **3.3 V** (ESP32-P4, IMU, logic)
-- **1.8 V** (display VDDI logic)
-- **5.0 V** (USB accessories and/or 0.39″ OLED AVDD path)
-- **Display analog rails** (option-dependent):
-  - **0.39″ OLED:** **Vin  2.5 - 5.5V**, **VDDI = 1.65 - 1.95 V**
-  - **0.49″ OLED:** **AVDD 5.3–5.5 V**, **AVEE −4 to −5.5 V**, **VDDI 1.65–1.95 V**; power ≈ **468 mW**
+An inline fuse adds overcurrent protection, and the design follows NEC and NESC safety standards for low-voltage, battery-powered systems.
 
-A **1S LiPo BMS / protection IC** manages **Over-Voltage (OV)**, **Under-Voltage (UV)**, **Over-Current (OCP)**, and **Over-Temperature (OTP)** Protections [2].  
-A **USB-C charging path** (5 V input) provides **CC/CV (Constant Current/Constant Voltage)** charging of the 1S pack [3].  
-This charging method is optimized for LiPo batteries and ensures that charging begins with a constant current until a set voltage is reached, after which the voltage is held constant while current tapers to safe cutoff levels.  
-Power distribution includes an inline fuse to further prevent overcurrents.
+#### Operation
 
-**Primary functions:**
-- Regulate and distribute **3.3 V**, **1.8 V**, **5 V**, and display analog rails.  
-- Provide **charge management** (**CC/CV**) and **cell protection** (**OV, UV, OCP, OTP**).  
-- Support **power-enable domains**.  
-- Conform to **NEC (National Electrical Code)** and **NESC (National Electrical Safety Code)** standards for low-voltage and battery-powered electronics, including safe conductor sizing, insulation, and fault protection guidelines.  
+At startup, the power subsystem activates when the user presses the power button or connects a USB-C charger. The Battery Management System (BMS) immediately verifies cell voltage and temperature before enabling the power rails. Once validated, the MCU sequentially powers the required domains — 3.3 V, 1.8 V, and the ± display analog rails — following the OLED vendor’s recommended timing for VDDI, AVDD, and AVEE initialization. This ensures stable startup conditions and prevents voltage overshoot or inrush that could damage the display or logic circuitry.
 
-*Note:* “1S” confirms the use of a **single LiPo cell in series**, ensuring all regulation is derived from the nominal 3.7 V pack.
+When operating in charging mode, the system uses a USB-C 5 V input to power a CC/CV (Constant Current / Constant Voltage) charging controller managed by the BMS. Charging occurs in two distinct phases: during the Constant Current (CC) phase, current remains fixed while the battery voltage gradually increases; once the voltage reaches approximately 4.2 V, the Constant Voltage (CV) phase begins, holding voltage steady while current tapers to a safe cutoff. The BMS also enforces a temperature gate that inhibits charging below 0 °C or above 45 °C, ensuring safe charging under varying ambient conditions. The charge rate is set between 0.5 C–1 C, as defined by the cell datasheet, corresponding to a full charge in 1–2 hours depending on battery capacity.
 
----
-#### Operation Description & Flow
+During normal operation, the subsystem continuously regulates and distributes power to all rails while monitoring for fault events. The BMS protects against Over-Voltage (OV), Under-Voltage (UV), Over-Current (OCP), and Over-Temperature (OTP) conditions, triggering shutdown or current limiting when thresholds are exceeded. Power delivery circuits remain active only when enabled by the MCU’s domain-control logic, allowing efficient energy use during low-power states or idle conditions. The user interface consists of a power button, USB-C charge port, and LED indicators showing charging, full-charge, and fault status. Together, these functions ensure safe and reliable energy delivery for a full 18-hole golf session, including performance margins for extended or cold-weather use.
 
-1. **Startup / Power-On**  
-   On button press or charger insertion, BMS validates cell voltage/temperature.  
-   If OK, MCU enables required rails (3.3 V, 1.8 V; +/− display rails as needed).  
-   *Note:* Follow OLED sequencing (VDDI/AVDD/AVEE timings) per vendor tables.
+##### Primary Functions
 
-2. **Charging Mode (USB-C 5 V)**  
-   1S charger applies **CC/CV (Constant Current / Constant Voltage)** with the BMS **Temprature gate** (charge inhibit < 0 °C or > 45 °C).  
-   During the **Constant Current (CC)** phase, current is fixed while voltage rises gradually; once the battery reaches ~4.2 V, the **Constant Voltage (CV)** phase begins and current tapers until cutoff.  
-   Charge current is set to cell **C-rate (0.5–1 C)** per datasheet, where “C” represents the charge/discharge rate relative to the battery capacity (e.g., 1 C = full charge in 1 hour, 0.5 C = full charge in 2 hours).
-
-3. **User Interface**  
-   - **Power button**  
-   - **USB-C charge port**  
-   - **LED indicators** for charging/full and fault status.
+* Regulate and distribute 3.3 V, 1.8 V, 5 V, and OLED analog power rails.  
+* Manage charging via CC/CV control and monitor OV, UV, OCP, and OTP fault conditions through the BMS.  
+* Provide power-enable domain control to optimize runtime and reduce idle power consumption.  
+* Maintain compliance with NEC and NESC standards for low-voltage and battery-powered systems.  
+* Ensure stable operation and safe charging through controlled startup sequencing and temperature-gated protection.
 
 #### Power & Efficiency Assumptions
 
-**Representative converter efficiencies (to be verified in detailed design):**
-- **3.3 V buck-boost from 1S:** η ≈ 90–93 %.  
-- **5.0 V boost from 1S:** η ≈ 90–93 %.  
-- **+5.4 V boost (OLED AVDD):** η ≈ 88–92 %.  
-- **−5.4 V inverting (OLED AVEE):** η ≈ 85–90 %.  
-- **1.8 V regulator (VDDI):**  
-  - **LDO from 3.3 V:** η ≈ 55 % (acceptable if I is low).  
-  - **Buck from 1S:** η ≈ 90–93 % (if I > 150 mA).
+Representative converter efficiencies (to be verified in detailed design):
+- 3.3 V buck-boost from 1S: η ≈ 90–93 %.  
+- 5.0 V boost from 1S: η ≈ 90–93 %.  
+- +5.4 V boost (OLED AVDD):** η ≈ 88–92 %.  
+- −5.4 V inverting (OLED AVEE): η ≈ 85–90 %.  
+- 1.8 V regulator (VDDI):  
+  - LDO from 3.3 V: η ≈ 55 % (acceptable if I is low).  
+  - Buck from 1S: η ≈ 90–93 % (if I > 150 mA).
 
-**Display power:**
-- **0.49″ OLED:** ≈ 468 mW at 90 Hz, 1800 nits (worst-case full white).  
-- **0.39″ OLED:** assume ≈ 300–450 mW (similar conditions, use ≈ 400 mW for budget).
+Display power:
+- 0.49″ OLED: ≈ 468 mW at 90 Hz, 1800 nits (worst-case full white).  
+- 0.39″ OLED: assume ≈ 300–450 mW (similar conditions, use ≈ 400 mW for budget).
 
-**IMU power:**  
-- The **Inertial Measurement Unit (IMU)** operates from the **3.3 V rail** shared with the ESP32-P4.  
-- Typical IMU current draw is **3–6 mA** during full 6-axis sampling and up to **10 mA peak** during data bursts.  
-- This equates to approximately **15–33 mW** average consumption, which is negligible compared to the compute and display loads but should still be included in total current budgeting on the 3.3 V line.  
-- Efficiency through the **3.3 V buck-boost** remains in the **90–93 % range**, so IMU conversion losses are minimal (< 2–3 mW).  
-- To minimize drift and noise, the IMU supply will use **low-ripple 3.3 V filtering** (LC or ferrite bead isolation) consistent with sensor manufacturer guidance.
+IMU power:  
+- The Inertial Measurement Unit (IMU) operates from the 3.3 V rail shared with the ESP32-P4.  
+- Typical IMU current draw is 3–6 mA during full 6-axis sampling and up to 10 mA peak during data bursts.  
+- This equates to approximately 15–33 mW average consumption, which is negligible compared to the compute and display loads but should still be included in total current budgeting on the 3.3 V line.  
+- Efficiency through the 3.3 V buck-boost remains in the 90–93 % range, so IMU conversion losses are minimal (< 2–3 mW).  
+- To minimize drift and noise, the IMU supply will use low-ripple 3.3 V filtering (LC or ferrite bead isolation) consistent with sensor manufacturer guidance.
 
 
 **Pack energy:**  
 5 000–6 000 mAh @ 3.7 V → 18.5–22.2 Wh nominal.  
 Include ≥ 20 % reserve and cold-weather derate for reliable 18-hole operation.
 
+#### Interfacing
+<div align="center">
+  <p><strong>Table XI</strong></p>
+  <p><em>Interfaces and Signal Definition</em></p>
 
----
----
-<p align="center">Table III </p>
-   <p align="center"> Interfaces and Signal Definition </p>
-
-| Interface | Connected Subsystem | Type | Direction | Protocol / Standard | Description |
-|------------|--------------------|-------|------------|---------------------|--------------|
-| **3.3 V Rail (buck-boost)** | ESP32-P4, IMU, logic | Power | Out | DC | Up to **600 mA** (headroom). Low ripple for RF/IMU. |
-| **1.8 V Rail (LDO or buck)** | OLED VDDI | Power | Out | DC | **150–300 mA** budget (LDO if low I; buck if ≥150 mA). |
-| **5.0 V Rail (boost)** | USB accessory / OLED AVDD (0.39″)| Power | Out | DC | Generated by dedicated boost. |
-| **AVDD (+5.3–5.5 V)** | OLED analog (0.49″) | Power | Out | DC | Generated by dedicated boost. |
-| **AVEE (−4 to −5.5 V)** | OLED analog (0.49″) | Power | Out | DC | Generated by inverting converter / charge-pump. |
-| **USB-C Charge In (5 V)** | External charger | Power | In | USB-C | 5 V input up to **0.5 C – 1 C A** into 1S CC/CV charger. |
-| **Charge / Full Indication** | BMS → MCU | Digital | Out | GPIO | Pack charging/full status. |
-| **Power-Enable Lines** | MCU → rails | Digital | In | GPIO | Enables per-domain rails for low-power. |
-| **Protection / Fault** | Power → MCU | Digital | Out | GPIO | **OV (Over-Voltage), UV (Under-Voltage), OCP (Over-Current), OTP (Over-Temperature)** asserted → safe shutdown. |
-
----
+  | **Interface** | **Connected Subsystem** | **Type** | **Dir.** | **Protocol / Standard** | **Description** |
+  |---------------|------------------------|----------|-----------|------------------------|-----------------|
+  | 3.3 V Rail (buck-boost) | ESP32-P4, IMU, logic | Power | Output | DC | Up to **600 mA** (headroom). Low ripple for RF/IMU. |
+  | 1.8 V Rail (LDO or buck) | OLED VDDI | Power | Output | DC | **150–300 mA** budget (LDO if low I; buck if ≥150 mA). |
+  | 5.0 V Rail (boost) | USB accessory / OLED AVDD (0.39″) | Power | Output | DC | Generated by dedicated boost. |
+  | AVDD (+5.3–5.5 V) | OLED analog (0.49″) | Power | Output | DC | Generated by dedicated boost. |
+  | AVEE (−4 to −5.5 V) | OLED analog (0.49″) | Power | Output | DC | Generated by inverting converter / charge-pump. |
+  | USB-C Charge In (5 V) | External charger | Power | Input | USB-C | 5 V input up to **0.5 C – 1 C** into 1S CC/CV charger. |
+  | Charge / Full Indication | BMS → MCU | Digital | Output | GPIO | Pack charging/full status. |
+  | Power-Enable Lines | MCU → rails | Digital | Input | GPIO | Enables per-domain rails for low-power. |
+  | Protection / Fault | Power → MCU | Digital | Output | GPIO | **OV (Over-Voltage), UV (Under-Voltage), OCP (Over-Current), OTP (Over-Temperature)** asserted → safe shutdown. |
+</div>
 
 
+### Power Subsystem “Shall” Statements
 
+1. The power subsystem **shall** use a single-cell (1S) LiPo battery rated at 3.7 V nominal and 5 000–6 000 mAh, providing at least six hours of continuous operation.
+2. The power subsystem **shall** generate regulated outputs of 3.3 V ±5 %, 1.8 V ±5 %, and OLED-specific analog rails as required.  
+   - 0.39″ OLED: Vin 2.5–5.5 V, VDDI 1.65–1.95 V  
+   - 0.49″ OLED: AVDD 5.3–5.5 V, AVEE −4 to −5.5 V, VDDI 1.65–1.95 V
+3. The subsystem **shall** comply with NESC and NEC low-voltage standards for grounding, overcurrent protection, and insulation.
+4. The subsystem **shall** include a BMS providing OV, UV, OCP, and OTP protection during charge and discharge.
+5. The subsystem **shall** include an inline fuse rated ≥ 1.5× the maximum steady-state current to prevent overcurrent faults.
+6. The subsystem **shall** inhibit charging below 0 °C or above 45 °C and disable discharge under under-voltage conditions.
+7. User-touchable surfaces **shall** not exceed 41 °C after 60 minutes at 25 °C ambient temperature.
+8. The subsystem **shall** meet NEC Article 480 and NESC Section 12 requirements for safe battery installation and short-circuit protection.
+9. The subsystem **shall** accept USB-C 5 V input and perform CC/CV charging per manufacturer specs.  
+   - In CC mode, current remains constant as voltage rises.  
+   - In CV mode, voltage is held while current tapers to a safe cutoff near 4.2 V.
+10. The subsystem **shall** limit charge current to the manufacturer’s rated C-rate (0.5–1 C), where 1 C = 6 000 mA for a 6 000 mAh cell.
+11. The subsystem **shall** achieve ≥ 90 % efficiency for the 3.3 V and 5 V converters, ≥ 88 % for +5.4 V, ≥ 85 % for −5.4 V, and ≥ 90 % for 1.8 V regulation.
+12. The subsystem **shall** include margin calculations for converter losses, battery derating, and safety headroom per NESC best practices.
 
-### Power Subsystem “Shall” Statements 
-
-#### Architecture & Rails  
-1. **Shall** use a single-cell (1S) LiPo, 3.7 V nominal, with a mAh capacity to last a minimum of 6 hours.  
-2. **Shall** generate regulated rails of **3.3 V ±5 %**, **1.8 V ±5 %**, and the OLED analog rails:(Option Dependent)  
-   - **0.39″:** Vin 2.5–5.5 V, VDDI 1.65–1.95 V.  
-   - **0.49″:** AVDD 5.3–5.5 V, AVEE −4 to −5.5 V, VDDI 1.65–1.95 V.  
-3. **Shall** comply with **NESC (National Electrical Safety Code)** and **NEC (National Electrical Code)** standards for low-voltage systems, grounding, overcurrent protection, and insulation.  
-   - NESC ensures human/equipment safety for low-voltage DC installations.  
-   - NEC ensures proper wiring, fusing, and component protection under rated current/temperature.
-
-#### Protection & Safety  
-4. Include **1S LiPo BMS** implementing **OV (Over-Voltage)**, **UV (Under-Voltage)**, **OCP (Over-Current)**, **OTP (Over-Temperature)**.  
-5. Inline fuse ≥ 1.5× max steady-state current of expected maximum current.  
-6. Inhibit charging below 0 °C / above 45 °C; shutdown discharge on UV.  
-7. User-touchable surfaces shall not exceed **41 °C after 60 min @ 25 °C** ambient.  
-8. **Shall** conform to **NEC Article 480 (Storage Batteries)** and relevant **NESC Part 1, Section 12 (Low-Voltage Systems)** guidelines for safe installation and protection against short-circuit or overheating hazards.
-
-#### Charging & Input Power  
-9. Accept **USB-C 5 V** input; perform **CC/CV (Constant Current / Constant Voltage)** charging per cell datasheet.  
-10. Limit charge current to ≤ cell manufacturer’s recommended **C-rate (0.5–1 C)**, where **C** defines the rate of current relative to total capacity (e.g., 1 C = 6 000 mA for a 6 000 mAh cell).
-
-#### Efficiency & Power Budgeting  
-11. Converter efficiency targets: **3.3 V buck-boost ≥ 90 %**, **5 V boost ≥ 90 %**, **+5.4 V boost ≥ 88 %**, **−5.4 V inverting ≥ 85 %**, **1.8 V buck ≥ 90 %**.  
-12. **Shall** include margin calculations accounting for converter inefficiency, battery derate, and safety headroom per **NESC** low-voltage best practices.
 
 ---
 ### Power Subsystem Flowchart
-<p align="center"><img style="display:block;margin:20px right;padding:1px;border:1px #eee;width:99%;" src="https://hackmd.io/_uploads/Byrf7_nRgx.png)" /></p> 
-
-<p align="center">Figure 6: Power Subsystem Flowchart</p>
-
-
-
+<div align="center">
+  <img src="https://hackmd.io/_uploads/Byrf7_nRgx.png" alt="Power Subsystem Flowchart" width="99%">
+  <p><em>Figure 20: Power Subsystem Flowchart</em></p>
+</div>
 
 ### Subsystem 5: App/Software
 
-#### Subsystem Overview  
+#### Overview and Function  
 The **Application Subsystem** serves as the user interface and data management hub for the Smart Golf Visor system. It enables golfers to view real-time and historical performance data, receive automated coaching insights, and maintain connectivity between the launch monitor, visor hardware, and cloud-based data storage. The subsystem is designed for compatibility across mobile and desktop browsers, optimized for smartphones for use on the course. The ideal way to accomplish this is with a web application written in Python and hosted via Streamlit Cloud. Streamlit Cloud offers a Community Cloud, which allows users to host web applications from a Github repository. These applications can then be accessed from any internet-enabled mobile device. Streamlit apps use Hypertext Transfer Protocol Secure (HTTPS) for an encrypted connection between the web app and the user's browser. 
 
+The web-based application shall provide an intuitive user interface to display the key performance metrics, including ball speed, carry distance, launch angle, spin rate, and smash factor. It shall integrate Bluetooth connectivity to communicate with both the launch monitor and the microcontroller-based visor module. The system shall process and store shot data in a secure cloud database to allow session tracking and post-round review. Additionally, it shall generate automated coaching insights using the processed shot data to suggest performance adjustments. Finally, the application shall transmit numerical metrics to the visor for real-time display.
 
-#### Primary Functions  
+#### Operation  
+When a user accesses the **application**, they are presented with a **mobile-friendly dashboard interface** featuring key options. Users can **Start New Session** to begin receiving metrics from the **launch monitor** and sending them to the **visor**, or they can **View History**, which loads past session data and statistical summaries from the **cloud database**. Within the history view, **Performance Insights** are provided, displaying trend analysis and coaching tips derived from session metrics. During an active session, incoming data packets from the **launch monitor** are processed in real-time. The **app** parses and filters the metrics, which are then stored securely in the **cloud database** and streamed via **Bluetooth** to the **visor microcontroller** for HUD viewing. Upon completion of a session, users can later review session metrics and suggested practice focus areas.
 
-1. **Provide an intuitive user interface** to display the key performance metrics of ball speed, carry distance, launch angle, spin rate, and smash factor.  
-2. **Integrate Bluetooth connectivity** to communicate with both the launch monitor and the microcontroller-based visor module.  
-3. **Process and store shot data** in a secure cloud database to allow session tracking and post-round review.  
-4. **Generate automated coaching insights** using processed shot data to suggest performance adjustments.  
-5. **Transmit numerical metrics** to the visor for real-time display.  
 
----
-
-#### Subsystem Operation  
-When a user accesses the application, they are presented with a mobile-friendly dashboard interface featuring key options:
-- **Start New Session** – Begin receiving metrics from the launch monitor and sending to the visor.  
-- **View History** – Loads past session data and statistical summaries from the cloud database.  
-    - **Performance Insights** – Displays trend analysis and coaching tips derived from session metrics.  
-
-During an active session, incoming data packets from the launch monitor are processed in real-time. The app parses and filters metrics, which are then both:
-- Stored securely in the cloud database, and  
-- Streamed via Bluetooth to the visor microcontroller for HUD viewing.  
-
-Upon completion of a session, users can later review session metrics and suggested practice focus areas.
-
----
 
 #### Interfacing
+<div align="center">
+  <p><strong>Table XII</strong></p>
+  <p><em>Application Interfaces with Other Subsystems</em></p>
 
-<p align="center">Table IV</p>  
-<p align="center">Application Interfaces with Other Subsystems</p>
-
-| Interface          | Connected Subsystems | Type                   | Dir.   | Protocol / Standard        | Description                                                                                                                                                                                        |
-| ------------------ | ------------------- | ---------------------- | ------ | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Launch Monitor** | Launch Monitor -> Communications -> Application             | Wireless Communication | Input  | Bluetooth Low Energy (BLE) | Receives real-time numerical shot data: ball speed, carry distance, launch angle, spin rate, and smash factor. Sends handshake to establish data streaming.                                        |
-| **Smart Visor**    | Application -> Communications -> Smart Visor| Wireless Communication | Output | Bluetooth Low Energy (BLE) | Sends numerical summary metrics for current swing: ball speed, carry distance, launch angle, spin rate, and smash factor. Receives status acknowledgment or readiness signal from microcontroller. |
-
----
+  | **Interface** | **Connected Subsystems** | **Type** | **Dir.** | **Protocol / Standard** | **Description** |
+  |---------------|-------------------------|----------|-----------|------------------------|-----------------|
+  | Launch Monitor | Communications | Wireless Communications | Input | Bluetooth Low Energy (BLE) | Receives real-time numerical shot data: ball speed, carry distance, launch angle, spin rate, and smash factor. Sends handshake to establish data streaming. |
+  | Smart Visor | Communications | Wireless Communications | Output | Bluetooth Low Energy (BLE) | Sends numerical summary metrics for current swing: ball speed, carry distance, launch angle, spin rate, and smash factor. Receives status acknowledgment or readiness signal from microcontroller. |
+</div>
 
 #### Application Subsystem "Shall" Statements
 1.  The application **shall** display five key performance metrics per shot: ball speed, carry distance, launch angle, spin rate, and smash factor.  
@@ -546,36 +852,28 @@ Upon completion of a session, users can later review session metrics and suggest
 9.  The application **shall** use secure Bluetooth pairing methods compliant with current browser-supported Web Bluetooth security standards.  
 10.  The application **shall** use HTTPS with TLS encryption for all cloud-based data transactions.  
 
----
 #### Flowchart
-<p align="center">
-  <img src="https://hackmd.io/_uploads/B1UDWjoCxe.png" alt="AppFlowChart" width="700"></p>
-  <p align="center">
-Figure 6: Flow Chart showing operation and user interaction with the application
-</p>
+<div align="center">
+  <img src="https://hackmd.io/_uploads/B1UDWjoCxe.png" alt="App Flow Chart" width="700">
+  <p><em>Figure 21: Flow Chart showing operation and user interaction with the application.</em></p>
+</div>
+
 
 ### Subsystem 6: Heads-Up Display
-#### Subsystem Overview and Function
-The Heads-Up Display (HUD) subsystem is responsible for clearly projecting both the real-world environment and the HUD graphic interface, which displays the following data metrics: ball speed, ball distance, launch angle, spin rate, and smash factor- along with shot direction and coaching suggestions. 
+#### Overview and Function
+The **Heads-Up Display (HUD) subsystem** is responsible for clearly projecting both the real-world environment and the HUD graphic interface, which displays the following data metrics: ball speed, ball distance, launch angle, spin rate, and smash factor- along with shot direction and coaching suggestions. 
 
 The HUD combines both hardare and software components to deliver real-time feedback with minimal delay, ensuring the user maintains visual clarity and responsiveness during operation. The HUD interfaces with the following subsystems: Power, Communications, and Physical Visor Design. 
 
 
-#### Subsystem Operation 
-##### Hardware Overview
+#### Operation 
+##### Hardware Operation
 The HUD hardware consists of three primary components:  a microcontroller, a tracking sensor (IMU), and a micro-OLED display. Each component plays a critical role in ensuring smooth data processing and accurate, real-time visual output
 
 ##### *Microcontroller*
-The microcontroller shall provide the processing power of the HUD. It shall process incoming data from both the IMU sensor and the app/software subsystem and drive the display at a high speed to ensure minimal delay. The microcontroller shall interface with the 
-system through a regulated 3.3 V DC input power signal.
+The microcontroller shall provide the processing power of the HUD. It shall process incoming data from both the IMU sensor and the app/software subsystem and drive the display at a high speed to ensure minimal delay. The microcontroller shall interface with the system through a regulated 3.3 V DC input power signal.
 
-It shall also interface with the Communications subsystem by receiving input data via Bluetooth wireless communication from the app/software and receiving motion data via SPI serial communication from the IMU. Possible microcontroller options include the ESP32-C3, ESP32-S3, and ESP32-P4 series.
-
-* The ESP32-C3 features a 160 MHz clock speed, 4 MB of onboard flash memory, and 400 KB of SRAM.
-* The ESP32-S3 offers a 240 MHz clock, 4–16 MB of flash, and 512 KB of SRAM.
-* The ESP32-P4 provides the highest performance with a 400 MHz clock speed, 768 KB of SRAM, and 16–32 MB of flash memory.
-
-Due to its superior processing speed and storage capacity, the ESP32-P4 is the optimal choice to ensure smooth and efficient HUD operation with no perceptible delay.
+It shall also interface with the Communications subsystem by receiving input data via Bluetooth wireless communication from the app/software and receiving motion data via SPI serial communication from the IMU. The selected microcontroller, the ESP32-P4, provides superior processing speed of 400 MHz clock speed and large storage capacity of 768 KB of SRAM, and 16–32 MB of flash memory. Its high performance makes it an optimal choice to ensure smooth and efficient HUD operation with no perceptible delay
 
 ##### *Tracking Sensor*
 The tracking sensor shall be an Inertial Measurement Unit (IMU) responsible for measuring the visor’s acceleration, angular velocity, and orientation. The IMU collects three-axis data from its onboard accelerometer, gyroscope, and magnetometer, corresponding to motion along the x, y, and z axes. The sensor’s data is read using an SPI interface by a function called SPIReadWord(x) that retrieves 16-bit values from the IMU’s data registers. This enables accurate tracking of the visor’s position and ensures that the HUD graphics remain properly aligned with the user’s field of view during movement. The IMU shall receive a regulated 3.3 V DC input power signal from the power subsystem and shall transmit motion and orientation data to the ESP32 microcontroller via an SPI serial communication interface.
@@ -596,30 +894,33 @@ The visor shall include at least one micro-OLED display projecting onto one lens
 
 All hardware components shall also interface with the physical visor design subsystem. All measurements of dimensions and placement for the hardware components shall be provided to the physical visor design subsystem to ensure an optimal and functional visor model.
 
-##### Software Overview
+##### Software Operation
 The HUD software shall be written in C and stored on the ESP32 based microcontroller. It shall use an microcontroller display library to generate the graphic intergface. The graphic interface shall display:
 * Data metrics (ball speed, ball distance, launch angle, spin rate, smash factor)
 * Shot direction
 * Coaching suggestion based on processed performance data
 Below is an example of the expected HUD layout that the Smart Golf Visor Team has come up.
-  <p align="center">
-    <img style="display:block;margin:20px right;padding:1px;border:1px #eee;width:80%;" src="https://hackmd.io/_uploads/r174n9Apxe.jpg" />
-    </p> 
+<div align="center">
+  <img src="https://hackmd.io/_uploads/r174n9Apxe.jpg" alt="HUD Graphic Interface Illustration" width="80%">
+  <p><em>Figure 22: HUD Graphic Interface Illustration</em></p>
+</div>
 
-<p align="center">Figure 7: HUD Graphic Interface Illustration </p>
+#### Interfacing
 
-#### Interfacing (Conceptual)
-<p align="center">Table V </p>
-   <p align="center"> Interfaces and Signal Definition </p>
+<div align="center">
+  <p><strong>Table XIII</strong></p>
+  <p><em>HUD Interfaces and Signal Definition</em></p>
 
-| Interface | Connected Subsystem | Type |Dir.| Protocol /Standard | Description |
-|------------|--------------------|-------|------|-----------|--------------|
-| **ESP32** | Power | Power | Input | DC | Receives regulated 3.3 V to operate. |
-| **IMU** | Power | Power | Input | DC | Receives regulated 3.3 V to operate. |
-| **IMU** | Communications | Serial | Output | SPI | Sends acceleration, angular velocity, and orientation data to ESP32. |
-| **Micro-OLED** | Power | Power | Input | DC | Receives 1.8 V to power digital logic. |
-| **Micro-OLED** | Power | Power | Input | DC | Receives 5 V or 5.3 to 5.5 V (AVDD) and -4 V to -5.5 V (AVEE) to operate depending on the display used. |
-| **Micro-OLED** | Communications | Serial | Input | MIPI-DSI | Receives HUD graphics for display. |
+  | **Interface** | **Connected Subsystem** | **Type** | **Dir.** | **Protocol / Standard** | **Description** |
+  |---------------|------------------------|----------|-----------|------------------------|-----------------|
+  | ESP32 | Power | Power | Input | DC | Receives regulated 3.3 V to operate. |
+  | IMU | Power | Power | Input | DC | Receives regulated 3.3 V to operate. |
+  | IMU | Communications | Serial | Output | SPI | Sends acceleration, angular velocity, and orientation data to ESP32. |
+  | Micro-OLED | Power | Power | Input | DC | Receives 1.8 V to power digital logic. |
+  | Micro-OLED | Power | Power | Input | DC | Receives 5 V or 5.3 to 5.5 V (AVDD) and -4 V to -5.5 V (AVEE) to operate depending on the display used. |
+  | Micro-OLED | Communications | Serial | Input | MIPI-DSI | Receives HUD graphics for display. |
+</div>
+
 
 #### Summary of “Shall” Statements
 
@@ -633,13 +934,12 @@ Below is an example of the expected HUD layout that the Smart Golf Visor Team ha
 
 #### Flowchart
 The operation of the Heads-Up Display is illustrated in the flowchart below.
-<p align="center"><img style="display:block;margin:20px right;padding:1px;border:1px #eee;width:80%;" src="https://hackmd.io/_uploads/rJC7dW70ge.png" /></p> 
+<div align="center">
+  <img src="https://hackmd.io/_uploads/rJC7dW70ge.png" alt="Heads-Up Display Subsystem Flowchart" width="80%">
+  <p><em>Figure 23: Heads-Up Display Subsystem Flowchart</em></p>
+</div>
 
-<p align="center">Figure 8: Heads-Up Display Subsystem Flowchart</p>
-
- ## Ethical, Professional, and Standards Considerations
-
-
+## Ethical, Professional, and Standards Considerations
 ### Broader Impacts
 
 - **Global / Economic Impacts:**  
@@ -649,7 +949,7 @@ The operation of the Heads-Up Display is illustrated in the flowchart below.
   - Because the software and display outputs are customizable, text can be produced in **any language**, and all metrics can be converted into **regionally appropriate units** (e.g., yards/meters, mph/km/h).  
   - Overall, this system supports economic inclusivity and the global sharing of sports analytics technology through affordable, scalable engineering solutions.
 
-- **Environmental Impacts:**  
+- **Environmental Impacts:**
   - **Electronic waste concerns:** The visor contains batteries, displays, and sensors that may degrade or become obsolete over time. Responsible **recycling and recovery programs** should be emphasized at end-of-life.  
   - **Energy consumption:** Devices that draw high current degrade batteries faster and require more frequent charging. Efficient **buck/boost converters (≥ 85–93% efficiency)** minimize this effect.  
   - **Materials:** The sourcing and manufacturing of electronics have an environmental footprint. Choosing **durable, repairable, and recyclable components** and adhering to **NEC/NESC guidelines** for safe electrical design (fuses, wiring gauge, insulation) reduces impact and increases product longevity.  
@@ -690,10 +990,11 @@ The operation of the Heads-Up Display is illustrated in the flowchart below.
 | **Wiring & power conductors** | **NEC/NESC low-voltage sections** [17] | Wire size, insulation, and fault protection | Proper conductor sizing (AWG rating), insulation class, and inline fusing to prevent short circuits or thermal failure |
 | **Converter efficiency** | IEC 62301 [16] | Power-saving requirements for electronics | Target ≥ 85% efficiency across converters to reduce standby losses and extend battery life |
 
----
+<div align="center">
+  <p><strong>Table VII</strong></p>
+  <p><em>Ethical-Risk Register & Mitigations We Implement</em></p>
+</div>
 
-<center>Table VII</center>  
-<center>Ethical-Risk Register & Mitigations We Implement</center>
 
 | Risk | Why It Matters | Mitigation Built Into the Design |
 |---|---|---|
@@ -706,7 +1007,6 @@ The operation of the Heads-Up Display is illustrated in the flowchart below.
 
 
 ## Resources
-
 
 ### Budget
 
@@ -725,40 +1025,57 @@ Power and I/O — the battery, charging and protection, power-delivery cabling a
 
 **Launch Monitor — $436.00**
 
-This subsystem implements the sensing pipeline for a do-it-yourself launch monitor modeled after the PiTrac approach. It uses two global-shutter Raspberry Pi–compatible cameras (2 × $50) and wide-angle lenses (2 × $25) to capture the ball’s motion with minimal motion blur. A Raspberry Pi 4 (1 × $55) executes the image pipeline and publishes shot results to the bridge. Supporting parts include transistor–transistor logic (TTL)–level discretes and cabling (1 × $25) for camera and strobe control, an infrared (IR) long-pass filter (1 × $15) to suppress ambient light, a chip-on-board (COB) light-emitting diode (LED) array (1 × $30) as the strobe source, and an LED power supply (1 × $36) sized for the strobe duty cycle. Mechanical items include a chassis/project housing (1 × $30) and 3D-printed mounts and shields produced in one of the following materials:
+This subsystem implements the sensing pipeline for a do-it-yourself launch monitor modeled after the PiTrac approach. It uses two global-shutter Raspberry Pi–compatible cameras and wide-angle lenses to capture the ball’s motion with minimal motion blur. A Raspberry Pi 4 executes the image pipeline and publishes shot results to the bridge. Supporting parts include transistor–transistor logic (TTL) discretes and cabling for camera and strobe control, an infrared (IR) long-pass filter to suppress ambient light, a chip-on-board (COB) light-emitting diode (LED) array as the strobe source, an LED power supply sized for the strobe duty cycle, and a printed/mechanical housing.For printed mounts and shields, three common filaments were considered: PETG for durability and outdoor use, PLA for easy, accurate prototyping, and ABS for higher-temperature parts near electronics. PETG is preferred for the final build because it balances strength, layer adhesion, and heat tolerance.
 
-Polyethylene terephthalate glycol (PETG): Best overall durability and impact resistance for field use; good layer adhesion, low warpage, and better UV/moisture tolerance than polylactic acid. Typical print temps 230–250 °C; glass-transition temperature (Tg) ~80 °C; filament cost ~$20–$25/kg.
+Raspberry Pi 4: $55.00
+Global-shutter cameras (2 × $50): $100.00
+Wide-angle lenses (2 × $25): $50.00
+TTL-level discretes and cabling: $25.00
+IR long-pass filter: $15.00
+COB LED array (strobe): $30.00
+LED power supply: $36.00
+Chassis / project housing: $30.00
+3D-printing material (PETG): 2 × $20.00 = $40.00
+Launch Monitor Subtotal: $436.00
 
-Polylactic acid (PLA): Easiest to print and dimensionally accurate; suitable for jigs, internal brackets, and non-sun-exposed parts. Lower heat resistance (Tg ~55–60 °C) and reduced toughness outdoors; filament cost ~$18–$22/kg.
 
-Acrylonitrile–butadiene–styrene (ABS): Higher heat resistance (Tg ~95 °C) and good toughness; preferred near warm electronics or lighting. Requires an enclosure to limit warpage and emits fumes during printing; filament cost ~$20–$28/kg.
+#### Visor / HUD — $301.00
 
-For outdoor range use and general robustness, PETG is recommended for primary brackets, shrouds, and cable guards; PLA is acceptable for non-structural internal fixtures; ABS is appropriate for high-temperature or solvent-bonded components. Together, these parts and materials provide the sensing, illumination, and mechanical robustness required to measure ball speed, launch angles, and spin while remaining portable.This subsystem implements the sensing pipeline for a do-it-yourself launch monitor modeled after the PiTrac approach. It uses two global-shutter Raspberry Pi–compatible cameras (2 × $50) and wide-angle lenses (2 × $25) to capture the ball’s motion with minimal motion blur. A Raspberry Pi 4 (1 × $55) executes the image pipeline and publishes shot results to the bridge. Supporting parts include transistor–transistor logic (TTL)–level discretes and cabling (1 × $25) for camera and strobe control, an infrared (IR) long-pass filter (1 × $15) to suppress ambient light, a chip-on-board (COB) light-emitting diode (LED) array (1 × $30) as the strobe source, and an LED power supply (1 × $36) sized for the strobe duty cycle. Mechanical items include a chassis / project housing (1 × $30) and polyethylene terephthalate glycol (PETG) filament for printed mounts and shields (2 × $20). Together these parts provide the sensing, illumination, and mechanical robustness required to measure ball speed, launch angles, and spin while remaining portable and low cost.
+This subsystem is a head-mounted, near-eye display driven over a wired video link from the host so that the video path is bounded and repeatable and updates are frame-accurate. The bill of materials includes two full-high-definition micro-organic light-emitting diode (micro-OLED) panels for high-contrast, daylight-readable text, an inertial-measurement unit (IMU) for stable metric placement if head pose is used, and glasses frames to mount the optics safely.
 
-**Visor / HUD — $301.00**
+Micro-OLED displays (2 × $144 averaged): $288.00
+IMU sensor: $13.00
+Glasses frames / mounting hardware: $25.00
+Visor / HUD Subtotal: $301.00
 
-The HUD is a head-mounted near-eye display driven over a wired video link from the host device, which provides a bounded, repeatable video path and frame-accurate updates. The bill of materials includes two full-high-definition micro-organic light-emitting diode (micro-OLED) panels (2 × $144 averaged) that provide high contrast and daylight-readable text, an inertial-measurement unit (IMU) (1 × $13) for stable placement of visual elements if the HUD software uses head pose, and glasses frames (1 × $25) to mount the optics safely and comfortably. Using a wired link reduces integration risk and eliminates recurring software fees.
+#### Communications — $25.00
 
-**Communications — $25.00**
+This subsystem bridges the launch monitor and the HUD/application. It terminates sockets or serial links, normalizes messages, and forwards them. It also provides a Bluetooth Low Energy (BLE) path for control or future accessories.
 
-This subsystem bridges the launch monitor and the HUD/application. It uses a microcontroller (1 × $20) to terminate sockets or serial links and to render or forward messages, and a BLE radio module (1 × $5) for wireless control or future accessories. Separating communications clarifies the data path and avoids double counting in the HUD budget.
+Microcontroller: $20.00
+BLE radio/module: $5.00
+Communications Subtotal: $25.00
 
-**Power and I/O — $85.00**
+#### Power and I/O — $85.00
 
-This subsystem supplies stable, protected power and the physical interconnects. It includes a lithium-polymer (Li-Po) cell (1 × $13), boost converters (1 × $5.50), a battery-management / protection circuit (BMS) (1 × $7.50), a USB-C receptacle (1 × $4.50), a charger integrated circuit (IC) or module (1 × $4.50), and miscellaneous passives and wiring such as LEDs, thermistors, fuses, and resistors (1 × $12.50). A small PCB including delivery (1 × $37.50) consolidates power and connectors. Short, power-delivery (PD)-rated cables and strain relief preserve voltage margin and prevent disconnects during a swing, while the BMS provides over-current and thermal protection.
+This subsystem supplies stable, protected power and the physical interconnects. It includes a lithium-polymer (Li-Po) cell, boost converters, a battery-management/protection circuit (BMS), a USB-C receptacle, a charger integrated circuit (IC) or module, miscellaneous passives/wiring, and a small PCB to consolidate power and connectors. Short, power-delivery (PD)–rated cables and strain relief preserve voltage margin and prevent disconnects during a swing.
+
+Li-Po cell: $13.00
+Boost converters: $5.50
+BMS / protection: $7.50
+USB-C receptacle: $4.50
+Charger IC / module: $4.50
+Misc. passives, wiring, LEDs, thermistors, fuses: $12.50
+PCB (incl. delivery): $37.50
+Power and I/O Subtotal: $85.00
 
 This total establishes the working baseline for design, procurement, and test planning. It reflects a complete, portable system that measures the ball’s motion, normalizes the resulting telemetry, and renders clear on-visor metrics without subscriptions or sales tax.
 
-<p align="center">Summary</p>
-
-
-<p align="center">
-  <img src="https://hackmd.io/_uploads/B11DhIY0el.jpg" alt="conceptual budget">
-</p>
-<p align="center">Figure 9: Smart Golf Visor Budget</p>
-
-
-
+<div align="center">
+  <p><strong>Summary</strong></p>
+  <img src="https://hackmd.io/_uploads/B11DhIY0el.jpg" alt="Smart Golf Visor Budget" width="700">
+  <p><em>Figure 24: Smart Golf Visor Budget</em></p>
+</div>
 
 ### Division of Labor
 
@@ -779,37 +1096,53 @@ Bryce Hughes has prior experience in field engineering, system testing, and sold
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/Hyua7j9Clg.png" alt="GanttChart_Sem1" width="700"> </p>
-  <p align="center">Figure 9: Updated Gantt Chart showing the Fall 2025 Semester.</p>
+  <p align="center">Figure 25: Updated Gantt Chart showing the Fall 2025 Semester.</p>
 
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/B1gyNiqRlg.png" alt="GanttChart_Sem1" width="700">
 </p>
-<p align="center"> Figure 10: Updated Gantt Chart showing the Spring 2026 Semester.
+<p align="center"> Figure 26: Updated Gantt Chart showing the Spring 2026 Semester.
 </p>
 
 ## References
 
 
 [1] IEEE, “IEEE code of ethics | IEEE,” IEEE Advancing Technology for Humanity, https://www.ieee.org/about/corporate/governance/p7-8 (accessed Sep. 18, 2025). 
+
 [2] “Lithium Polymer Battery Protection Technology: How to prevent overheating and explosion risks,” myliontech, https://myliontech.com/en/lithium-polymer-battery-protection-technology-how-to-prevent-overheating-and-explosion-risks/ (accessed Oct. 18, 2025). 
+
 [3] “CC and CV charging of Lithium Polymer Battery,” Lithium_Polymer_Battery_net, https://www.lithium-polymer-battery.net/cc-and-cv-charging-of-lithium-polymer-battery/ (accessed Oct. 17, 2025). 
 [4] M. Cooper, “Web content accessibility guidelines (WCAG) 2.1,” W3C, https://www.w3.org/TR/WCAG21/ (accessed Oct. 17, 2025). 
+
 [5] ISO, “Ergonomics of human-system interaction,” ISO, https://www.iso.org/obp/ui/#iso:std:iso:9241:-112:ed-2:v1:en (accessed Oct. 17, 2025). 
+
 [6] “IEC 62133: Safety Testing for lithium ion batteries,” intertek, https://www.intertek.com/batteries/iec-62133/ (accessed Oct. 14, 2025). 
+
 [7] “IEEE SA - IEEE Standard for Information technology-- local and metropolitan area networks-- specific requirements-- part 15.1A: Wireless Medium Access Control (MAC) and Physical Layer (PHY) specifications for Wireless Personal Area Networks (WPAN),” IEEE Standards Association, https://standards.ieee.org/ieee/802.15.1/3513/ (accessed Oct. 14, 2025). 
+
 [8] “Ingress Protection (IP) ratings,” IEC, https://www.iec.ch/ip-ratings (accessed Oct. 14, 2025). 
-[9] B. Kelechava, “ANSI/ISEA Z87.1-2020: Current standard for safety glasses - ANSI BLOG,” The ANSI Blog, https://blog.ansi.org/ansi/ansi-isea-z87-1-2020-safety-glasses-eye-protection/ (accessed Oct. 14, 2025). 
+
+[9] B. Kelechava, “ANSI/ISEA Z87.1-2020: Current standard for safety glasses - ANSI BLOG,” The ANSI Blog, https://blog.ansi.org/ansi/ansi-isea-z87-1-2020-safety-glasses-eye-protection/ (accessed Oct. 14, 2025).
+
 [10] Samainstage, “IEEE launches new standard to address ethical concerns during systems design,” IEEE Standards Association, https://standards.ieee.org/news/ieee-7000/ (accessed Sep. 24, 2025).
-[11] ESP32-C3 series Datasheet version 2.2, https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf (accessed Oct. 19, 2025). 
-[12] ESP32-S3 series Datasheet version 2.0, https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf (accessed Oct. 19, 2025). 
+
+[11] ESP32-C3 series Datasheet version 2.2, https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf (accessed Oct. 19, 2025).
+
+[12] ESP32-S3 series Datasheet version 2.0, https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf (accessed Oct. 19, 2025).
+
 [13] Preliminary ESP32-P4 series Datasheet pre-release v0.5, https://www.espressif.com/sites/default/files/documentation/esp32-p4_datasheet_en.pdf (accessed Oct. 19, 2025). 
-[14] Streamlit and Streamlit Cloud web application documentation,
-https://docs.streamlit.io/ (accessed Oct. 20, 2025)
+
+[14] Streamlit and Streamlit Cloud web application documentation,https://docs.streamlit.io/ (accessed Oct. 20, 2025)
+
 [15] Wangfred, “How to make a heads-up display glasses: A comprehensive DIY guide,” INAIRSPACE, https://inairspace.com/blogs/learn-with-inair/how-to-make-a-heads-up-display-glasses-a-comprehensive-diy-guide?srsltid=AfmBOooBdnwXlWmnyAdKJQRSVs1zUNqJjkFWid4B2v0YD2_p1Ywq6vZF (accessed Oct. 19, 2025). 
+
 [16] “IEC 62301:2011,” IEC, https://webstore.iec.ch/en/publication/6789 (accessed Oct. 24, 2025). 
+
 [17] W. T. W. Guy, “The Ultimate Guide to Wire Ampacity and NEC Basics,” Wire & Cable Your Way Blog, https://blog.wireandcableyourway.com/the-ultimate-guide-to-wire-ampacity-and-nec-basics (accessed Oct. 27, 2025). 
+
 [18] “ISO 15004-2:2024,” ISO, https://www.iso.org/standard/79919.html (accessed Oct. 27, 2025). 
+
 [19] “PiTrac: The DIY Golf Launch Monitor,” Hackaday.io, https://hackaday.io/project/195042-pitrac-the-diy-golf-launch-monitor
  (accessed Oct. 15, 2025).
 
