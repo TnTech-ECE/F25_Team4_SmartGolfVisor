@@ -1,0 +1,84 @@
+---
+
+## 1) Project Document Formatting & Submission
+- Keep the **exact subsection headers** provided (Function, Subsystem Specs, Constraints, Overview, Interface).
+- Share a **finished, formatted example** if you complete early so everyone matches the layout.
+- **Submission cadence:** once per week to professor; **send drafts anytime** to the advisor for feedback.
+- Expect **strict early feedback** to align with professor’s standards.
+
+---
+
+## 2) Software Tools & 3D Modeling
+- Use **Fusion 360** (free via TTU student license). **Autodesk Inventor** is also available.
+- Fusion supports **STL/OBJ**, assemblies, animations, and **scripting**.
+- You can **import and edit existing CAD** (e.g., launch monitor models). Confirm reuse with professor.
+
+---
+
+## 3) PCB & Electrical Design Guidance
+- **Power subsystem** will be closely reviewed.
+- For RF/comm lines (ESP32, etc.), route at **50 Ω** (use impedance calculators).
+- Size **trace widths** for maximum current per IPC/EDA rules.
+- Add a **power distribution board** with **fuse close to the battery**.
+- Fuse options: inline holders or small modular **fuse boxes**.
+- LiPo noted as lower risk than Li-ion, but **protection still required**.
+
+---
+
+## 4) Hardware Assembly & Build Practices
+- **No breadboards** in the final build (okay for quick fixes only).
+- Use **proto-boards** with copper strips for repairs if needed.
+- Provide **dedicated PCBs** per subsystem (ESP32 logic, power distribution, etc.).
+- Design **protective, water-resistant** enclosures; consider **thermal separation** for battery/microcontroller.
+
+---
+
+## 5) Detailed Design Expectations
+- Docs must allow a new student (e.g., **Connor**) to build without questions.
+- Include:
+  - Updated **schematics** with final voltages, interfaces, protocols.
+  - **Flowcharts**, **pseudo code**, and **block diagrams** for software.
+- Aim for a **build-ready** package entering Capstone II.
+
+---
+
+## 6) Software (App Subsystem) Notes
+- Provide **flowcharts, pseudo code, and detailed commentary** (full code optional now).
+- Clearly document **data flow** and **interfaces** between subsystems.
+- Ensure feasibility by March; reduce coding load in Capstone II with strong groundwork now.
+
+---
+
+## 7) Prototype Timeline
+- **Detailed Design target:** ~**Dec 3**.  
+- **Order parts:** Winter break (arrive early January).  
+- **Build & test:** Jan–Mar; **Experimental validation:** Mar–Apr.  
+- **Passing criterion:** demonstrate a **working prototype**.
+
+---
+
+## 8) Launch Monitor Power Discussion
+- GitHub PiTrack appears **wall-powered** → must be **battery-powered**.
+- Rough estimate: **2 cameras × 0.5 A = ~1 A**; for **4 hours** ⇒ **~6–7 Ah**.
+- Options: **Li-ion/LiPo packs**, **power-tool batteries** with BMS; optional **solar backup**.
+- **Visor** needs small pack (~**3 Ah**); **launch monitor** likely separate, larger pack.
+
+---
+
+## 9) Action Items
+| Task | Owner(s) | Due |
+|---|---|---|
+| Align headers/format across all subsystem reports | All | Before submission |
+| Start Fusion 360 enclosure models | Mechanical lead | Ongoing |
+| Calculate 50 Ω lines + power trace widths | Power team | Next meeting |
+| Draft pseudo code & flowcharts (App) | App team | By ~Dec 3 |
+| Verify battery sizing & fusing plan | Power team | By ~Dec 3 |
+| Prepare advisor review draft | All | By ~Dec 3 |
+| Plan BOM & place orders | Subsystem leads | Winter break |
+
+---
+
+## 10) Closing Notes
+- Prioritize **clarity, documentation, and safety**.
+- Design so others can **assemble without guidance**.
+- Invest now to **save time** during build/debug in Capstone II.
