@@ -1,0 +1,194 @@
+# Smart Golf Visor — Capstone Team Meeting Minutes  
+**Recording:** Tennessee Tech University 7.m4a  
+**Date:** 11-12-2025  
+**Duration:** ~1 hour  
+
+**Attendees:**
+- Landen Johnson  
+- Bryce Hughes  
+- Brandon Zerkovich  
+- Ryan Zerkovich  
+- Michael Madigan  
+- [Others as applicable]  
+
+---
+
+## 1. General Announcements
+- **Advisor meeting with Matt** scheduled for **Tuesday at 1:30 PM**.  
+  - Purpose: Keep advisor updated on progress and confirm design directions.  
+  - Expected duration: ~15 minutes.  
+- **DigiKey** confirmed as an **approved vendor** for component purchases.
+
+---
+
+## 2. Coaching Feature Discussion
+- Current **shall statement**: system provides **coaching suggestions** based on performance.
+- Concern: Advisor will likely say **single-shot advice** is not very accurate.
+- Team discussed options:
+  - Move from **per-shot** advice to:
+    - **Per hole**, **per nine holes**, or **per round** advice.
+  - Single-shot messages can still be **short and simple** (e.g., “Square the clubface,” “Face open,” “Low spin”).
+- Data usage:
+  - Use metrics such as **spin**, **launch angle**, and **ball flight**.
+  - More reliable advice generated after multiple swings rather than a single measurement.
+
+**Action Item:**  
+- Clarify with Matt whether coaching suggestions should be:
+  - Per-shot (simple/low-accuracy), or  
+  - Aggregated over **multiple swings/holes/rounds**.
+
+---
+
+## 3. Display & User Interface
+- Goal: Show **shot metrics** and **coaching suggestions** on the visor display.
+- Constraints:
+  - Limited display size may restrict text length.
+  - Too many metrics will clutter the screen and reduce readability.
+- Options discussed:
+  - Use **short phrases** for advice (few words only).
+  - Consider **scrolling text / ticker** area for longer suggestions.
+  - Carefully choose **font size** and **layout** for readability.
+- **Graphics library:**  
+  - Plan to use **LVGL** (Light and Versatile Graphics Library) for the embedded GUI.
+  - Will prototype different layouts and test what’s readable in practice.
+
+**Action Items:**
+- Landen:
+  - Evaluate display options for:
+    - Resolution, brightness, contrast ratio.
+    - Ability to fit both **metrics** and **short suggestions**.
+  - Prototype a basic LVGL layout once hardware is selected.
+
+---
+
+## 4. Hardware Integration & Power Design
+- **Main microcontroller:** ESP32-P4 (development board).
+- **Power strategy:**
+  - LiPo battery voltage range: ~4.2 V (full) down to ~2.75–3.0 V (cutoff).
+  - ESP32 dev board typically expects **5 V input** and uses an onboard **buck (DC–DC) converter** or LDO to drop to **3.3 V**.
+- Discussion points:
+  - Option 1: Use a **boost or buck-boost converter** to provide **stable 5 V** to the dev board, then let onboard regulator step down to 3.3 V.
+  - Option 2: Directly supply **3.3 V** if pinout supports it (via VSYS or 3.3 V rail), accepting some inefficiency due to internal conversion.
+  - Onboard regulator will continue to output 3.3 V even if input is 3.3 V, with slightly higher power loss.
+- **Display power:**
+  - Selected OLED option can accept **3.3 V or 5 V** (includes a level shifter).
+  - Expected current draw is low (~a few mA), negligible compared to ESP32.
+- **Grounding:**
+  - All subsystems must share a **common ground** referenced to the **battery negative terminal**.
+
+**Action Items:**
+- Brandon:
+  - Decide between **5 V rail** (with boost) vs **direct 3.3 V** distribution approach.
+  - Finalize **converter selection** (efficiency target ≥ 90%).
+  - Confirm expected **ESP32 current draw** and total subsystem power budget.
+- Landen:
+  - Confirm display’s operating voltage range and current draw from datasheet.
+
+---
+
+## 5. Component Sourcing & Vendor Constraints
+- **Allowed vendors:**  
+  - DigiKey  
+  - Adafruit  
+  - Amazon  
+- **Not allowed:**  
+  - Walmart  
+  - eBay  
+  - AliExpress  
+- Adafruit identified as:
+  - Valid source for **battery level indicators**, displays, and dev boards.
+- Team will:
+  - Continue sourcing **approved components** from the allowed vendor list.
+  - Avoid references to non-approved suppliers in the final BOM.
+
+**Action Item:**
+- Brandon:
+  - Identify suitable **battery level indicator** module from DigiKey/Adafruit/Amazon.
+- Entire Team:
+  - Ensure BOM items are only from approved vendors.
+
+---
+
+## 6. Display Enclosure & Mechanical Design
+- Discussion on whether the display will be:
+  - **Exposed**, or  
+  - **Enclosed** to control light and glare.
+- Tentative approach:
+  - Use an **enclosed optical path** to the lens/head-up display area:
+    - Reduce **ambient light** and glare.
+    - Maintain consistent visibility outdoors.
+- Mechanical constraints:
+  - Must remain **comfortable** and **wearable** on the visor/eyewear.
+  - May rely on **existing 3D CAD files** (from open-source designs) and adapt them.
+- Key parameters:
+  - **Brightness** and **contrast ratio** are critical for outdoor use.
+  - A higher contrast ratio allows for lower brightness while retaining legibility.
+
+**Action Items:**
+- Bryce:
+  - Search for existing **3D models/CAD files** for AR-style clip-on or visor mounts.
+  - Begin planning enclosure around the chosen display size and mounting geometry.
+
+---
+
+## 7. Software / GitHub Reference (PyTrack Launch Monitor)
+- Team identified an **open-source GitHub repository** (PyTrack / launch monitor) containing:
+  - Camera calibration code.
+  - LED control.
+  - Core tracking algorithms.
+- Plan:
+  - **Download and archive** all relevant code and documentation.
+  - Use as a **reference implementation** and adapt as needed for this project.
+- Consensus:
+  - Building the entire launch-monitor codebase **from scratch** would be impractical within the capstone timeline.
+
+**Action Item:**
+- Software lead:
+  - Mirror/download the GitHub repository locally.
+  - Identify which modules can be reused or adapted (e.g., camera calibration, detection pipeline).
+
+---
+
+## 8. Subsystem Coordination
+- **Display Subsystem (Landen):**
+  - Select final OLED or similar display.
+  - Verify dimensions, brightness, voltage, and interface (SPI/I2C).
+  - Coordinate with mechanical subsystem for enclosure sizing.
+- **Power Subsystem (Brandon):**
+  - Finalize LiPo capacity target (e.g., **~4000 mAh** as a baseline).
+  - Design battery → converter → ESP32 + display power chain.
+  - Confirm grounding scheme and protection/fusing at the battery.
+- **Mechanical Subsystem (Bryce):**
+  - Use available 3D files or create custom housing to:
+    - Mount display.
+    - Route wiring.
+    - Ensure comfort and stability during swing.
+- **Communications / Processing:**
+  - Verify ESP32 and Raspberry Pi boards include **Bluetooth 5.0** or equivalent wireless capability.
+  - Determine data flow: cameras → Raspberry Pi → microcontroller → visor/app.
+
+---
+
+## 9. Next Steps
+1. **Meet with Matt** (Tuesday, 1:30 PM):
+   - Present updated concept for coaching logic (per-round/per-nine vs per-shot).
+   - Confirm expectations on:
+     - Data collection.
+     - UI complexity.
+     - Level of precision required for coaching feedback.
+2. **Display & UI:**
+   - Landen to narrow down display candidates and confirm readability/space for metrics + short advice.
+3. **Power & Battery:**
+   - Brandon to lock in converter choice (boost/buck-boost) and validate battery runtime estimates.
+4. **Mechanical Enclosure:**
+   - Bryce to identify or adapt 3D models for the visor/glasses mount and begin enclosure concept.
+5. **Shall Statements & Documentation:**
+   - Team to update shall statements to:
+     - Reflect realistic coaching frequency (per round/per nine).
+     - Explicitly include **voltage, current, and runtime** requirements derived from new design decisions.
+
+---
+
+**Meeting adjourned.**  
+**Next scheduled meeting:**  
+- With Matt: **Tuesday, 1:30 PM** (project review and Q&A). 
