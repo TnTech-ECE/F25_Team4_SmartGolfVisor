@@ -195,14 +195,17 @@ The weighting rationale prioritizes ergonomic performance and ease of integratio
 
 Based on the evaluation of wireless protocols, wired communication interfaces, and microcontroller options and trade study, the following are the desired choices:
 1) **Bluetooth Wireless Communication Protocol**
-2) **SPI Serial Communication and MIPI DSI Protocol**
-3) **ESP32-P4**
+2) **SPI Serial Communication Protocol**
+3) **ESP32-S3**
 
 **Bluetooth Wireless Communication Protocol** provides simplified device networking and lower power consumption. The low range and bandwidth fit within the smart golf visor functionality.
 
-**SPI serial communication** provides the high speed bandwidth and lower latency to match the HUD display's peripheral. This is crucial for the time-sensitive HUD updates. **MIPI DSI** protocol was chosen for the display interface to support high-speed, low-power transmission of graphics data
 
-The **ESP32-P4** [9] was selected as the primary controller for the visor system. Its dual-core RISC-V processor operating at up to 400 MHz provides sufficient computational capability for real-time data processing, while its native support for **MIPI** enables direct interfacing with the OLED display without the need for additional bridge ICs. With the **ESP32-P4-WIFI6** [9] development board, it also provides built-in bluetooth module to recieve the shot metrics transmitted by the app.
+**SPI Serial Communication Protocol** provides the high-speed bandwidth and low latency required to interface with both the IMU and the OLED display. This is especially beneficial for the visor system, where consistent, time-sensitive HUD updates are critical for maintaining an accurate and responsive user experience.
+
+
+The **ESP32-S3** was selected as the primary controller for the visor system. Its dual-core Xtensa LX7 processor operating at up to 240 MHz provides sufficient computational capability for real-time data processing, while its flexible SPI interface supports reliable communication with the IMU and OLED display. The built-in BLE module provides wireless connectivity without requiring any external components, allowing for easier integration.
+
 ### Power
 
 ##### Overview
@@ -458,7 +461,7 @@ The selection of the display will depend on factors such as outdoor brightness a
 2) **Micro-LED**
 3) **Micro-LCD** 
 
-**Micro-OLED** displays offer exceptional contrast ratios and deep black lights, resulting in excellent visual clarity under moderate lighting conditions however, their brightness typically ranges from 1,000 to 5,000 nits, which can be limiting in direct sunlight. They offer extremely fast response times (under 1 ms) and support high refresh rates that range between 60 and 120 Hz making them ideal for displaying dynamic data metrics. In terms of cost, **Micro-OLEDs** typically range from $80 to $200 depending on the resolution and refresh rate, offering a solid balance between image quality, responsiveness and affordability for near-eye displays.
+**Micro-OLED** displays offer exceptional contrast ratios and deep black lights, resulting in excellent visual clarity under moderate lighting conditions. Higher-end models typically achieve brightness levels between 1,000 to 5,000 nits, which can be limiting in direct sunlight. They offer extremely fast response times (under 1 ms) and support high refresh rates that range between 60 and 120 Hz making them ideal for displaying dynamic data metrics. In terms of cost, **Micro-OLEDs** typically range from $80 to $200 for higher-quality units featuring 1080p resolutions and 60 fps capabilities, while lower-cost options fall, depending on the resolution and refresh rate. This makes Micro-OLEd technology a strong balance of image quality, responsiveness and affordability for near-eye displays.
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/BJiQgi7yZx.png" alt="Micro-OLED Display" width="300">
@@ -583,7 +586,7 @@ Overall, the Smart Golf Visor design optimizes real-time data acquisition, proce
 ### Hardware Block Diagram
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/rkTk9hSkZx.png" alt="Smart Golf Visor Hardware Block Diagram" style="width:90%; border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/Sy7xgo5xWg.png" alt="Smart Golf Visor Hardware Block Diagram" style="width:90%; border:1px #eee; padding:1px; margin:20px;">
   <br>
   <strong>Figure 16: Smart Golf Visor Hardware Block Diagram</strong>
 </p>
@@ -656,12 +659,12 @@ At the start of a session, the golfer will need to establish a Bluetooth connect
   Interfaces and Signal Definition
 </p>
 
-| Interface                 | Connected Subsystem | Type               | Dir.   | Protocol / Standard | Description                                                                 |
-|---------------------------|------------------|------------------|--------|-------------------|----------------------------------------------------------------------------|
-| **ESP32-P4**              | Power System      | Power             | Input  | DC                 | Receives regulated 3.3 V to operate and up to 500 mA for wireless transmission. |
-| **Selected Launch Monitor** | App             | Wireless Comm.    | Output | Bluetooth (2.4 GHz)| Sends selected data to the app.                                           |
-| **ESP32-P4**              | HUD/Display       | Serial Comm.      | Output | MIPI DSI           | Sends HUD graphic to the Micro-OLED displays.                              |
-| **ESP32-P4**              | HUD/Display       | Serial Comm.      | Input  | SPI                | Receives acceleration, angular velocity, and orientation data from IMU.    |
+| Interface               | Connected Subsystem | Type                   | Dir. | Protocol / Standard | Description                                                                      |
+| ----------------------- | ------------------- | ---------------------- | --------- | ------------------- | -------------------------------------------------------------------------------- |
+| **ESP32-S3**| Power System | Power| Input     | DC | Receives regulated 3.3 V to operate and up to 500 mA for wireless transmission.  |
+| **Selected Launch Monitor** | App | Wireless Comm. | Output | Bluetooth (2.4 GHz) | Sends selected data to the app.|
+| **ESP32-S3**| HUD/Display| Serial Comm. | Output | SPI | Sends HUD graphic to the Micro-OLED displays.|
+| **ESP32-S3** | HUD/Display | Serial Comm. | Input | SPI | Receives acceleration, angular velocity, and orientation data from IMU.|
 
 
 #### Summary of “Shall” Statements
@@ -669,8 +672,7 @@ At the start of a session, the golfer will need to establish a Bluetooth connect
 1. The selected launch monitor, app, and visor  **shall** wireless communicate shot metrics via BLE (Bluetooth Low Energy) at 2.4 GHz.
 2. The microcontroller **shall** wirelessly receive the shot metrics via BLE (Bluetooth Low Energy) at 2.4 GHz.
 3. The microcontroller **shall** be supplied and operate with 3.3V power signal.
-4. The IMU **shall** use SPI serial protocol to interface with the ESP32-P4.
-5. The mini OLED display **shall** use 2-lane MIPI DSI interfacing with the ESP32-P4 due to board restrictions.
+4. The IMU and OLED display **shall** use SPI serial protocol to interface with the microcontroller.
 6. All hardware **shall** be designed to integrate with the Physical Visor Design Subsystem for structural compatibility.
 
 <p align="center">
@@ -748,11 +750,12 @@ Designs and dimensions are conceptual and may be refined through physical protot
 
 ### Subsystem 4: Visor Powering System
 #### Overview and Function
-The **Power Subsystem** converts energy from a single-cell LiPo (1S, 3.7 V nominal) into regulated rails for the ESP32-P4 (3.3 V), IMU (3.3 V), and OLED HUD. It provides full protection, safe charging per cited standards, and is designed to last beyond a full round of golf (≥ 18 holes with cold-weather margin) using a 5000–6000 mAh LiPo cell.
+The **Power Subsystem** converts energy from a single-cell LiPo (1S, 3.7 V nominal) into regulated rails for the ESP32-S3 (3.3 V), IMU (3.3 V), and OLED HUD. It provides full protection, safe charging per cited standards, and is designed to last beyond a full round of golf (≥ 18 holes with cold-weather margin) using a 3000–5000 mAh LiPo cell.
 
-The subsystem outputs 3.3 V for logic and sensors, 1.8 V for display logic, 5.0 V for USB accessories or the 0.39″ OLED, and display-specific analog rails:  
-- 0.39″ OLED: Vin 2.5–5.5 V, VDDI 1.65–1.95 V  
-- 0.49″ OLED: AVDD 5.3–5.5 V, AVEE −4 to −5.5 V, VDDI 1.65–1.95 V; power ≈ 468 mW  
+The subsystem outputs 3.3 V for:
+- 128x64 OLED  
+- IMU Sensor
+- ESP32-S3
 
 A 1S LiPo BMS provides Over-Voltage (OV), Under-Voltage (UV), Over-Current (OCP), and Over-Temperature (OTP) protections [2]. A USB-C charging path (5 V input) supports CC/CV (Constant Current / Constant Voltage) charging [3], holding constant current until 4.2 V, then constant voltage as current tapers for a safe full charge.  
 
@@ -760,7 +763,7 @@ An inline fuse adds overcurrent protection, and the design follows NEC and NESC 
 
 #### Operation
 
-At startup, the power subsystem activates when the user presses the power button or connects a USB-C charger. The Battery Management System (BMS) immediately verifies cell voltage and temperature before enabling the power rails. Once validated, the MCU sequentially powers the required domains — 3.3 V, 1.8 V, and the ± display analog rails — following the OLED vendor’s recommended timing for VDDI, AVDD, and AVEE initialization. This ensures stable startup conditions and prevents voltage overshoot or inrush that could damage the display or logic circuitry.
+At startup, the power subsystem activates when the user presses the power button or connects a USB-C charger. The Battery Management System (BMS) immediately verifies cell voltage and temperature before enabling the power rails. Once validated, the MCU sequentially powers the required domains — 3.3 V This ensures stable startup conditions and prevents voltage overshoot or inrush that could damage the display or logic circuitry.
 
 When operating in charging mode, the system uses a USB-C 5 V input to power a CC/CV (Constant Current / Constant Voltage) charging controller managed by the BMS. Charging occurs in two distinct phases: during the Constant Current (CC) phase, current remains fixed while the battery voltage gradually increases; once the voltage reaches approximately 4.2 V, the Constant Voltage (CV) phase begins, holding voltage steady while current tapers to a safe cutoff. The BMS also enforces a temperature gate that inhibits charging below 0 °C or above 45 °C, ensuring safe charging under varying ambient conditions. The charge rate is set between 0.5 C–1 C, as defined by the cell datasheet, corresponding to a full charge in 1–2 hours depending on battery capacity.
 
@@ -768,7 +771,7 @@ During normal operation, the subsystem continuously regulates and distributes po
 
 ##### Primary Functions
 
-* Regulate and distribute 3.3 V, 1.8 V, 5 V, and OLED analog power rails.  
+* Regulate and distribute 3.3 V or 5 V (Depending on compnents chosen)
 * Manage charging via CC/CV control and monitor OV, UV, OCP, and OTP fault conditions through the BMS.  
 * Provide power-enable domain control to optimize runtime and reduce idle power consumption.  
 * Maintain compliance with NEC and NESC standards for low-voltage and battery-powered systems.  
@@ -779,18 +782,14 @@ During normal operation, the subsystem continuously regulates and distributes po
 Representative converter efficiencies (to be verified in detailed design):
 - 3.3 V buck-boost from 1S: η ≈ 90–93 %.  
 - 5.0 V boost from 1S: η ≈ 90–93 %.  
-- +5.4 V boost (OLED AVDD):** η ≈ 88–92 %.  
-- −5.4 V inverting (OLED AVEE): η ≈ 85–90 %.  
-- 1.8 V regulator (VDDI):  
-  - LDO from 3.3 V: η ≈ 55 % (acceptable if I is low).  
-  - Buck from 1S: η ≈ 90–93 % (if I > 150 mA).
+
 
 Display power:
-- 0.49″ OLED: ≈ 468 mW at 90 Hz, 1800 nits (worst-case full white).  
-- 0.39″ OLED: assume ≈ 300–450 mW (similar conditions, use ≈ 400 mW for budget).
+- 128 x 64 OLED: ≈ 640 mW at worst-case full blue  
+
 
 IMU power:  
-- The Inertial Measurement Unit (IMU) operates from the 3.3 V rail shared with the ESP32-P4.  
+- The Inertial Measurement Unit (IMU) operates from the 3.3 V rail shared with the ESP32-S3.  
 - Typical IMU current draw is 3–6 mA during full 6-axis sampling and up to 10 mA peak during data bursts.  
 - This equates to approximately 15–33 mW average consumption, which is negligible compared to the compute and display loads but should still be included in total current budgeting on the 3.3 V line.  
 - Efficiency through the 3.3 V buck-boost remains in the 90–93 % range, so IMU conversion losses are minimal (< 2–3 mW).  
@@ -798,7 +797,7 @@ IMU power:
 
 
 **Pack energy:**  
-5 000–6 000 mAh @ 3.7 V → 18.5–22.2 Wh nominal.  
+3 000–5 000 mAh @ 3.7 V → 11.1 –18.5 Wh nominal.  
 Include ≥ 20 % reserve and cold-weather derate for reliable 18-hole operation.
 
 #### Interfacing
@@ -808,24 +807,19 @@ Include ≥ 20 % reserve and cold-weather derate for reliable 18-hole operation.
   Interfaces and Signal Definition
 </p>
 
-| Interface                     | Connected Subsystem          | Type     | Dir.   | Protocol / Standard | Description                                                                                          |
-|-------------------------------|-----------------------------|---------|--------|-------------------|------------------------------------------------------------------------------------------------------|
-| **3.3 V Rail (buck-boost)**   | ESP32-P4, IMU, logic        | Power    | Output | DC                | Up to **600 mA** (headroom). Low ripple for RF/IMU.                                                 |
-| **1.8 V Rail (LDO or buck)**  | OLED VDDI                   | Power    | Output | DC                | **150–300 mA** budget (LDO if low I; buck if ≥150 mA).                                             |
-| **5.0 V Rail (boost)**        | USB accessory / OLED AVDD (0.39″) | Power | Output | DC                | Generated by dedicated boost.                                                                        |
-| **AVDD (+5.3–5.5 V)**         | OLED analog (0.49″)        | Power    | Output | DC                | Generated by dedicated boost.                                                                        |
-| **AVEE (−4 to −5.5 V)**       | OLED analog (0.49″)        | Power    | Output | DC                | Generated by inverting converter / charge-pump.                                                     |
-| **USB-C Charge In (5 V)**     | External charger            | Power    | Input  | USB-C             | 5 V input up to **0.5 C – 1 C A** into 1S CC/CV charger.                                           |
-| **Charge / Full Indication**  | BMS → MCU                  | Digital  | Output | GPIO              | Pack charging/full status.                                                                           |
-| **Power-Enable Lines**        | MCU → rails                | Digital  | Input  | GPIO              | Enables per-domain rails for low-power.                                                             |
-| **Protection / Fault**        | Power → MCU                | Digital  | Output | GPIO              | **OV (Over-Voltage), UV (Under-Voltage), OCP (Over-Current), OTP (Over-Temperature)** asserted → safe shutdown. |
+| Interface | Connected Subsystem | Type | Dir. | Protocol / Standard | Description |
+|------------|--------------------|-------|------------|---------------------|--------------|
+| **3.3 V Rail (buck-boost)** | ESP32-S3, IMU, logic | Power | Output | DC | Up to **600 mA** (headroom). Low ripple for RF/IMU. |
+| **USB-C Charge In (5 V)** | External charger | Power | Input | USB-C | 5 V input up to **0.5 C – 1 C A** into 1S CC/CV charger. |
+| **Charge / Full Indication** | BMS → MCU | Digital | Output | GPIO | Pack charging/full status. |
+| **Power-Enable Lines** | MCU → rails | Digital | Input | GPIO | Enables per-domain rails for low-power. |
+| **Protection / Fault** | Power → MCU | Digital | Output | GPIO | **OV (Over-Voltage), UV (Under-Voltage), OCP (Over-Current), OTP (Over-Temperature)** asserted → safe shutdown. |
+
 
 ### Power Subsystem “Shall” Statements
 
-1. The power subsystem **shall** use a single-cell (1S) LiPo battery rated at 3.7 V nominal and 5 000–6 000 mAh, providing at least six hours of continuous operation.
-2. The power subsystem **shall** generate regulated outputs of 3.3 V ±5 %, 1.8 V ±5 %, and OLED-specific analog rails as required.  
-   - 0.39″ OLED: Vin 2.5–5.5 V, VDDI 1.65–1.95 V  
-   - 0.49″ OLED: AVDD 5.3–5.5 V, AVEE −4 to −5.5 V, VDDI 1.65–1.95 V
+1. The power subsystem **shall** use a single-cell (1S) LiPo battery rated at 3.7 V nominal and 3 000–5 000 mAh, providing at least six hours of continuous operation.
+2. The power subsystem **shall** generate regulated output of 3.3 V ±5 %
 3. The subsystem **shall** comply with NESC and NEC low-voltage standards for grounding, overcurrent protection, and insulation.
 4. The subsystem **shall** include a BMS providing OV, UV, OCP, and OTP protection during charge and discharge.
 5. The subsystem **shall** include an inline fuse rated ≥ 1.5× the maximum steady-state current to prevent overcurrent faults.
@@ -836,14 +830,14 @@ Include ≥ 20 % reserve and cold-weather derate for reliable 18-hole operation.
    - In CC mode, current remains constant as voltage rises.  
    - In CV mode, voltage is held while current tapers to a safe cutoff near 4.2 V.
 10. The subsystem **shall** limit charge current to the manufacturer’s rated C-rate (0.5–1 C), where 1 C = 6 000 mA for a 6 000 mAh cell.
-11. The subsystem **shall** achieve ≥ 90 % efficiency for the 3.3 V and 5 V converters, ≥ 88 % for +5.4 V, ≥ 85 % for −5.4 V, and ≥ 90 % for 1.8 V regulation.
+11. The subsystem **shall** achieve ≥ 90 % efficiency for the 3.3 V and 5 V converters (If used)
 12. The subsystem **shall** include margin calculations for converter losses, battery derating, and safety headroom per NESC best practices.
 
 
 ---
 ### Power Subsystem Flowchart
 <p align="center">
-  <img src="https://hackmd.io/_uploads/Byrf7_nRgx.png" alt="Power Subsystem Flowchart" style="width:99%; border:1px #eee; padding:1px; margin:20px;">
+  <img src="https://hackmd.io/_uploads/rJ7Piaolbg.png" style="width:99%; border:1px #eee; padding:1px; margin:20px;">
   <br>
   <strong>Figure 20: Power Subsystem Flowchart</strong>
 </p>
@@ -912,22 +906,30 @@ The HUD hardware consists of three primary components:  a microcontroller, a tra
 ##### *Microcontroller*
 The microcontroller shall provide the processing power of the HUD. It shall process incoming data from both the IMU sensor and the app/software subsystem and drive the display at a high speed to ensure minimal delay. The microcontroller shall interface with the system through a regulated 3.3 V DC input power signal.
 
-It shall also interface with the Communications subsystem by receiving input data via Bluetooth wireless communication from the app/software and receiving motion data via SPI serial communication from the IMU. The selected microcontroller, the ESP32-P4, provides superior processing speed of 400 MHz clock speed and large storage capacity of 768 KB of SRAM, and 16–32 MB of flash memory. Its high performance makes it an optimal choice to ensure smooth and efficient HUD operation with no perceptible delay
+It shall also interface with the Communications subsystem by receiving input data via Bluetooth wireless communication from the app/software and receiving motion data via SPI serial communication from the IMU. The selected microcontroller, the ESP32-P4, provides superior processing speed of 240 MHz clock speed and large storage capacity of 512 KB of SRAM, and up to 16 MB flash memory. Its high performance makes it an optimal choice to ensure smooth and efficient HUD operation with no perceptible delay.
 
 ##### *Tracking Sensor*
-The tracking sensor shall be an Inertial Measurement Unit (IMU) responsible for measuring the visor’s acceleration, angular velocity, and orientation. The IMU collects three-axis data from its onboard accelerometer, gyroscope, and magnetometer, corresponding to motion along the x, y, and z axes. The sensor’s data is read using an SPI interface by a function called SPIReadWord(x) that retrieves 16-bit values from the IMU’s data registers. This enables accurate tracking of the visor’s position and ensures that the HUD graphics remain properly aligned with the user’s field of view during movement. The IMU shall receive a regulated 3.3 V DC input power signal from the power subsystem and shall transmit motion and orientation data to the ESP32 microcontroller via an SPI serial communication interface.
+The tracking sensor shall be an Inertial Measurement Unit (IMU) responsible for measuring the visor’s acceleration, angular velocity, and orientation. The IMU collects three-axis data from its onboard accelerometer, gyroscope, and magnetometer, corresponding to motion along the x, y, and z axes. The sensor’s data is read using an SPI interface by a function called SPIReadWord(x) that retrieves 16-bit values from the IMU’s data registers. This enables accurate tracking of the visor’s position and ensures that the displayed information remains stable and readable within the user’s field of view during movement. The IMU shall receive a regulated 3.3 V DC input power signal from the power subsystem and shall transmit motion and orientation data to the ESP32 microcontroller via an SPI serial communication interface.
 
 Possible IMU options include the Adafruit ICM-20948 9DoF [23], Seeed Grove 9DoF IMU [24], and DFRobot 10DOF Module [25], each offering accelerometer, gyroscope, and magnetometer sensors totaling nine degrees of freedom.
 
 ##### *Display*
-The display shall provide the projection of the HUD graphic interface. It shall maintain high clarity and fast response to minimize disorientation or lag between real-world motion and virtual graphics. To ensure this, the display shall have a minimum resolution of 1080p and a minimum refresh rate of 60 frames per second (fps).The display shall communicate with the microcontroller via a MIPI-DSI input serial communcation interface. 
+The display shall provide the projection of the HUD graphic interface. It shall maintain a readable display and fast response to minimize disorientation or lag between real-world motion and virtual graphics. To ensure this, the display shall have a minimum refresh rate of 60 frames per second (fps).The display shall communicate with the microcontroller via a SPI input serial communcation interface. 
 
-The HUD shall utilize a micro-OLED display, known for its fast response time, high pixel resolution, and strong contrast ratio—ideal for augmented reality applications. There are two possibile methods for implementing this display: using a transparent display which is a physical screen that allows light to pass through it or using an optical combiner that blends virtual images onto the real world view by reflecting a projected image onto a transparent lens. While transparent displays can support augmented reality, they are typically used for larger-scale applications such as heads-up windshields or public information displays. Optical combiners, on the other hand, are optimized for compact, near-eye systems such as smart glasses. For this application, a display setup utilizing an optical combiner is the most suitable approach. Potential display options compatible with an optical combiner include:
+The HUD shall utilize a micro-OLED display, known for its fast response time, high pixel resolution, and strong contrast ratio—ideal for augmented reality applications. There are two possibile methods for implementing this display: using a transparent OLED panel display which is a physical screen that allows light to pass through it or using an optical combiner that blends virtual images onto the real world view by reflecting a projected image onto a transparent lens. 
 
-* 0.39″ Micro-OLED Display (1920 × 1080, MIPI, I2C) [26]
-* 0.49″ Micro OLEDoS Display (1920 × 1080, 1800 nits, 90 Hz, MIPI) [27]
+Transparent displays are typically used for larger-scale applications such as heads-up windshields or public information displays but they can also be appropriate for near-eye prototypes, particularly when using lower-resolution displays in outdoor environments where ambient light may cause image washout. In this method, the transparent OLED would be positioned directly in front of one of the eyeglass lenses. 
 
-Both displays require a 1.8 V DC input to power the VDDI I/O supply but differ in their main input voltage requirements. The 0.39″ Micro-OLED Display requires a 5 V DC input to power its internal analog circuitry, which generates the necessary voltages for the OLED panel. In contrast, the 0.49″ Micro OLEDoS Display does not integrate analog power circuitry internally. Therefore, it requires an external 5.3–5.5 V DC input to power AVDD (the positive supply voltage) and a -4 to -5.5 V DC input to power AVEE. These voltages shall be supplied by the power subsystem.
+Optical combiners, on the other hand, are optimized for compact, near-eye augmented reality systems. However, they require a brighter and higher-resolution micro-display because the image must pass through additional optical elements and reflect off a beam-splitter before reaching the user's eye. This extended optical path reduces effective brightness, making low-end or low-brightness displays less suitable for outdoor use.
+
+For this application, a lower-resolution display is acceptable for displaying simple data metrics such as ball speed, distance, launch angle, spin rate, and smash factor. Based on this requirement, the transparent OLED solution offers the most practical and reliable approach for the initial prototype.
+
+Potential display options include:
+
+* 1.51 inch Transparent OLED Display Module 128x64 [26]
+* DFRobot Fermion Transparent OLED Display [27]
+
+Both displays come with a SSD1309 driver chip in a breakout PCB board that will directly drive and power the display. This breakout PCB board will require a 3.3 V DC input to power the logic directly. The breakout PCB board will also internally boost the 3.3 V DC input power signal to a range of 8 V - 15 V DC that will be used to power the display. The 3.3 V DC input power signal shall be supplied by the power subsystem.
 
 The visor shall include at least one micro-OLED display projecting onto one lens, with the option to implement a second display for dual-lens operation.
 
@@ -953,21 +955,19 @@ Below is an example of the expected HUD layout that the Smart Golf Visor Team ha
   HUD Interfaces and Signal Definition
 </p>
 
-| Interface   | Connected Subsystem | Type       | Dir.  | Protocol / Standard | Description                                                                                       |
-|------------|-------------------|-----------|-------|-------------------|---------------------------------------------------------------------------------------------------|
-| **ESP32**  | Power             | Power     | Input | DC                | Receives regulated 3.3 V to operate.                                                             |
-| **IMU**    | Power             | Power     | Input | DC                | Receives regulated 3.3 V to operate.                                                             |
-| **IMU**    | Communications    | Serial    | Output| SPI               | Sends acceleration, angular velocity, and orientation data to ESP32.                             |
-| **Micro-OLED** | Power          | Power     | Input | DC                | Receives 1.8 V to power digital logic.                                                          |
-| **Micro-OLED** | Power          | Power     | Input | DC                | Receives 5 V or 5.3 to 5.5 V (AVDD) and -4 V to -5.5 V (AVEE) to operate depending on the display used. |
-| **Micro-OLED** | Communications | Serial    | Input | MIPI-DSI          | Receives HUD graphics for display.                                                              |
+| Interface | Connected Subsystem | Type |Dir.| Protocol /Standard | Description |
+|------------|--------------------|-------|------|-----------|--------------|
+| **ESP32-S3** | Power | Power | Input | DC | Receives regulated 3.3 V to operate. |
+| **IMU** | Power | Power | Input | DC | Receives regulated 3.3 V to operate. |
+| **IMU** | Communications | Serial | Output | SPI | Sends acceleration, angular velocity, and orientation data to ESP32. |
+| **Transparent OLED** | Communications | Serial | Input | SPI | Receives HUD graphics for display. |
 
 
 #### Summary of “Shall” Statements
 
 1. The HUD **shall** project real-time data metrics, shot direction, and coaching suggestions in the user’s field of view.
 2. The microcontroller **shall** receive processed data via Bluetooth and motion data via SPI.
-3. The HUD **shall** operate at a minimum of 60 fps with 1080p resolution to ensure smooth and clear visuals.
+3. The HUD **shall** operate at a minimum of 60 fps to ensure smooth visuals.
 4. The IMU **shall** provide real-time motion tracking to maintain display alignment with head movement.
 5. The HUD **shall** not obstruct the golfer’s natural line of sight or impair safety during use.
 6. The HUD **shall** communicate and synchronize seamlessly with the Communications and Power subsystems.
@@ -1224,9 +1224,9 @@ https://developer.apple.com/xcode/ (accessed Nov. 3 2025)
 
 [25] MPU-9250 product specification revision 1.1, https://invensense.tdk.com/wp-content/uploads/2015/02/PS-MPU-9250A-01-v1.1.pdf (accessed Nov. 3, 2025).
 
-[26] Shopify, https://cdn.shopify.com/s/files/1/0264/7629/files/DM-OLED14R-678N_Datasheet.pdf?v=1723010001 (accessed Nov. 3, 2025).
+[26] 1.51inch transparent OLED with expansion board,for Raspberry Pi/Arduino/stm32,128x64 resolution light blue color display,full viewing angle, SPI/I2C interfaces, embedded independent driver chip - newegg.com, https://www.newegg.com/waveshare-barebone-systems-mini-pc-other/p/2SW-004U-002T6
 
-[27] Shopify, https://cdn.shopify.com/s/files/1/0264/7629/files/DM-OLED14R-678N_Datasheet.pdf?v=1723010001 (accessed Nov. 3, 2025).
+[27] DFR0934 DFRobot | development boards, kits, programmers | DigiKey, https://www.digikey.com/en/products/detail/dfrobot/DFR0934/16678689 
 
 [28] “IEC 62133: Safety Testing for lithium ion batteries,” intertek, https://www.intertek.com/batteries/iec-62133/ (accessed Oct. 14, 2025).
 
