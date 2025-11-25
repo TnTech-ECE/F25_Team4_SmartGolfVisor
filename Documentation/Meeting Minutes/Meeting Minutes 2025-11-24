@@ -1,0 +1,333 @@
+# MEETING NOTES – TRANSCRIPT 1 (New Recording 20)
+
+**Topic:** Capstone Project Progress Update  
+**Attendees:** Project team + industry mentor  
+**Date:** Not specified  
+
+---
+
+## 1. Project Status Overview
+- Team has completed the **Conceptual Design** phase.
+- Currently working on the **Detailed Design**, focusing on subsystem responsibilities and how everything will integrate.
+
+---
+
+## 2. Subsystem Updates
+
+### 2.1 Launch Monitor (Andrew)
+- Building a **battery-powered launch monitor** for on-course golf use.
+- Originally considered commercial launch monitors (e.g., Garmin), but:
+  - These restrict access to raw calculated data.
+- Team found an **open-source project** design that:
+  - Allows direct access to calculated data.
+  - Can be adapted to send data to their own app and visor system.
+- Mentor provided a **consumer launch monitor** that:
+  - Can later be used to **validate** accuracy of the team’s device.
+- Parts cannot be ordered until **next semester**:
+  - Current focus is on design, documentation, and planning.
+
+### 2.2 Mobile App (Michael)
+- Responsibilities:
+  - Receive data from the launch monitor.
+  - Display **previous rounds** and **sessions**.
+  - Show **swing/shot metrics**.
+  - Deliver **coaching tips** based on data (with mentor assistance).
+- Data flow:
+  - Launch monitor → App → Back to visor for in-play feedback.
+
+### 2.3 Visor Hardware & Power
+- **Bryce**:
+  - Designing the **visor model** (mechanical/structural design).
+- **Landen**:
+  - Designing the **power subsystem** for the visor.
+  - Current design target: **~9 hours** of battery life.
+- Launch monitor is planned to have **similar runtime** so one device does not die significantly earlier than the other.
+- **Ryan**:
+  - Designing the **processor subsystem** that:
+    - Processes incoming data.
+    - Sends formatted output to the visor display.
+- **Display**:
+  - Data is shown through a see-through/visor-mounted display.
+  - Due to limited display space, metrics will likely be shown **one at a time** with a timed rotation.
+
+---
+
+## 3. Selected Data Metrics for Display
+Initial set of metrics chosen (can be expanded later):
+
+1. **Ball Speed**  
+2. **Spin Rate**  
+3. **Distance**  
+4. **Launch Angle**  
+5. **Smash Factor**
+
+- These are considered the most important core metrics for players.
+- Display strategy:
+  - Likely cycle one metric at a time with a timer.
+  - App interface will provide more comprehensive views.
+
+---
+
+## 4. Coaching Suggestions Logic
+
+- Mentor emphasized that **coaching suggestions** should not be based on a single shot.
+- Better approach:
+  - Use **patterns or repeated errors** (e.g., consistently high spin, pushed shots, etc.).
+- For an issue like **excessive spin**, system could:
+  - Offer **multiple possible causes**, such as:
+    1. Alignment (aiming left/right of target).
+    2. Attack angle (derived using smash factor).
+    3. Swing path/swing mechanics.
+- Recommendation:
+  - Provide **2–3 coaching options** for the user to check, instead of a single “one cause” diagnosis.
+- Implementation:
+  - App has enough space to show detailed suggestions.
+  - Visor display will show only key/high-level info because of limited screen real estate.
+
+---
+
+## 5. Data Validation & External Devices
+
+- Mentor provided:
+  - A comparatively **inexpensive launch monitor** device.
+  - A **swing speed training device** that measures swing speed only.
+- Intended uses:
+  - Future **verification and comparison** of the team’s launch monitor data.
+  - Not needed immediately; more relevant **next semester** when hardware is available.
+
+---
+
+## 6. Timeline & Next Steps
+
+- **Remaining part of this semester:**
+  - Focus on **Detailed Design documentation**:
+    - Subsystem descriptions.
+    - Data flow.
+    - Power budgeting.
+    - Coaching logic framework.
+- **Next semester:**
+  - Order components (launch monitor, visor electronics, power hardware).
+  - Assemble and integrate subsystems.
+  - Begin **testing and validation**.
+- Mentor made clear:
+  - Students can email for follow-up questions or deeper coaching logic discussions.
+
+---
+
+## 7. Additional Notes
+
+- Another student group is working on a **GolfNow-powered website redesign** for the same facility.
+  - Their work is more focused on **website cleanup and functionality** (e.g., member tee-time booking online).
+- Mentor noted:
+  - The visor/launch-monitor project is **more technically complex** and more “out-of-the-box” than the website project.
+
+---
+
+# MEETING NOTES – TRANSCRIPT 2 (New Recording 21)
+
+**Topic:** PCB Design, Hardware Integration, and Documentation Requirements  
+**Attendees:** Team + mentor  
+**Date:** Not specified  
+
+---
+
+## 1. Recommended Resources
+
+- **Phil’s Lab (YouTube)**:
+  - Good for PCB design fundamentals and practical tips.
+- **Cadence PCB Design Articles**:
+  - How to choose PCB **stackup**.
+  - How to size **trace widths**.
+  - How to handle **high-speed signals** and **matched trace lengths** (e.g., USB, digital interfaces).
+
+---
+
+## 2. PCB Consistency and Fasteners
+
+- All team members designing PCBs should:
+  - Use **consistent screw types** (e.g., M2 screws).
+  - Use compatible **mounting hole sizes**.
+- Goal:
+  - Avoid mismatched hardware such as some boards using M2 and others using M3.
+  - Simplify mechanical integration and ordering.
+
+---
+
+## 3. Mechanical Mounting & 3D Printing
+
+- Options for mounting plates and standoffs:
+  - Use the **machine shop** (drill press, manual tapping) where available.
+  - Or **3D print standoffs and plates** as one combined piece.
+- In CAD (e.g., Fusion 360):
+  - Threads can be modeled by:
+    - Making a cylinder.
+    - Creating a hole (negative extrude).
+    - Applying the **thread feature** with the correct standard (e.g., M2).
+- For the **CAD model** in this semester:
+  - Main priority is showing reasonable mounting and standoff locations.
+  - Exact thread details can be refined later.
+
+---
+
+## 4. Launch Monitor – PCB vs. Wiring
+
+- For the **launch monitor**, a dedicated PCB **may not be required** if:
+  - A **Raspberry Pi hat** or similar board is used.
+  - Connections are **soldered**, not just jumper wires.
+- Concerns with loose jumper wires:
+  - Risk of disconnection with vibration or movement.
+  - Harder for future teams to use the design reliably.
+- Design report justification:
+  - If no PCB is used, clearly state:
+    - Wire gauge (AWG).
+    - Ratings.
+    - Connection method (soldered to hat/terminal).
+    - Mechanical strain relief.
+
+---
+
+## 5. When a PCB Is Required
+
+- For the **visor headset electronics**, a PCB **is strongly recommended**:
+  - ESP32 with multiple discrete wires hanging off is undesirable.
+  - A dedicated PCB allows:
+    - Clean layout.
+    - Secure connectors.
+    - Integrated filters (LC filters) for power rails.
+- Advisor expects visor electronics to be on a **dedicated PCB** inside the visor housing.
+
+---
+
+## 6. Standardizing PCB Size
+
+- Recommendation:
+  - Team should agree on a **standard PCB footprint** (e.g., 8 cm × 6 cm or 12 cm × 5 cm) for all subsystem boards where practical.
+- Suggested steps:
+  1. Identify mechanical constraints (e.g., maximum PCB size that fits inside visor sleeve/housing).
+  2. Set a **maximum board size** that fits those constraints.
+  3. Use that same size (or a consistent set of dimensions) across your subsystem PCBs for easier CAD and documentation.
+- The largest components such as **ESP32** and **power converters** will guide the minimum board area required.
+
+---
+
+## 7. Power Subsystem & Converter Design
+
+- Battery:
+  - Battery pack includes a built-in **BMS** in a plastic pouch on top of the cell.
+  - BMS handles basic **protection and balancing**.
+- Existing board:
+  - Has a built-in converter that can output **3.3 V at ~240 mA**, which is insufficient.
+- New approach:
+  - Use a **Texas Instruments buck-boost converter** capable of **3.3 V at 800 mA**.
+  - This meets power requirements for ESP32, display, and IMU.
+- Charging:
+  - Since BMS exists, the battery can be charged with regulated voltage.
+  - For the report, include a **shall statement** for **CC–CV charging** (constant-current/constant-voltage).
+- TI tools:
+  - TI provides an online **design tool** that:
+    - Helps choose inductors, capacitors, and layout.
+    - Often comes with a **PSpice/Spice model** for simulation.
+- Simulation expectations:
+  - Run **SPICE simulations** (LTspice or similar) for:
+    - Output ripple.
+    - Efficiency vs. load.
+    - Transient behavior.
+
+---
+
+## 8. Grounding & KiCad Details
+
+- Different ground symbols:
+  - **Chassis ground**, **earth ground**, and **signal ground** appear in reference schematics.
+- In KiCad:
+  - You mainly need a consistent **GND net** unless you are intentionally isolating parts of the circuit.
+- For isolated sections:
+  - Use separate ground nets and keep them unconnected in the schematic where isolation is required (e.g., isolated DC/DC output).
+
+---
+
+## 9. Filtering (LC Circuit) and Analysis
+
+- For LC filters:
+  - Use the standard cutoff formula:  
+    \[
+    f_c = \frac{1}{2\pi\sqrt{LC}}
+    \]
+  - Explain **why** chosen L and C values filter switching ripple at the converter’s switching frequency.
+- Advisor expects:
+  - Clear reasoning tying datasheet values and your calculations.
+  - A short explanation or figure showing frequency response or ripple suppression.
+
+---
+
+## 10. Protection Elements
+
+- Suggestions:
+  - **Fuse** in series with the battery.
+  - **TVS diode** across supply rails for surge protection.
+  - **Reverse-polarity protection**:
+    - MOSFET-based solution is preferred over a simple diode to reduce voltage drop.
+- Include small SPICE or conceptual plots/figures to show:
+  - Why a MOSFET-based reverse protection works (requires gate threshold before conduction).
+  - How the fuse/TVS protects against faults.
+
+---
+
+## 11. Flowcharts & Documentation Style
+
+- When describing:
+  - Data transmission.
+  - Power flow.
+  - Control logic.
+- Use **flowcharts** instead of long paragraphs:
+  - Example: “Using SPI to transmit data from sensor to ESP32 to app” → Show as a block-flow diagram.
+- Written explanation + flowchart is ideal.
+
+---
+
+## 12. PCB Cost Estimation & BOM
+
+- PCB pricing:
+  - Use **JLCPCB** (or similar) to obtain cost estimates.
+  - Steps:
+    1. Download a sample PCB Gerber (similar size to your design) from GitHub.
+    2. Upload it to JLCPCB.
+    3. Choose **FR4**, standard thickness, and basic options.
+    4. Use estimated cost (without assuming discounts).
+- BOM notes:
+  - Each subsystem owner creates their own **Bill of Materials**.
+  - KiCad can export a BOM, but might require:
+    - Mapping parts to Mouser/DigiKey.
+    - Cleaning up part names and references.
+  - It may be easier to build a BOM manually using a spreadsheet.
+
+---
+
+## 13. Parts Selection & Redundancy
+
+- When ordering:
+  - Order **extra components** (resistors, capacitors, inductors, connectors) to account for failures and rework.
+  - Expensive items (e.g., Raspberry Pis) should be ordered in the **minimum** quantity needed.
+- For Raspberry Pi:
+  - Design uses **Pi 4B**.
+  - In the report:
+    - Explain why Pi 4B is chosen over Pi 5 (e.g., cost savings, performance sufficient, availability).
+
+---
+
+## 14. Consistency Across Subsystems
+
+- If one team member has already done a calculation or justification (e.g., trace width for a battery rail):
+  - Others may **reuse** that reasoning where applicable, keeping the documentation consistent.
+- Always:
+  - Stay consistent with naming (same net names, same units).
+  - Use the same engineering assumptions across the whole project.
+
+---
+
+## 15. Scheduling and Draft Review
+
+- Mentor is willing to:
+  - Review draft reports submitted around **Tuesday**, likely able to respond by **Wednesday**.
+- Expectation:
+  - Have a reasonably complete draft ready for feedback before final submission.
