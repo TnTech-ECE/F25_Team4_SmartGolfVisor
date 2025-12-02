@@ -1,0 +1,95 @@
+# **Meeting Minutes — New Recording 24**
+
+**Date:** Not specified  
+**Attendees:** Multiple team members  
+**Purpose:** Discuss formatting expectations for Detailed Design documents, Bill of Materials structure, PCB considerations, workload planning, and scheduling for the upcoming presentation.
+
+---
+
+## **1. Specifications & Constraints Formatting**
+
+- JC provided feedback on formatting requirements for the Detailed Design.  
+- **Specifications** must be written as **bolded bullet-point shall statements**.  
+- **Constraints** must appear in a **table** containing:  
+  - Constraint  
+  - Rationale  
+- Team agreed this format satisfies project requirements and should be used consistently.  
+- A screenshot/example will be shared in Microsoft Teams for reference.
+
+---
+
+## **2. Bill of Materials (BOM) Formatting**
+
+- Current BOM formats across subsystems are inconsistent.  
+- A team member created an **Excel BOM template** that includes:  
+  - Component  
+  - Manufacturer  
+  - Part Number  
+  - Distributor  
+  - Description  
+  - Quantity  
+  - Cost  
+- Team agreed to adopt this template.  
+- Notes:  
+  - JLCPCB parts lists will rely on JLC-specific part numbers.  
+  - For JLC-sourced BOM sections, include a note such as:  
+    *“All components in this section are sourced from JLCPCB.”*  
+- Some subsystems require **two BOMs**:  
+  - PCB components (JLCPCB)  
+  - Off-board components (wire, switch, fuse holder, etc.)  
+
+---
+
+## **3. PCB & Mechanical Constraints**
+
+- Discussion of PCB size: earlier guidance referenced **4 × 4 inches**, though final dimensions may be reduced over winter break.  
+- Enclosure design considerations:  
+  - Possible placement of the battery compartment on the lid.  
+  - A cable pass-through hole will allow routing power to the board.  
+  - Final switch placement depends on the completed PCB layout.  
+- Team members will provide **3D PCB models** for accurate enclosure integration.
+
+---
+
+## **4. Timeline & Submission Planning**
+
+- JC stated the submission may be turned in **early Thursday morning** before grading begins.  
+- Most members plan to submit between **Wednesday night and early Thursday morning**.  
+- Team members discussed prioritizing this submission over other coursework.
+
+---
+
+## **5. Presentation Planning**
+
+- Presentation work begins **after the Detailed Design submission**.  
+- Proposed schedule:  
+  - **Wednesday:** Short planning meeting  
+  - **Friday/weekend:** Begin slide creation  
+- Presentation slides will be **individualized by subsystem** but merged into a single deck.  
+- The conclusion cannot be written until all subsystem work is complete.
+
+---
+
+## **6. Additional Notes**
+
+- Members discussed availability around exams and work schedules.  
+- Consistency is needed in:  
+  - Physical deliverables  
+  - Formatting  
+  - GitHub updates  
+  - PCB models for enclosure design  
+
+---
+
+## **7. Action Items**
+
+| **Action Item** | **Owner** | **Due Date** |
+|-----------------|-----------|--------------|
+| Share screenshot/example of spec/constraint formatting | Assigned member | ASAP |
+| Distribute BOM Excel template | Same member | ASAP |
+| Update Detailed Design documents for formatting consistency | All members | Before submission |
+| Provide 3D PCB models for enclosure design | PCB designers | When available |
+| Meet Wednesday for presentation planning | Entire team | Wednesday |
+| Begin slide creation | Entire team | Friday / Weekend |
+
+---
