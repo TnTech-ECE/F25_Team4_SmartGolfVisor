@@ -1,0 +1,113 @@
+# **Capstone Team Meeting Notes**
+_All content derived from team transcript_  :contentReference[oaicite:0]{index=0}
+
+**Meeting Purpose:**  
+Plan structure, slide assignments, and content for the Capstone presentation.
+
+---
+
+## **1. Grading & Evaluation Discussion**
+- Confirmed point values for IDA evaluation and Controls final.
+- Members discussed submitting screenshots/confirmations to the appropriate Dropbox.
+
+---
+
+## **2. Technical Difficulties**
+- Multiple issues opening PowerPoints due to slow Wi-Fi.
+- RISD PowerPoints noted as especially large and difficult to load on some devices.
+
+---
+
+## **3. Stakeholders Identification**
+- Identified stakeholders:
+  - Golfers
+  - Individuals who enjoy golf
+  - Users seeking affordable, performance-improvement tools
+
+---
+
+## **4. Presentation Planning**
+
+### **Slide Count & Time Constraints**
+- Presentation is limited to **10 minutes**.
+- Team currently has **10–12 slides** → not feasible without heavy condensation.
+- Estimated time: ~45 seconds per slide, ~1–1.5 minutes per speaker.
+
+### **Agreed-Upon Approach**
+- **Conceptual Design**
+  - Keep to 1–2 slides maximum.
+  - Include:
+    - Hardware block diagram  
+    - Software flowchart(s)
+  - Maintain only high-level explanations.
+
+- **Detailed Design**
+  - Present as a **subsystem overview**.
+  - Each team member summarizes their subsystem in **20–30 seconds**.
+  - Include graphics (visor CAD, PCB preview, tower, etc.) as space allows.
+
+- **Background**
+  - Quick introduction before transitioning into conceptual content.
+
+- **Contributions & Acknowledgements**
+  - Contributions slide should reflect **project work**, not slide clicking order.
+  - Acknowledgements slide required (e.g., advisors, external contributors).
+
+---
+
+## **5. Standards, Ethics, and Broader Impacts**
+- Section must mention:
+  - Standards used/considered  
+  - Ethical considerations  
+  - Broader impact for users/public
+- Team agreed:
+  - **Very short section (~30 seconds)**  
+  - Only list standards; no deep technical detail required.
+
+---
+
+## **6. Conceptual Design Clarifications**
+- Required elements:
+  - Hardware block diagrams
+  - Software/app workflow diagrams
+  - High-level operational/user flow
+- Team discussed whether the conceptual flow should include user steps;  
+  decision: **include a simplified use-case flow**.
+
+---
+
+## **7. Detailed Design Clarifications**
+- Present only selective highlights:
+  - Visor hardware structure
+  - Battery specification overview
+  - Brief PCB specification reference
+  - CAD model preview
+  - Software subsystem highlights
+- Excessive detail removed due to time constraints.
+
+---
+
+## **8. Formatting & Slide Cleanup**
+- Items needing correction:
+  - Template background inconsistencies
+  - Name spelling verification
+  - Style alignment across slides
+  - Resume uploads for portfolio portion
+
+---
+
+## **9. Materials & Fabrication Notes**
+- PETG replaced with more durable outdoor-rated filament.
+- Plan to experiment with thread sizes and hole adjustments in visor prototypes.
+- Consider showing tower model or PCB visuals if time permits.
+
+---
+
+## **10. Next Steps / Action Items**
+- Finalize slide assignments.
+- Condense conceptual design to **1–2 slides**.
+- Prepare **brief subsystem summaries** for detailed design.
+- Add and finalize **acknowledgements** slide.
+- Verify conceptual flowcharts align with hardware/software.
+- Fix formatting issues (scaling, background, alignment).
+- Ensure all members update their slide sections before next meeting.
