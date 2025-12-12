@@ -328,7 +328,7 @@ These features allow the capstone team to inspect wiring, power rails, sensors, 
 .
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/BJZXgJyzWx.png" alt="3d model" width="600">
+<img width="548" height="715" alt="3d model" src="https://github.com/user-attachments/assets/ca14ce40-d37c-4a64-952a-0cbe58f48402" />
 
 <br>
 
@@ -343,7 +343,7 @@ The overall launch monitor schematic, shown conceptually in Figures 1–4, imple
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/S1hFk3CZWl.png" alt="high level fig 1" width="600">
+<img width="1024" height="1024" alt="high level fig 1" src="https://github.com/user-attachments/assets/bd8953b4-f07d-4f85-b5ec-aedab07ee9c9" />
 
 <br>
 
@@ -357,7 +357,7 @@ Figure 2 presents the top-level schematic for the Launch Monitor subsystem, inte
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/HkxSIn0bbx.jpg" alt="Figure 3 image" width="600">
+<img width="1024" height="1536" alt="fig 2" src="https://github.com/user-attachments/assets/0a551b8b-3366-4e19-8200-d0ef6aa8d1e8" />
 
 <br>
 
@@ -371,7 +371,8 @@ Figure 3 details the interface between the Raspberry Pi 5, the dual OV9281 globa
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/SyN94nRbZe.png" alt="fig 3" width="600">
+<img width="1024" height="1536" alt="fig 3" src="https://github.com/user-attachments/assets/ceb018c5-38ec-4975-a5c4-2501af76022f" />
+
 
 <br>
 
@@ -386,7 +387,8 @@ The schematic in Figure 4 implements the IR strobe subsystem using a ~20-W 850-n
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/B1dl5iCbZg.png" alt="schematic" width="600">
+<img width="1697" height="495" alt="schematic" src="https://github.com/user-attachments/assets/8d59b666-2dc2-4ba9-9b79-13aaff2ed675" />
+
 
 <br>
 
@@ -402,7 +404,8 @@ The 5-V output rail is routed to a 2-pin locking connector (J2) labeled 5V_OUT /
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/SkRNE20WZx.png" alt="fig 5" width="600">
+<img width="1021" height="919" alt="fig 5" src="https://github.com/user-attachments/assets/8c21654f-8de2-4634-882f-2b13a796a3f9" />
+
 
 <br>
 
@@ -433,7 +436,8 @@ The following subsections describe each board's layout, functional grouping, and
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/BJBRf60-be.png" alt="pitrac PCB" width="600">
+<img width="1185" height="717" alt="pitrac PCB" src="https://github.com/user-attachments/assets/36d67372-3bee-4bdc-a364-2525616845a3" />
+
 
 <br>
 
@@ -467,7 +471,8 @@ Overall, the layout implements a stable, noise-aware platform for high-speed inf
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/S112G6C-Wg.png" alt="PITRAC PCB Board Picture (Both Layers)" width="600">
+<img width="1110" height="797" alt="PITRAC PCB Board Picture (Both Layers)" src="https://github.com/user-attachments/assets/9f2ebbed-193f-4c4e-b297-0a012422bacf" />
+
 
 <br>
 
@@ -519,7 +524,8 @@ As the project moves from Rev A into later revisions, the board outline and conn
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/S1frI6A--x.png" alt="battery PCB" width="600">
+<img width="1397" height="682" alt="battery PCB" src="https://github.com/user-attachments/assets/b404cd4b-e073-4897-8205-99b758f1c934" />
+
 
 <br>
 
@@ -534,8 +540,9 @@ The IR strobe driver interface occupies a dedicated region near the battery side
 Throughout the layout, polygon pours are used to widen the PACK+ and 5V_OUT copper areas, and thermal reliefs are applied to plated through-holes where necessary to balance solderability with current-carrying capability. The continuous ground plane on the bottom layer supports good return paths and also acts as a thermal spreader for the buck regulator and LED driver components. Mounting holes tied to ground are placed near the corners of the PCB so the board can be rigidly attached to stand-offs in the Launch Monitor enclosure, further improving mechanical robustness and heat transfer.
 
 <div align="center">
+  
+<img width="1607" height="780" alt="3d battery" src="https://github.com/user-attachments/assets/53b796be-4b37-4f29-a725-a514625d7356" />
 
-<img src="https://hackmd.io/_uploads/BJKL8pAWWx.png" alt="3d battery" width="600">
 
 <br>
 
@@ -554,7 +561,8 @@ While electrically equivalent to the schematic described in the previous section
 
 <div align="center">
 
-<img src="https://hackmd.io/_uploads/BksCwa0-bl.jpg" alt="Figure 11" width="600">
+<img width="1732" height="435" alt="detailed flowchart" src="https://github.com/user-attachments/assets/aa3c2f0b-23aa-4afd-9edf-1fa145c9cb65" />
+
 
 <br>
 
