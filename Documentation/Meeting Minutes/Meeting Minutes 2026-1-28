@@ -1,0 +1,94 @@
+Capstone Meeting Minutes (Quick Summary)
+
+
+Time/Location: Engineering Building, Study Room 301 — ~2:51 PM
+
+Purpose: Team check-in on current project progress + next steps
+
+
+Individual Progress Updates
+
+
+
+Michael (Software / Bluetooth)
+
+
+Officially began coding
+Testing Bluetooth modules communicating via Python
+Research indicates web-hosted / remote setup should work, but could be tricky
+Estimates about 1 month to get base system set up, with debugging taking longer
+Not currently blocked but may request help later
+
+
+Chad
+
+Has been very helpful to the team (noted in discussion)
+
+
+(You / Landen) – PCB / Power
+
+
+PCB is basically done
+Concern: one MOSFET footprint causes clearance errors no matter routing/trace width
+Belief: issue may be due to JLCPCB design rule capability limits
+Possible fix: swap MOSFET to a different part/footprint
+Waiting for JC video feedback, but errors may not matter functionally
+Need to redo/clean detailed design after review (add real PCB photos, remove placeholder text)
+
+Power system change:
+
+5V system removed
+Battery is 3.7V LiPo
+Current battery roughly 4000 mAh (large physical size ~90mm x 45mm)
+Possible to reduce to 2000–3000 mAh for smaller size
+Downsizing battery does not affect circuit, only runtime
+
+Brian
+
+Has display code written
+Only remaining coding work: IMU sensor (expected to be easy)
+Offered help to Michael as needed
+
+Andrew (Enclosure / PCB)
+
+Watching reference videos for guidance
+Needs to finish PCB, plans to work with Brian
+Components mostly selected
+Working on enclosure/base box layout depending on battery size/shape
+Needs to select a better battery (old one failing) and keep price low
+
+Ryan (Board / Enclosure)
+
+Board is mostly done
+Considering adding indicator LEDs (on/off, transmit lines) mainly for testing
+Learned battery board already has 4 battery-level indicator diodes
+Enclosure will include cutouts for:
+USB-C port
+battery indicator LEDs
+
+Halfway done designing enclosure (including Landen’s parts)
+Needs display cutout and display arm considerations
+
+
+Parts Ordering / Admin Notes
+
+There is an Excel ordering sheet for purchasing parts
+Landen already started it and will share with everyone
+Each member should fill in their own section with product links
+Team discovered a full parts list / build guide posted online (step-by-step), very helpful
+
+
+Key Decisions / Action Items
+
+
+✅ Remove 5V system (confirmed)
+
+✅ Battery can possibly be downsized later
+
+🔧 Landen: fix MOSFET clearance problem (possibly change part)
+
+📄 Clean up detailed design doc after review
+
+📦 Everyone fill in parts ordering Excel sheet
+
+🖨️ Enclosure: plan USB-C + LED indicator cutouts; 3D print with filament (already budgeted)
