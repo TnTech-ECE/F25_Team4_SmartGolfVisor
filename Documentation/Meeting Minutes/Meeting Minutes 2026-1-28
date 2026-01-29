@@ -20,13 +20,8 @@ Estimates about 1 month to get base system set up, with debugging taking longer
 Not currently blocked but may request help later
 
 
-Chad
 
-Has been very helpful to the team (noted in discussion)
-
-
-(You / Landen) – PCB / Power
-
+(Landen) – Power PCB
 
 PCB is basically done
 Concern: one MOSFET footprint causes clearance errors no matter routing/trace width
@@ -43,29 +38,30 @@ Current battery roughly 4000 mAh (large physical size ~90mm x 45mm)
 Possible to reduce to 2000–3000 mAh for smaller size
 Downsizing battery does not affect circuit, only runtime
 
-Brian
+Brandon
 
 Has display code written
 Only remaining coding work: IMU sensor (expected to be easy)
 Offered help to Michael as needed
 
-Andrew (Enclosure / PCB)
+Andrew (Launch Monitor Enclosure / Battery PCB)
 
 Watching reference videos for guidance
-Needs to finish PCB, plans to work with Brian
+Needs to finish PCB, plans to work with Ryan
 Components mostly selected
 Working on enclosure/base box layout depending on battery size/shape
 Needs to select a better battery (old one failing) and keep price low
 
-Ryan (Board / Enclosure)
+Ryan (Communications PCB)
 
 Board is mostly done
 Considering adding indicator LEDs (on/off, transmit lines) mainly for testing
+
+Bryce (Visor Design)
 Learned battery board already has 4 battery-level indicator diodes
 Enclosure will include cutouts for:
 USB-C port
 battery indicator LEDs
-
 Halfway done designing enclosure (including Landen’s parts)
 Needs display cutout and display arm considerations
 
