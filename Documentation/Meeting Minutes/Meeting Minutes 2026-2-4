@@ -1,0 +1,49 @@
+## Meeting Summary (Transcript 2)
+
+**Purpose:** Coordinate upcoming **individual presentations** before parts ordering, confirm timelines, and share status on software prototype + logistics (JC meeting, ordering sheet).
+
+---
+
+### Key Points Discussed
+
+#### 1) Presentations scheduling (priority)
+- Presentations are **individual**, but likely scheduled **as a group on the same day**.
+- Plan: **Email Storm on Monday** to lock in presentation dates.
+- Concern: if the next available Monday is **the 23rd**, that’s tight because **ordering is due on the 27th** (shipping lead time risk).
+- Alternative: use **office hours / weekday slot** to avoid pushing too late.
+- Storm wants presentations completed **before ordering anything**.
+
+#### 2) Ordering format + parts list
+- Storm has an uploaded **ordering/template** (the one shown in class).
+- Note: **JLCPCB ordering** is different from general parts ordering (separate flow for PCB assembly/components).
+- Landen will **email the Excel ordering sheet** to the team so everyone can paste in their own links/items.
+
+#### 3) Software progress (backend prototype)
+- A **prototype backend** is working locally:
+  - Runs **Python locally** (not cloud/web-hosted yet).
+  - Takes shot data → validates it → sends to another program → outputs to **CSV** in the desired structured format.
+- Front-end and communications are **not done yet**.
+- Comms coordination with Ryan will happen **later in the month** (tentative).
+
+#### 4) Upcoming JC meeting
+- Team meeting with **JC Friday at 10:00 AM** (same room).
+- Request: **Everyone except Andrew and Ryan** attend (noted they likely can’t).
+- Purpose: give JC a **status update** (“where we’re at” / same as last update).
+
+#### 5) Landen PCB + battery discussion
+- Landen plans to ask **Tyler** about PCB clearance/DRC concerns (send a screenshot; expectation: may not matter).
+- Battery size may be reduced (example: **4000 mAh → 3000 mAh**) to improve fit; circuit remains **3.7 V LiPo** (voltage must stay the same).
+- Discussion acknowledged some batteries can be “suspect” / hard to source reliably, but swapping capacity is low risk since it’s plug-in.
+
+#### 6) Water resistance / IP rating clarification (risk/expectations)
+- Confusion/joking around the idea of **submerging** vs **spray resistance**.
+- Takeaway: be realistic—don’t claim unrealistic underwater testing; focus on practical precautions and whatever protection level is actually designed.
+
+---
+
+### Action Items
+- **Landen:** Email Storm on Monday to schedule presentations; share the Excel ordering sheet with the team.
+- **Team:** Start filling in ordering sheet (links + quantities) ASAP.
+- **Software lead:** Continue moving from local prototype to cloud/web-hosted + add comms + front end; sync with Ryan later this month.
+- **Friday:** Attend JC meeting at **10:00 AM** for progress update (except Andrew/Ryan as discussed).
+- **Landen:** Ask Tyler about PCB errors/clearances; decide if any footprint/board-size changes are needed.
