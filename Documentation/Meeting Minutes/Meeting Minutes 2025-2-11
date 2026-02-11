@@ -1,0 +1,119 @@
+## Meeting Summary (Transcript 3)
+
+**Purpose:** Clarify data handling (storage vs overwrite), Bluetooth packet limits, available PiTrak metrics, PCB/battery sizing updates, and presentation submission logistics.
+
+---
+
+### Key Points Discussed
+
+#### 1) Data Storage vs Overwrite (Backend + Visor)
+- Decision: **No long-term storage** of shot data.
+- Data will be **overwritten each shot** after display.
+- No “history” or “go back” functionality planned in the app.
+- This simplifies backend and visor logic.
+- Storing data would only be necessary if implementing logs or shot review — not currently required.
+
+---
+
+#### 2) Dynamic Data Fields / Dropdown Customization (Deferred)
+- Idea discussed: customizable dropdown menus selecting which metrics to send/display.
+- Would require:
+  - Fully dynamic code
+  - Byte-index handling
+  - Runtime packet restructuring
+- Decision: **Not necessary given limited metrics available.**
+- System will send a fixed structure instead.
+
+---
+
+#### 3) Bluetooth Packet Size Clarification
+- ESP32 BLE max transmission size discussed:
+  - Up to **247 bytes per BLE packet**
+  - Recommended smaller size (~20–25 bytes) for stability in some cases
+- Conclusion: Plenty of packet headroom for the small metric set.
+- No concerns about exceeding BLE limits.
+
+---
+
+#### 4) PiTrak Available Metrics (Important Limitation)
+
+Metrics confirmed available:
+- Ball Speed
+- Launch Angle
+- Side Angle
+- Back Spin
+- Side Spin
+- (Possibly Smash Factor — needs confirmation)
+
+Not directly available:
+- Club Head Speed
+- Distance (must be calculated)
+- Additional derived metrics
+
+Implication:
+- Distance likely must be calculated using:
+  - Ball speed
+  - Launch angle
+  - Spin
+- If additional metrics are needed, calculations can be handled:
+  - In backend API
+  - Not on visor itself
+
+Decision:
+- Keep metric set simple and realistic.
+- If questioned during presentation: explain hardware limitations and budget constraints.
+
+---
+
+#### 5) Presentations Update
+- Storm email clarified:
+  - Presentation will be **recorded video upload**
+  - Not live in-class presentation
+- No additional scheduling required.
+- Continue preparing presentation materials.
+
+---
+
+#### 6) PCB & Battery Sizing Update
+- Landen researching smaller LiPo:
+  - Target: **3000 mAh**
+  - Desired dimensions approx: ~60mm x 40mm range
+- Voltage remains **3.7V (non-negotiable)**.
+- Enclosure redesign depends on finalized battery dimensions.
+- Avoid redesigning enclosure multiple times before PCB order is finalized.
+
+---
+
+#### 7) Git / Submission Logistics
+- For Detailed Design submission:
+  - Use permanent link (main branch or approved pull request).
+  - Ensure updated document link is submitted.
+- Bluetooth confirmed as communication method (no change).
+
+---
+
+### Action Items
+
+- **Backend Lead:** Continue API development; handle derived metric calculations if needed.
+- **Landen:** Finalize smaller battery option; update enclosure once dimensions confirmed.
+- **Team:** Prepare recorded presentation for submission.
+- **All:** Confirm final metric list before coding final display layout.
+
+---
+
+### Risks Identified
+
+- Overestimating available PiTrak metrics.
+- Battery size affecting enclosure redesign.
+- BLE stability if packet size increases unnecessarily.
+- Last-minute metric changes requiring code restructuring.
+
+---
+
+### Overall Status
+
+- Communication method confirmed (BLE).
+- Data handling simplified (no storage).
+- Metric list mostly confirmed.
+- Presentation format clarified.
+- Hardware progressing; battery sizing still under refinement.
