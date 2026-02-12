@@ -343,43 +343,18 @@ The overall launch monitor schematic, shown conceptually in Figures 1–4, imple
 
 <div align="center">
 
-<img width="1024" height="1024" alt="high level fig 1" src="https://github.com/user-attachments/assets/bd8953b4-f07d-4f85-b5ec-aedab07ee9c9" />
+
+<img width="1024" height="1024" alt="wiring diagram cameras   board" src="https://github.com/user-attachments/assets/91d1faf9-a0cd-4020-8ace-e26947b4a9bf" />
 
 <br>
+
+</div>
 
 **Figure 2. Overall Launch Monitor & Power subsystem schematic**
 
-</div>
+The Launch Monitor subsystem integrates the Raspberry Pi 5 compute platform, dual global-shutter camera interfaces, an electrically isolated IR strobe driver stage, regulated 5-V power distribution, and structured debug infrastructure into a unified portable hardware architecture optimized for field operation. A 4S LiFePO₄ battery pack (12.8-V nominal) supplies the raw battery rail, which feeds a high-efficiency synchronous buck converter on the custom Power PCB to generate a regulated 5-V main rail. This 5-V rail powers the Raspberry Pi 5, dual OV9281-class global-shutter cameras via the CSI-2 interface, the 40-mm cooling fan, and all debug and expansion headers. Bulk electrolytic and high-frequency ceramic capacitors are placed at the power entry point and near the Pi 5 and fan headers to provide transient current support and minimize noise injection into the high-speed camera interface. The Raspberry Pi 5 serves as the sole processing element, performing synchronized dual-camera image acquisition, frame timing control, IR strobe triggering, and real-time golf telemetry computation. Each CSI camera connector is wired according to the Raspberry Pi 5 dual-lane CSI-2 pinout, including differential data pairs (D0±, D1±), differential clock (CK±), 3.3-V sensor supply, and multiple ground returns. Local 0.1-µF decoupling capacitors are placed at each camera 3.3-V input, and ESD-rated TVS protection devices are included on exposed connector pins to protect against handling and insertion transients. The IR strobe trigger signal originates from a dedicated Raspberry Pi 5 GPIO line (e.g., GPIO18), passes through a series resistor for edge-rate control and protection, and drives an optocoupler or digital isolator that electrically separates the high-current LED domain from the logic domain. This isolation prevents fault propagation, eliminates ground noise coupling, and ensures the LED defaults to OFF if the GPIO becomes unpowered or floating. 
 
-Figure 2 presents the top-level schematic for the Launch Monitor subsystem, integrating the Raspberry Pi 5, dual global-shutter camera connectors, the IR strobe driver interface, and the 5-V power distribution network. The 5-V input from the custom Power PCB enters the Pi 5 through a dedicated 5-V / GND header or USB-C-equivalent connector, while the two CSI-2 camera ports are wired to OV9281-class global-shutter camera modules using shielded or twisted-pair FFC/FFC cables. A GPIO line from the Pi 5 (e.g., GPIO18) is routed through a series resistor and level-conditioning stage to the IR_STROBE_EN signal that ultimately controls the LED driver. Local decoupling capacitors on the 5-V rail near the Pi connector and fan header provide transient current support and reduce noise injection into the cameras. This top-level view also shows the breakout of key debug and calibration signals (such as 5-V, GND, and GPIO test pads) used during bring-up.
-
----
-
-<div align="center">
-
-<img width="1024" height="1536" alt="fig 2" src="https://github.com/user-attachments/assets/0a551b8b-3366-4e19-8200-d0ef6aa8d1e8" />
-
-<br>
-
-**Figure 3. Raspberry Pi 5, camera connectors, and GPIO trigger interface**
-
-</div>
-
-Figure 3 details the interface between the Raspberry Pi 5, the dual OV9281 global-shutter cameras, and the IR strobe trigger signal. Each camera connector is wired according to the Pi global-shutter camera pinout, including differential CSI-2 data pairs, clock lines, 3.3-V sensor power, and ground. The schematic includes local 0.1-µF decoupling capacitors at each camera’s 3.3-V input, as well as ESD-rated TVS diodes on the exposed connector pins to protect against handling and cable-insertion transients. The IR_STROBE_EN signal originates from a Raspberry Pi 5 GPIO pin, passes through a series resistor (for edge-rate control and protection), and then drives either an optocoupler or digital isolator input on the Power/LED driver PCB. This separation keeps the high-current LED domain electrically isolated from the Pi logic domain and ensures that any faults in the LED circuit cannot back-feed into the compute subsystem. An on-board 40-mm 5-V fan header, fed directly from the 5-V rail and switched via a GPIO-controlled transistor or MOSFET, supports closed-loop thermal management based on temperature readings from the Pi 5.
-
----
-
-<div align="center">
-
-<img width="1024" height="1536" alt="fig 3" src="https://github.com/user-attachments/assets/ceb018c5-38ec-4975-a5c4-2501af76022f" />
-
-
-<br>
-
-**Figure 4. IR COB LED strobe and constant-current driver schematic**
-
-</div>
-The schematic in Figure 4 implements the IR strobe subsystem using a ~20-W 850-nm COB LED and a constant-current LED driver stage. The LED anode and cathode are connected to a high-current driver circuit powered from the raw battery rail (e.g., 12.8-V nominal from the 4S LiFePO₄ pack). A synchronous constant-current driver IC or discrete buck-type driver regulates LED current at approximately 700–1000 mA during pulses. The driver’s ENABLE or PWM input is controlled by the isolated IR_STROBE_EN signal coming from the Pi 5 interface. To maintain safety, the driver logic is designed such that the LED defaults to **OFF** when the GPIO is unpowered or floating, preventing the “stuck-on” failure mode described in prior PiTrac builds. Snubber components (RC network) are placed across the LED or switch node to mitigate ringing, while bulk electrolytic and ceramic capacitors on the input rail provide current during high-di/dt strobe events. The COB LED is represented with its thermal-pad connection tied to a dedicated copper region and mounting holes, supporting mechanical attachment to an external heatsink and optical shroud as defined in the mechanical subsystem.
+The IR strobe subsystem consists of a ~20-W, 850-nm COB LED driven by a synchronous constant-current buck driver powered directly from the raw battery rail. The driver regulates LED current in the 700–1000 mA range during short pulse events and includes bulk input capacitors, parallel ceramic capacitors, and an RC snubber network to mitigate high-di/dt ringing and switching transients. The LED thermal pad is bonded to a dedicated copper region with mechanical mounting provisions for an external heatsink and optical shroud assembly. Thermal management of the compute subsystem is achieved using a 5-V 40-mm fan controlled by a GPIO-driven MOSFET or transistor stage, enabling closed-loop temperature regulation based on processor telemetry. Dedicated debug and expansion headers provide access to 5-V, GND, UART RX/TX, GPIO test pads, and calibration signals to support bring-up, validation, and field servicing. Collectively, this architecture replaces earlier dual-processor implementations with a single Raspberry Pi 5 platform, reducing system complexity, lowering power consumption, improving synchronization determinism, and increasing overall electrical robustness for portable launch monitor operation.
 
 ---
 
@@ -861,21 +836,6 @@ The subsystem has **substantial margin** in:
 These margins support reliable operation even under non-ideal field conditions.
 
 ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
