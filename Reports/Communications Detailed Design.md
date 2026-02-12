@@ -9,7 +9,7 @@ The Communication Subsystem is essential to the operation of the Smart Golf Viso
 ####  Specifications 
 Listed below are the specification **shall** statements for the Communications Subsystem:
 - The PiTrac DIY Launch Monitor, App, and Visor **shall** wirelessly communicate shot metrics (ball speed, ball distance, launch angle, spin rate, and smash factor) via BLE (Bluetooth Low Energy) operating within the 2.4 GHz ISM band.
-- The system **shall** achieve an end-to-end wireless latency of ${\le 120 \text{ ms}}$ for 95% of all shot-metric packets when app is running in the foreground.
+- The system **shall** achieve an end-to-end wireless latency of ${\le 120 \text{ ms}}$ for ≤ 95% of all shot-metric packets when app is running in the foreground.
 - The visor's microcontroller **shall** operate at a nominal supply voltage of 3.3V ± 5%.
 - The mobile application **shall** support simultaneous BLE connections with multiple paired devices.
 - The visor's microcontroller **shall** possess BLE connectivity. 
@@ -22,17 +22,18 @@ Listed below are the specification **shall** statements for the Communications S
 Listed below are constraints the subsystem must abide by, including rationales describing how each relates to engineering requirements and regulatory compliance.
 
 
-<Center>
+<div align="center">
   <strong>Table I</strong><br>
   Unified Constraints, Standards/Guidance, and Design Impact Table
-</Center>
+
 
 | **Constraint** | **Standard** | **Relevance to Design** | **Design Rationale**|
 | ------ | ----- | ----- | ----- |
 | **BLE Operating Frequency**| IEEE 802.15.1 (Bluetooth Low Energy Physical Layer Specification) [1]    | Ensures the wireless subsystem operates strictly within the globally unlicensed 2.400–2.4835 GHz ISM band, maintaining BLE compatibility and avoiding illegal or out-of-band transmission           | RF front-end must be designed/tuned for 2.4 GHz ISM operation; antenna and layout must meet FCC emissions constraints; system must remain within BLE PHY requirements         |
 | **BLE Transmission Range & Packet Reliability** | Bluetooth SIG Core Specification (PHY sensitivity & link budget guidance); FCC Part 15 radiated-power restrictions          | BLE is optimized for short-range, low-power communication; defining a ≤10 m operational range with ≤1% packet loss ensures responsive telemetry and predictable RF behavior in a wearable           | Requires low-power TX configuration; line-of-sight range verification; antenna placement optimized for head-worn device; packet-loss testing at ≤10 m to validate link margin |
 | **SPI Logic-Level Compliance**                  | Component-level datasheet specifications (ESP32-S3, IMU, display driver); JEDEC JESD8 low-voltage digital logic conventions | Ensures digital communication between the microcontroller and peripherals remains within the allowable 3.3 V logic-level limits, preventing latch-up, device overstress, or logic-threshold failure | All SPI signals must be routed at 3.3 V I/O levels; no level shifters required; PCB trace impedance kept consistent; ensures reliable timing margins and electrical safety    |
-
+</div>
+ 
 ## Overview of Proposed Solution
 
 The Communication Subsystem supports both wired and wireless data transmission between the Smart Golf Visor’s launch monitor, mobile application, and visor. Taking into account all previously defined specifications and design constraints, the proposed solution is organized as follows:
@@ -65,7 +66,7 @@ The Communication and Launch Monitor subsystems interface to form a section of t
 
 Inside the BLE network, the launch monitor will function as **peripheral device** within the network [5]. In this role, the launch monitor will accept connections from the BLE central (app) and provides the packeted shot metrics data as requested.
 
-The shot metrics (ball speed, ball distance, launch angle, spin rate, club head speed) are currently outputted internally through **JSON text** by the PiTrac DIY Launch Monitor after each swing. For wireless transmission, the JSON text will be parsed and converted into a **fixed-length binary format** consisting of each metric represented by a **4-byte float** and the timestamp represented by a **4-byte unsigned integer**. This binary packet will be transmitted over **BLE UART** which is a custom **GATT (Generic Attribute) Profiles**. These profiles will allow the app to determine when the packet starts and ends as well as distinguishing what each piece of data is. **GATT profiles** consist of **services** and **characteristics**. A single BLE UART service will be created, containing all the shot metrics  and will be assigned a unique **16-bit UUID** (Universally Unique Identifier), allowing the **client (app)** to distinguish it during device scanning and data discovery [6] . Within the service, the TX characteristics will function as a serial data stream containing all shot metrics into a single packet. The TX characteristic includes descriptors specifying units for user interpretation and properties defining the **bytes (4-8 bytes)** and **access permissions**, such as read or write [7]. Additionally, the RX characteristic can be used for any commands sent from the client to the peripheral.
+The shot metrics (ball speed, ball distance, launch angle, spin rate, club head speed) are currently outputted internally through JSON text by the PiTrac DIY Launch Monitor after each swing. For wireless transmission, the JSON text will be parsed and converted into a fixed-length binary format consisting of each metric represented by a 4-byte float and the timestamp represented by a 4-byte unsigned integer. This binary packet will be transmitted over BLE UART which is a custom **GATT (Generic Attribute) Profiles**. These profiles will allow the app to determine when the packet starts and ends as well as distinguishing what each piece of data is. **GATT profiles** consist of **services** and **characteristics**. A single BLE UART service will be created, containing all the shot metrics  and will be assigned a unique **16-bit UUID** (Universally Unique Identifier), allowing the **client (app)** to distinguish it during device scanning and data discovery [6] . Within the service, the TX characteristics will function as a serial data stream containing all shot metrics into a single packet. The TX characteristic includes descriptors specifying units for user interpretation and properties defining the **bytes (4-8 bytes)** and **access permissions**, such as read or write [7]. Additionally, the RX characteristic can be used for any commands sent from the client to the peripheral.
 
 
 ### APP
@@ -109,94 +110,99 @@ The OLED display will require two additional control signals consisting of a **D
 ### VISOR DESIGN
 
 
-The Communication and Visor Design subsystems serves as the mounting platform for the components that provides wired connections between the IMU, OLED display, and themicrocontroller to communicate. Although the mounting itself does **not transfer data**, proper positioning is essential to maintain reliable connections between these devices. The standard thickness of a PCB is **1.6 mm** and shall be secured using **M2 screws** through **2.5 mm pre-drilled mounting holes**. To prevent short circuits and allow airflow for thermal management,  **5–10 mm nylon** standoffs shall  elevates the PCB above the visor surface. The orientation will be aligned with the placement of the IMU and display to **minimize cable strain** and **ensure consistent electrical connections**. Additional supports, such as brackets or adhesive pads, may be used to reduce vibration and mechanical stress during use. The mounting design also allows for easy maintenance or replacement of the PCB and attached components without disturbing the overall visor assembly.
+The Communication and Visor Design subsystems interface through the physical mounting of the Communication subsystem's PCB. Although the mounting itself does **not transfer data**, proper positioning is essential to maintain reliable connections between the Power subsystem, Communication subsystem's PCB, and the Micro OLED display. The standard thickness of a PCB is **1.6 mm** and shall be secured using **M2 screws** through **2.5 mm pre-drilled mounting holes**. To prevent short circuits and allow airflow for thermal management,  **5–10 mm nylon** standoffs shall  elevates the PCB above the visor surface. The orientation will be aligned with the placement of the display to **minimize cable strain** and **ensure consistent electrical connections**. The mounting design also allows for easy maintenance or replacement of the PCB and attached components without disturbing the overall visor assembly.
 
 ## Buildable Schematic 
 
-Integrate a buildable electrical schematic directly into the document. If the diagram is unreadable or improperly scaled, the supervisor will deny approval. Divide the diagram into sections if the text and components seem too small.
 
-The schematic should be relevant to the design and provide ample details necessary for constructing the model. It must be comprehensive so that someone, with no prior knowledge of the design, can easily understand it. Each related component's value and measurement should be clearly mentioned.
 
 ### Low-pass Filter
-
 <p align="center">
-  <img src="https://hackmd.io/_uploads/S1U9avHWWe.png" alt="LC circuit with shunt and damping">
+  <img src="https://hackmd.io/_uploads/S1U9avHWWe.png" alt="Low-Pass Filter Input and Output Voltage">
   <br>
-  <strong>Figure 1: LC Filter Schematic</strong>
+  <strong>Figure 1 :  LC filter Schematic</strong>
 </p>
 
-Figure 1, the low pass filter seen is very similar to the filter suggested in the ESP32-S3-WROOM1 datasheet [3]. The suggested filter consists of **3 parallel capacitors** (10 µF, 1 µF, and 0.1 µF), a **2nH inductor**, and a **decoupling capacitor** (0.1 µF) placed close to the MCU (microcontroller unit). However, to effienciently filter out the higher frequencies, a 10 µH inductor will replace the 2nH inductor. The $\mathbf{10\,\mu\text{F}}$  capacitor ($C_1$) primarily addresses low-frequency ripple voltage from the buck boost converter. Conversely, the smaller capacitors ($\mathbf{1\mu\text{F}}$and $\mathbf{0.1\mu\text{F}}$) and $\mathbf{10\mu\text{H}}$ inductor form a low-pass filter stage to suppress higher frequency switching transients and EMI/RFI (Electromagnetic Interference/Radio Frequency Interference), leveraging the low Equivalent Series Inductance (ESL) of the ceramics. Finally, the $\mathbf{0.1\mu\text{F}}$ decoupling capacitor is placed immediately adjacent to the microcontroller's 3.3V input pin (the $V_o$ node) to provide the instantaneous current bursts required by the MCU's fast-switching digital and wireless circuitry. The microcontroller's **3.3V input pin** will be connected at the **Vo node** in the following schematic. This arrangement provides both **high- and low-frequency noise suppression**, improving power integrity for reliable microcontroller operation. Additionally, a **10 Ω shunt resistor** will be placed in parallel with the **10 µH inductor** to provide proper filter damping. [13]
+Figure 1, the low pass filter seen is very similar to the filter suggested in the ESP32-S3-WROOM1 datasheet [3]. The suggested filter consists of **3 parallel capacitors** (10 µF, 1 µF, and 0.1 µF), a **2nH inductor**, and a **decoupling capacitor** (0.1 µF) placed close to the MCU (microcontroller unit). However, to effienciently filter out the higher frequencies, a 10 µH inductor will replace the 2nH inductor. The $\mathbf{10\,\mu\text{F}}$  capacitor ($C_1$) primarily addresses low-frequency ripple voltage from the buck boost converter. Conversely, the smaller capacitors ($\mathbf{1\,\mu\text{F}}$and $\mathbf{0.1\,\mu\text{F}}$) and $\mathbf{10\,\mu\text{H}}$ inductor form a low-pass filter stage to suppress higher frequency switching transients and EMI/RFI (Electromagnetic Interference/Radio Frequency Interference), leveraging the low Equivalent Series Inductance (ESL) of the ceramics. Finally, the $\mathbf{0.1\,\mu\text{F}}$ decoupling capacitor is placed immediately adjacent to the microcontroller's 3.3V input pin (the $V_o$ node) to provide the instantaneous current bursts required by the MCU's fast-switching digital and wireless circuitry. The microcontroller's **3.3V input pin** will be connected at the **Vo node** in the following schematic. This arrangement provides both **high- and low-frequency noise suppression**, improving power integrity for reliable microcontroller operation. Additionally, a **10 Ω shunt resistor** will be placed in parallel with the **10 µH inductor** to provide proper filter damping. [13]
 
 ### Wireless 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/rJANxsqlbx.png" alt="Bluetooth Comms">
+  <img src="https://hackmd.io/_uploads/rJANxsqlbx.png" alt="BLE Wireless Network">
   <br>
-  <strong>Figure 2: BLE Wireless Network</strong>
+  <strong>Figure 2 :  BLE Wireless Network</strong>
 </p>
 
 Figure 2 illustrates the data flow within the wireless subsystem. The smartphone application operates as the **BLE central**, while the launch monitor and visor function as **BLE peripherals**. This architecture supports straightforward connectivity between devices and corresponds to the communication pathways defined in the subsystem interfacing descriptions for both the Communication–Launch Monitor and Communication–App interactions.
 
 ### Wired
 <p align="center">
-  <img src="https://hackmd.io/_uploads/rJUB_cEZWl.png" alt="SPI Comms">
+  <img src="https://hackmd.io/_uploads/rJUB_cEZWl.png" alt="SPI Master Slave Network">
   <br>
-  <strong>Figure 3: SPI Master/Slave Network</strong>
+  <strong>Figure 3 :  SPI Master/Slave Network</strong>
 </p>
-
 
 Figure 3 presents the wired data-transfer paths between the microcontroller, IMU, and display within the HUD subsystem. All communication lines operate at **3.3 V** and use the SPI protocol to ensure **high-speed** and **reliable** data exchange. These connections correspond directly to the signal interactions defined in the Communication and HUD subsystem interfacing, where the roles of the SPI master and slave devices, required signal lines, and timing dependencies are outlined.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/rJCuj-2WZg.png" alt="USB-C Port">
+  <img src="https://hackmd.io/_uploads/rJCuj-2WZg.png" alt="USB to UART Communication Network">
   <br>
-  <strong>Figure 4: USB to UART Communication Network</strong>
+  <strong>Figure 4 :  USB to UART Communication Network</strong>
 </p>
-
 
 Figure 4 shows the circuitry used to program the microcontroller, as detailed in the wired communication section of the proposed solution. A CP2102N USB-to-UART bridge converts **5 V USB** data signals to **3.3 V** UART signals compatible with the ESP32-S3, enabling firmware uploading and serial communication via a USB-C interface.
 
 <p align="center">
-  <img src="https://hackmd.io/_uploads/HyE6LV0bbx.png" alt="PCB Schematic for Wired Communication">
+  <img src="https://hackmd.io/_uploads/r1tQywtD-e.png" alt="PCB Schematic for Wired Communication">
   <br>
-  <strong>Figure 5: PCB Schematic for Wired Communication</strong>
+  <strong>Figure 5 :  PCB Schematic for Wired Communication</strong>
 </p>
 
-
-Figure 5 shows the **complete PCB schematic**, incorporating the low-pass filter, wireless and wired communication circuits, USB-to-UART programming interface, TVS diode protection network, component footprints, and solder pads for external connections. This schematic represents the full electrical design required to construct the PCB.
+Figure 5 shows the **complete PCB schematic**, incorporates the ESP32-S3 microcontroller with the needed low pass filter, USB-to-UART bridge, TVS diode protection network, as well as incorporates the IMU needed for the HUD subsystem and pin connections for the Micro OLED display. This schematic represents the full electrical design required to construct the PCB.
 
 ## Printed Circuit Board Layout
 
+The Communications Subsystem PCB was designed using a **four-layer stackup** to support structured routing, signal integrity, power distribution, and grounding. The top layer contains **routed signal traces** and **incoming power connections**, along with a **ground pour**. The second layer consists of a **continuous ground plane** to provide a low-impedance return path and minimize noise coupling. The third layer is a **solid 3.3 V power plane** used to distribute regulated power across the board. The bottom layer contains **additional signal routing** and includes a **ground pour** to further support return current paths and reduce electromagnetic interference.
+
 <p align="center">
-  <img src="https://hackmd.io/_uploads/Bkzya_RWZg.png" alt="PCB Render">
+  <img src="https://hackmd.io/_uploads/ryqUl_qDWl.png" alt="PCB Layout">
   <br>
-  <strong>Figure 6: PCB Render</strong>
+  <strong>Figure 6 :  PCB Layout</strong>
 </p>
 
-Figure 6 shows the initial PCB render with all required components placed on the board. At this stage, the layout focuses primarily on grouping components near the pins and interfaces they will connect to in the final routed design. This allows for a clear visual organization of the system without introducing any routing, copper pours, or finalized trace paths. The render effectively illustrates the planned component arrangement before progressing to the electrical layout and routing phase.
+Figure 6 shows the components' placement on the board and their routed copper traces carrying signals and the incoming **3.3V** within the **front layer (red)** and the **back layer (blue)**. The incoming power traces seen on the right side of the board's layout are thicker **(0.508 mm)** to accomodate for the current levels that will drawn **(max 350 mA)** and reduce resistive voltage drop. The **routed traces** do not include any **90 degree** turns to prevent any additional impedances towards the signals. On each corner of the board, **2.5 mm mounting holes** are placed to ensure proper mounting to the visor chassis. 
+
+
+<p align="center">
+  <img src="https://hackmd.io/_uploads/BJ9bIutD-e.png" alt="PCB Render">
+  <br>
+  <strong>Figure 7 :  PCB Render</strong>
+</p>
+
+Figure 7 presents the **3D rendering** of the assembled PCB. The rendering illustrates component placement, connector accessibility, and overall board organization. This visualization enables verification of component spacing, mounting alignment, and mechanical compatibility prior to fabrication while maintaining electrical equivalence to the layout shown in Figure 6.
 
 ## Flowchart
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/ryggwpN-We.png" alt="Bluetooth Transmission Flowchart">
   <br>
-  <strong>Figure 7: Bluetooth Transmission Flowchart</strong>
+  <strong>Figure 8 :  Bluetooth Transmission Flowchart</strong>
 </p>
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/ByFokjNb-g.png" alt="SPI Transmission Flowchart">
   <br>
-  <strong>Figure 8: SPI Transmission Flowchart</strong>
+  <strong>Figure 9 :  SPI Transmission Flowchart</strong>
 </p>
-
 
 ## BOM
 
 ###### Bill of Materials
-![BOM_1](https://hackmd.io/_uploads/HyMD7SAW-x.png)
-![BOM_2(1)](https://hackmd.io/_uploads/r1MtAFCWZx.png)
+![Screenshot 2026-02-11 222839](https://hackmd.io/_uploads/BJkdv05DZg.png)
+![Screenshot 2026-02-11 222902](https://hackmd.io/_uploads/BJddPC5vZg.png)
+![Screenshot 2026-02-11 223112](https://hackmd.io/_uploads/rJ05DC5PWe.png)
 
 
-## Analysis
+# Analysis
 
 According to the constraints of the system, the following is an in-depth analysis supporting the design abiding by it. 
 
@@ -205,7 +211,7 @@ The wireless communication of the Smart Golf Visor consists of Bluetooth Low Ene
 
 The BLE protocol is also **highly energy-efficient** and well-suited for small data transmissions, supporting extended single-charge use. The reason for being highly energy-efficient is due to the RF module going into a deep-sleep state, only drawing  **1 μA** at **3V**, once the data has been sent or received [14]. For a typical 18-hole round, the average golfer takes about **100 strokes** and lasts approximately **4 hours** [15]. Breaking that down, the average golfer is swinging **~25 swings** an hour. For the majority of the time, the BLE radio will remain in a deep sleep, only waking to briefly transit or receive shot metrics, thereby minimizing energy consumption and maximizing the specified battery life **(3,000–5,000 mAh)**.
 
-The Pitrac DIY Launch Monitor outputs the shot metrics (ball speed, ball distance, launch angle, spin rate, club head speed, and timestamp) in **JSON fomart**. However, for lower latency, these will be converted to **fixed-length binary format** lowering the amount of bytes transferred. Each metric will be represented by a **4-byte float** and the timestamp represented by a 4-byte unsigned integer. With a total of 5 metrics and a timestamp the total bytes of the packet is: 
+The Pitrac DIY Launch Monitor outputs the shot metrics (ball speed, ball distance, launch angle, spin rate, club head speed, and timestamp) in **JSON fomart**. Each metric will be represented by a **4-byte float** and the timestamp represented by a 4-byte unsigned integer. With a total of 5 metrics and a timestamp the total bytes of the packet is: 
 
 $$
 \text{Total Packet Bytes}=
@@ -247,7 +253,7 @@ This approach allows the simulation to estimate BLE packet loss as a function of
 <p align="center">
   <img src="https://hackmd.io/_uploads/ByXBTOzZ-e.png" alt="BLE packet loss rate vs distance">
   <br>
-  <strong>Figure 9: BLE Packet Loss Rate as Device Distance Increases</strong>
+  <strong>Figure 10: BLE Packet Loss Rate as Device Distance Increases</strong>
 </p>
 
 
@@ -261,7 +267,7 @@ In the following Monte Carlo simulation of the BLE network, the design specifica
 <p align="center">
   <img src="https://hackmd.io/_uploads/SyiGTrDZZg.png" alt="System End-to-End Wireless Latency">
   <br>
-  <strong>Figure 10: System End-to-End Wireless Latency</strong>
+  <strong>Figure 11: System End-to-End Wireless Latency</strong>
 </p>
 
 #### Wired
@@ -309,12 +315,12 @@ $$
 These low latencies ensure that both sensor data acquisition and display updates occur effectively instantaneously from the user’s perspective, satisfying the real-time performance requirements of the Smart Golf Visor.
 
 
-For reliable programming of the ESP32-S3, a USB to UART bridge IC will need to be implemented to take a 5V input USB signal to a 3.3V UART signal. The operation of the USB to UART bridge IC is shown in Figure 11:
+For reliable programming of the ESP32-S3, a USB to UART bridge IC will need to be implemented to take a 5V input USB signal to a 3.3V UART signal. The operation of the USB to UART bridge IC is shown in Figure 12:
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/rJUUPKRb-x.png" alt="USB Plug-in & CP2102N Bridge IC Connection">
   <br>
-  <strong>Figure 11: USB Plug-in & CP2102N Bridge IC Connection</strong>
+  <strong>Figure 12: USB Plug-in & CP2102N Bridge IC Connection</strong>
 </p>
 
 
@@ -394,7 +400,7 @@ The pulse energy experienced is well within the SP0503BAHTG's rated for **0.1 
 <p align="center">
   <img src="https://hackmd.io/_uploads/rJXnql3-Wx.png" alt="ESD pulse clamped by SP0503BAHTG at CP2102N input pins">
   <br>
-  <strong>Figure 12: Simulation of ESD Pulse Clamped by SP0503BAHTG at CP2102N Input Pins</strong>
+  <strong>Figure 13: Simulation of ESD Pulse Clamped by SP0503BAHTG at CP2102N Input Pins</strong>
 </p>
 
 
@@ -460,14 +466,14 @@ The shunt resistor also serves an important role in the **dissipation** of energ
 <p align="center">
   <img src="https://hackmd.io/_uploads/BJt_H9Ub-x.png" alt="Low-Pass Filter Undamped">
   <br>
-  <strong>Figure 13: Low-Pass Filter Undamped</strong>
+  <strong>Figure 14: Low-Pass Filter Undamped</strong>
 </p>
 
 The severe peak, seen at the resonance frequency, is approximately +20 dB. Calculating  the gain of the system, we get: 
 
 $$ \text{System Gain}= 10 ^{(20 \text{dB} / 20)} \approx 10 $$
 
-In this case, the **3.3V** DC input to the filter becomes a **33V** output exceeding the operating range of the ESP32-S3-WROOM1, essentially **destroying** it. To get rid of this increased gain, damping resistances needs to be applied in order to dissipate the energy generated from the resonance frequency. In this case, a **10 $\Omega$** shunt resistor is placed in parallel with the inductor to equalize the maximum load resistance **(10 $\Omega$)** of the microcontroller when it is drawing max current (approximately **350 mA**) [2]. In addition to the damping shunt resistance, the **$10\mu\text{H}$** inductor's **DCR** (DC resistance) also provides a series resistance to help dissipate any build up of energy caused from resonance frequency oscillation. Since it is in series with the input voltage, the approximate voltage drop for a **65 m$\Omega$** DSR is:
+In this case, the **3.3V** DC input to the filter becomes a **33V** output exceeding the operating range of the ESP32-S3-WROOM1, essentially **destroying** it. To get rid of this increased gain, damping resistances needs to be applied in order to dissipate the energy generated from the resonance frequency. In this case, a **10 $\Omega$** shunt resistor is placed in parallel with the inductor to equalize the maximum load resistance **(10 $\Omega$)** of the microcontroller when it is drawing max current (approximately **350 mA**) [2]. In addition to the damping shunt resistance, the **$10\mu\text{H}$** inductor's **DCR** (DC resistance) also provides a series resistance to help dissipate any build up of energy caused from resonance frequency oscillation. Since it is in series with the input voltage, the approximate voltage drop for a **65 $\text m \Omega$** DSR is:
 
 $$ V_{DR,L} = 330 mA * 0.065 \approx 21.45 \text{mV} $$
 
@@ -483,7 +489,7 @@ With the proper damping in place for the low-pass filter, ensuring stability of 
 <p align="center">
   <img src="https://hackmd.io/_uploads/H157kdHW-x.png" alt="Low-Pass Filter with Damping">
   <br>
-  <strong>Figure 14: Low-Pass Filter with Damping</strong>
+  <strong>Figure 15: Low-Pass Filter with Damping</strong>
 </p>
 
 
@@ -495,12 +501,12 @@ $$\frac{di}{dt} = \frac{3.3V}{10\mu\text{H}} \approx 0.33 \text{A/$\mu$s}$$
 
 The **$10\mu\text{H}$ inductor** provides a **slow ramp up** current of $\mathbf{0.33 ~\text{A/}\mu\text{s}}$ supplied to the microcontroller until the buck boost converter responds and **reestablishes** regulation. The **decoupling 0.1 $\mu\text{F}$ capacitor** placed near the microcontroller’s supply pin further suppresses high-frequency disturbances generated locally at the device
 
-The simulated input and output waveforms of the filter are shown in Figure 14: 
+The simulated input and output waveforms of the filter are shown in Figure 16: 
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/BkhRnPrb-x.png" alt="Low-Pass Filter Input and Output Voltage">
   <br>
-  <strong>Figure 15: Low-Pass Filter Input Voltage & Output Voltage</strong>
+  <strong>Figure 16: Low-Pass Filter Input Voltage & Output Voltage</strong>
 </p>
 
 The analysis and simulations confirm that the proposed **LC low-pass filter** effectively stabilizes the **3.3 V** rail by attenuating switching ripple from the buck boost converter (**2.5 MHz**) and high-frequency noise generated by the microcontroller. The chosen inductor–capacitor network provides strong high-frequency suppression, while the **10 Ω damping resistor**, along with the inductor’s **DCR** and capacitor **ESR**, **eliminates** the resonant gain that would otherwise amplify disturbances near the corner frequency. Additionally, the inductor **limits** inrush current during transients, helping **maintain** voltage regulation as the capacitors charge. With these combined characteristics, the filter reliably ensures a **clean**, **stable**, and **well-damped** supply voltage for the **ESP32-S3-WROOM1** under all expected operating conditions.
@@ -552,7 +558,6 @@ Power demands for the SPI subsystem are **low** and **easily** managed within st
 [19] TDK InvenSense, “ICM-20948 9-Axis MotionTracking Device Datasheet, Rev. 1.3,” 2016. [Online]. Available: https://invensense.tdk.com/wp-content/uploads/2016/06/DS-000189-ICM-20948-v1.3.pdf.
 
 [20] USB Implementers Forum, Inc. (USB-IF), "Universal Serial Bus Specification, Revision 2.0," Apr. 27, 2000. [Online]. Available: www.usb.org/documents.
-
 
 [21] M. Xiong, “ESD Fundamentals Part 2: IEC 61000‑4‑2 Rating,” Texas Instruments, SSZT871, Nov. 2017. [Online]. Available: https://www.ti.com/lit/ta/sszt871/sszt871.pdf.
 
