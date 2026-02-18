@@ -1,0 +1,135 @@
+## Meeting Summary (Transcript 4)
+
+**Purpose:** Discuss presentation format changes, ordering timeline, PCB readiness, subsystem milestones, waterproof rating clarification, and prototype deadlines.
+
+---
+
+### Key Points Discussed
+
+#### 1) Presentation Update
+- Originally planned as in-class presentations.
+- Updated plan: **Recorded video submission** due to large class size (~40+ students).
+- Expected length: **~5–10 minutes** (avoid exceeding ~15 minutes).
+- Focus:
+  - Include technical engineering content.
+  - Demonstrate subsystem functionality.
+  - Optionally include short demo or highlight clip (keep professional).
+
+---
+
+#### 2) Ordering Timeline & Logistics
+- Goal: Submit parts order **next week**.
+- Recommendation:
+  - Consolidate parts onto as few vendors as possible.
+  - Submit early due to:
+    - Shipping delays
+    - PCB lead time (1–3 weeks typical)
+    - Possible customs/tariff delays
+- Ordering goes through Julie — submit ASAP once finalized.
+
+---
+
+#### 3) PCB Status
+
+- **Ryan’s PCB:** Completed.
+- **Landen’s PCB:** Completed; minor DRC constraint concern but likely non-critical.
+- **Andrew’s PCB:** Components selected; routing/tracing pending.
+- Plan: Finish remaining PCB work next weekend.
+- Boards expected to take ~2–3 weeks from JLCPCB.
+
+---
+
+#### 4) Subsystem & Prototype Deadlines
+
+Expected timeline:
+- **Mid-March (~March 17):** Minimal Functional Subsystem Prototype
+- **Early April (~April 1):** Minimal Functional Full System Prototype
+- **Late April (Dead Week):** Poster + Final Expo Presentation
+- Finals week follows early May.
+
+Minimal Functional Prototype:
+- Must demonstrate subsystem meets defined specifications.
+- May not require every spec — clarify with instructor.
+- Some negotiation possible on % of requirements required.
+
+Action:
+- Confirm grading expectations (minimum specs vs full compliance).
+
+---
+
+#### 5) Software Progress
+
+- Display baseline code written and tested previously.
+- Only pending:
+  - IMU integration
+  - Final data push from microcontroller
+- Bluetooth confirmed as communication method.
+- Backend handles calculations if needed.
+
+---
+
+#### 6) Display Mounting Considerations
+
+- Display distance from eye must be adjustable.
+- Proposed solution:
+  - Sliding arm with set screw
+  - Adjustable bracket
+- Final display mount will be printed last after boards arrive.
+
+---
+
+#### 7) Waterproof Rating Clarification
+
+- Correct rating: **Basic dust/sweat resistance** (not submersible).
+- IP rating adjusted (low water exposure rating).
+- Device will **not** be marketed or tested as waterproof/submersible.
+
+---
+
+#### 8) Battery & Power Indicator
+
+- System currently lacks battery indicator.
+- Suggested:
+  - Simple LED power indicator.
+  - Optional low-voltage threshold indicator.
+- Advanced battery percentage display considered unnecessary for now.
+
+---
+
+#### 9) Assembly & Lab Resources
+
+- Soldering options available:
+  - Capstone lab
+  - Electronics lab (microscope, hot air reflow station)
+- Surface-mount soldering feasible with hot air + flux.
+- Isopropyl alcohol cleanup available.
+
+---
+
+### Risks Identified
+
+- PCB shipping delays.
+- Customs/tariff-related delays.
+- Battery sizing affecting enclosure adjustments.
+- Time compression between PCB arrival and prototype deadline.
+
+---
+
+### Action Items
+
+- **Team:** Finalize PCB routing and submit order ASAP.
+- **Landen:** Confirm DRC concern is non-critical.
+- **Andrew/Ryan:** Complete PCB routing next weekend.
+- **All:** Prepare recorded presentation.
+- **Team:** Confirm minimal subsystem requirement expectations with instructor.
+- **Power Team:** Consider adding basic power indicator LED.
+
+---
+
+### Overall Status
+
+- Designs largely complete.
+- Ordering phase imminent.
+- Software progressing.
+- Enclosure pending final hardware dimensions.
+- Timeline manageable if ordering is submitted promptly.
