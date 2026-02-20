@@ -2,7 +2,7 @@
 
 ## Function of the Subsystem
 
-The **Heads-Up Display (HUD) subsystem** is responsible for presenting a clear and responsive graphical interface that allows the user to view key golf shot data metrics (ball speed, ball distance, launch angle, spin rate, and smash factor), along with shot direction and coaching suggestions while wearing the Smart Golf Visor. The subsystem integrates both hardware and software components to deliver real-time feedback with minimal delay, ensuring that the displayed information remains visually clear, stable, and responsive during use.
+The **Heads-Up Display (HUD) subsystem** is responsible for presenting a clear and responsive graphical interface that allows the user to view key golf shot data metrics (ball speed, ball distance, launch angle, back spin, and side spin) and coaching suggestions while wearing the Smart Golf Visor. The subsystem integrates both hardware and software components to deliver real-time feedback with minimal delay, ensuring that the displayed information remains visually clear, stable, and responsive during use.
 
 
 ## Specifications and Constraints
@@ -36,7 +36,7 @@ Listed below are constraints the subsystem must abide by:
 
 ## Overview of Proposed Solution
 
-The proposed solution for the HUD subsystem is a program written in C that contains a graphic interface that includes the data metrics (ball speed, ball distance, launch angle, spin rate, and smash factor) calculated from the user's golf swing, the direction of the shot, and coaching suggestions. This code is stored on the ESP32-S3 microcontroller and is displayed on the transparent OLED display that sits in front of one of the eyewear lenses of the Smart Golf Visor for the user to see. Below is a more in depth overview of the proposed solution.
+The proposed solution for the HUD subsystem is a program written in C that contains a graphic interface that includes the data metrics (ball speed, ball distance, launch angle, back spin, and side spin) calculated from the user's golf swing and coaching suggestions. This code is stored on the ESP32-S3 microcontroller and is displayed on the transparent OLED display that sits in front of one of the eyewear lenses of the Smart Golf Visor for the user to see. Below is a more in depth overview of the proposed solution.
 
 #### Software
 The software that will be used for programming is **Arduino IDE**. **Arduino IDE** is a free software that is compatible with many different boards including an ESP32-S3. It is a strong choice for the programming in the subsystem because it provides an easy setup, a simple workflow, and a massive number of libraries that support nearly every sensor, display, and communication module including the **Adafruit TDK InvenSense ICM-20948 9-DoF IMU** and **1.51" transparent OLED display** used in this subsystem.
@@ -75,7 +75,7 @@ All commands have been gathered from the ICM-20948 datasheet [1]
 A **Madgwick Sensor Fusion Algorithm (SFA)** will be implemented to convert raw IMU data into usable orientation estimates. It outputs orientation as a quaternion, a four-dimensional complex number that can be used to represent the orientation of a ridged body or coordinate frame in three-dimensional space. Madgwick was selected because it provides fast convergence and and doesn't demand a lot of processing power, which makes it ideal for running in real time on the ESP32-S3. [2]
 
 #### OLED Display
-The **Transparent OLED display** is a monochrome 128x64 dot matrix used to project the swing data metrics (ball speed, ball distance, launch angle, spin rate, and smash factor), shot direction, and coaching suggestions. The **SSD1309 driver chip** receives text and graphics data from the program running on the ESP32-S3. This driver chip contains a Graphic Display Data RAM (GDDRAM) with a capacity of 128x64 bits. GDDRAM stores the bit patterns that determine which pixels are lit on the display. The RAM is divided into eight pages, PAGE0 to PAGE7. Each page represents 8 vertical pixels (one byte) across all 128 columns. A page structure of the GDDRAM of the SSD1309 is shown in the figure below.
+The **Transparent OLED display** is a monochrome 128x64 dot matrix used to project the swing data metrics (ball speed, ball distance, launch angle, back spin, and side spin) and coaching suggestions. The **SSD1309 driver chip** receives text and graphics data from the program running on the ESP32-S3. This driver chip contains a Graphic Display Data RAM (GDDRAM) with a capacity of 128x64 bits. GDDRAM stores the bit patterns that determine which pixels are lit on the display. The RAM is divided into eight pages, PAGE0 to PAGE7. Each page represents 8 vertical pixels (one byte) across all 128 columns. A page structure of the GDDRAM of the SSD1309 is shown in the figure below.
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/Hkg6Z-SbWl.png" alt="GDDRAM">
@@ -115,7 +115,7 @@ All commands have been gathered from the SSD1309 datasheet [3]
 
 After initialization, the text containing the swing data metrics, shot direction, and coaching suggestions is sent to the **SSD1309 driver chip** through the SPI MOSI line. The **U8G2.h** graphics library is used to simplify rendering and eliminates the need to manually manage font bitmaps and low-level addressing. High-level functions are used from this library such as **u8g2.setFont()** which selects the font style and size, allowing for an adjustment of appearance and readibility of the text on the display, **u8g2.drawStr(x,y,"text")** to draw a string at a specified coordinate on the display internal buffer, **u8g2.clearBuffer()** to clear the internal buffer, and **u8g2.sendBuffer()** to push buffer contents to the OLED. These functions will be used to ensure the text is correctly displayed providing a clear and responsive heads-up interface for the user.
 
-To comply with **ANSI/HFES 100-2007 usability guidelines** [4], the HUD will ensure legibility and minimal cognitive load by using sans-serif fonts at least 8-10 pixels high for a typical visor viewing distance of 40-60 cm, with consistent spacing and high contrast to maximize clarity under outdoor lighting. To avoid overwhelming the golfer, the interface shall present no more than 3-5 data elements at a time, grouped locally and sequenced temporally to cycle through three sets of metrics. Ball speed and ball distance are shown first, followed by launch angle and spin rate, and then smash factor with shot direction. Each set of metrics shall remain visible for approximately 5 seconds, providing sufficient time for the golfer to scan and interpret the information before the display advances. The coaching suggestion will be displayed with each group. The active display content will also be constrained to no more than 15% of the total 128x64 screen area ensuring no obstruction of the golfer's field of view.
+To comply with **ANSI/HFES 100-2007 usability guidelines** [4], the HUD will ensure legibility and minimal cognitive load by using sans-serif fonts at least 8-10 pixels high for a typical visor viewing distance of 40-60 cm, with consistent spacing and high contrast to maximize clarity under outdoor lighting. To avoid overwhelming the golfer, the interface shall present no more than 3-5 data elements at a time, grouped locally and sequenced temporally to cycle through three sets of metrics. Ball speed and ball distance are shown first, followed by launch angle and back spin, and then side spin with a coaching suggestion. Each set of metrics shall remain visible for approximately 5 seconds, providing sufficient time for the golfer to scan and interpret the information before the display advances. The active display content will also be constrained to no more than 15% of the total 128x64 screen area ensuring no obstruction of the golfer's field of view.
 
 Ensuring **ISO 15004-2 ophthalmic safety standards** [5] compliance with a transparent OLED display is highly achievable becasue these panels emit primarily in the visible spectrum with negligible UV and IR output, meaning the main safety lever is controlling visible irradiance. The display will enforce this through capping the contrast register to limit peak luminance, but the cap will be calibrated to remain high enough for clear visibility in an outdoor environment. The active pixel area of no more than 15% of the 128x64 matrix and metrics sets sequenced at 5 seconds reduce cumulative exposure. Together, these measures confirm that the HUD delivers swing metrics and coaching suggestions safely, without risk of ocular strain or photobiological hazard during prolonged use.
 
@@ -149,7 +149,7 @@ The HUD and Communications subsystems interface through a SPI serial connection 
 
 The HUD subsystem directly interfaces with **Master Out / Slave In (MOSI)** and **Master In / Slave Out (MISO)** lines. The MOSI line allows the microcontroller to transmit data and commands to peripheral devices, such as initialization sequences, configuration registers, or read-request commands. Conversely, the MISO line enables the microcontroller to recieve data from the peripheral devices. 
 
-The **ICM-20948** uses both MOSI and MISO, while the OLED display requires only MOSI. Input and Output data from these devices are stored in a single one-byte (8 bit) variable, initialized using the uint8_t type. Output data transmitted via MOSI line include commands, text, and the data metrics such as ball speed, ball distance, launch angle, spin rate, and smash factor. Input data received via MISO consist of accelerometer, gyroscope, and magnetometer readings from the ICM-20948.
+The **ICM-20948** uses both MOSI and MISO, while the OLED display requires only MOSI. Input and Output data from these devices are stored in a single one-byte (8 bit) variable, initialized using the uint8_t type. Output data transmitted via MOSI line include commands, text, and the data metrics such as ball speed, ball distance, launch angle, back spin, and side spin. Input data received via MISO consist of accelerometer, gyroscope, and magnetometer readings from the ICM-20948.
 
 The function **SPI.transmit(x)** is used to send or receive data. It simultaneously clocks out 8 bits on MOSI while clocking in 8 bits on MISO , provided the peripheral is designed to respond immediately which applies to the ICM-20948 but not to the OLED display. Below is a picture that reflects the interfacing characteristics of the 4-wire SPI configuration
 
@@ -193,7 +193,7 @@ The next step is to configure and enable the IMU's data-ready interrupt, notifyi
 
 #### Step 3 - Run Main Loop 
 
-The main loop continuously monitors whether the IMU interrupt has been triggered. When the interrupt triggers, it reads and process acceleerometer and gyroscoppe measurements to determine if a golf swing has occured. If a swing is detected, the corresponding data metrics (ball speed, ball distance, launch angle, spin rate, smash factor) as well as shot direction, and coaching suggestion is retrieved and is sent to be updated to the HUD.
+The main loop continuously monitors whether the IMU interrupt has been triggered. When the interrupt triggers, it reads and process acceleerometer and gyroscoppe measurements to determine if a golf swing has occured. If a swing is detected, the corresponding data metrics (ball speed, ball distance, launch angle, back spin, side spin) and coaching suggestion is retrieved and is sent to be updated to the HUD.
 
 <p align="center">
   <img src="https://hackmd.io/_uploads/S1cXR59bZg.png" alt="Figure 7: Pseudocode for HUD subsystem (Step 3)">
@@ -229,7 +229,7 @@ Once the raw accelerometer and gyroscope readings are obtained, the main loop pa
 
 #### Step 6 - Render Metrics to HUD
 
-After computing orientation and rotational motion from the sensor fusion algorithm and a golf swing is detected, the main loop sends over the data metrics (ball speed, ball distance, launch angle, spin rate, and smash factor) as well as shot direction and coaching suggestion to the OLED display. The **renderHUD()** function cycles through different screens of this data, displaying the data for 5 seconds before automatically advancing to the next, providing the user with enough time to read and interpret each set of metrics without overwhelming the display or missing key information.
+After computing orientation and rotational motion from the sensor fusion algorithm and a golf swing is detected, the main loop sends over the data metrics (ball speed, ball distance, launch angle, back spin, and side spin) and coaching suggestion to the OLED display. The **renderHUD()** function cycles through different screens of this data, displaying the data for 5 seconds before automatically advancing to the next, providing the user with enough time to read and interpret each set of metrics without overwhelming the display or missing key information.
 
 
 <p align="center">
@@ -240,14 +240,14 @@ After computing orientation and rotational motion from the sensor fusion algorit
 
 ## Flowchart
 <p align="center">
-  <img src="https://hackmd.io/_uploads/Hy8u1c8-be.png" alt="Figure 12 : HUD Software Flowchart">
+  <img src="https://hackmd.io/_uploads/SkFCmwSdWg.png" alt="Figure 12 : HUD Software Flowchart">
   <br>
   <em>Figure 12 : HUD Software Flowchart</em>
 </p>
 
 ## BOM
 <p align="center">
-  <img src="https://hackmd.io/_uploads/BkNDBqLZ-e.png" alt="Figure 13 : HUD Subsystem BOM">
+  <img src="https://hackmd.io/_uploads/Sy_xEvBdbe.png" alt="Figure 13 : HUD Subsystem BOM">
   <br>
   <em>Figure 13 : HUD Subsystem BOM</em>
 </p>
@@ -369,7 +369,7 @@ Using a standard 6x8 font, where the average number of lit pixels per character 
 <p align= "center"> $N_{\text{max}} = \frac{P}{P_c} = \frac{1228}{18} \approx 68 \;\text{characters}$ </p>
 
 
-For the Smart Golf Visor application, the planned layout shows three sets of two lines of data metrics that cycle with a five-second timer, plus one line of coaching suggestions. Assuming a maximum of 20 characters per line, the total number of characters displayed at one time is
+For the Smart Golf Visor application, the planned layout shows three sets of data metrics that cycle with a five-second timer, with the last set including one line of a coaching suggestion. Assuming a maximum of 20 characters per line, the total number of characters displayed at one time is
 
 <p align= "center"> $N_{\text{display}} = 3 \times 20 = 60 \; characters$ </p>
 
