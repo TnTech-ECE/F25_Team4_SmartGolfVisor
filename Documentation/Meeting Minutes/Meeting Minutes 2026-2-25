@@ -1,0 +1,89 @@
+## Meeting Summary 
+
+**Purpose:** Review current project status, ordering readiness, software progress, enclosure progress, battery selection, and budgeting/ordering logistics.
+
+---
+
+### Key Points Discussed
+
+#### 1) Materials / 3D Printing Supplies
+- Team discussed filament availability and selection for 3D printing.
+- Some filament inventory may already exist; confirm what is on hand before purchasing.
+- If items are already available in the lab/department, they still may need to be listed in the BOM with cost marked appropriately (e.g., $0).
+
+---
+
+#### 2) Presentation + Ordering Status
+- Detailed designs have been submitted.
+- Presentation will be a **recorded video** (large class size).
+- Team is preparing the **order forms/BOM** for submission.
+- Plan: submit orders as soon as possible to reduce lead-time risk.
+
+---
+
+#### 3) Purchasing / Shipping Logistics
+- Recommendation to consolidate purchases across fewer vendors when possible.
+- PCB fabrication lead time expected to be ~1–3 weeks depending on supplier and shipping.
+- Confirm how shipping is handled when multiple PCBs are combined into a single order:
+  - Add a separate BOM line item for “PCB Shipping” (e.g., $23 total) rather than embedding it into one board cost.
+
+---
+
+#### 4) Budget Status
+- Remaining budget mentioned: approximately **$95 left**.
+- Team noted limited remaining opportunities to reduce cost significantly.
+- Avoid unnecessary re-orders; prioritize correctness on the first PCB run.
+
+---
+
+#### 5) Software Progress (Backend + Web App)
+- Web interface is functional for session history and basic UI.
+- Backend complexity has been the main challenge due to:
+  - Cloud database (Supabase)
+  - Front-end framework (Streamlit)
+  - Python services and inter-service communication
+- Current web app is generating test data; next step is replacing it with real PiTrak data and sending data onward to the visor device.
+
+---
+
+#### 6) Hardware Integration Plan
+- ESP32 hardware is available in the team’s capstone storage box.
+- Next step is to connect ESP32 to a computer via USB and begin testing communications.
+- Note: Web Bluetooth support may be limited on iOS/Safari; expect best support on desktop/laptop and possibly Android/Chrome.
+
+---
+
+#### 7) PCB and BOM Readiness
+- BOM is close to complete; final additions pending (some remaining items from Andrew).
+- Team delayed submitting to Julie until all PCB changes are finalized to avoid rework.
+- The team is tracking connector-board revisions (newer versions released recently) and updating the order list accordingly.
+
+---
+
+#### 8) Battery Selection
+- Team plans to try a smaller LiPo option (e.g., **~3000 mAh**) if needed for packaging.
+- Consider ordering an extra battery for contingency, but communicate if any additions are made so BOM remains accurate.
+
+---
+
+#### 9) Enclosure Progress + Display Mounting
+- Enclosure design is expected to be complete soon, excluding final mounting geometry.
+- Display mounting requires adjustment based on eye distance and comfort.
+- Proposed mounting approach: adjustable mechanism (e.g., slide/slot or multiple pin positions) to allow distance tuning without redesigning the arm repeatedly.
+- Concern noted: frequent screw removal can wear printed threads; design should minimize repeated screw-in/out cycles.
+
+---
+
+### Action Items
+- **Team:** Finalize BOM and submit order request to Julie once all last PCB/BOM changes are included.
+- **Software Lead:** Begin ESP32 communications testing and replace test data with real sensor data flow.
+- **Mechanical/Enclosure:** Finalize enclosure geometry; implement adjustable display mount method.
+- **All:** Verify existing lab inventory (filament, wire, misc parts) and update BOM accordingly.
+
+---
+
+### Risks / Watch Items
+- Shipping lead time and possible customs delays.
+- iOS Web Bluetooth limitations impacting mobile testing.
+- Budget is tight; avoid re-orders and minimize scope creep.
+- Dependency on final battery dimensions before enclosure is locked.
