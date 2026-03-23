@@ -1,0 +1,107 @@
+## Meeting Summary (Transcript 7 — Business Only)
+
+**Purpose:** Review component procurement status, confirm updated project timeline, assess subsystem progress, and coordinate PCB assembly support and scheduling.
+
+---
+
+### Key Points Discussed
+
+#### 1) Component Procurement Status
+- PCBs have been ordered through JLCPCB and are expected to arrive soon.
+- Majority of components have been received from Digi-Key.
+- Some components remain on **backorder** (e.g., Raspberry Pi 5 fan).
+- Additional parts are available for pickup from the lab (per recent notification).
+- Expectation: **All components should be available by the end of Spring Break**.
+
+---
+
+#### 2) Updated Project Timeline
+- **Minimal Functional Subsystem Deadline:** April 1  
+- **Minimal Functional Full System Deadline:** April 15  
+- **Final Capstone Presentation:** April 29 or 30 (TBD)
+
+- Instructor guidance:
+  - ~1 month allocated for construction and integration after parts arrival.
+  - Subsystem validation followed by full system integration.
+
+---
+
+#### 3) Software / Communications Progress
+- Backend and communication stack is progressing well:
+  - Successful communication from **web app (Python)** → **ESP32**
+  - Remaining issue: **PiTrak → Web App communication**
+- System architecture includes:
+  - Raspberry Pi 5 (PiTrak)
+  - ESP32 for communication
+  - Web application interface
+
+---
+
+#### 4) Hardware Adjustments / Risks
+- Minor substitutions made for unavailable components (e.g., capacitors).
+- Ribbon cable for display may be too short:
+  - Potential constraint on adjustable mounting design.
+  - Action: investigate **extension cable** or workaround solution.
+
+---
+
+#### 5) Recommended Preemptive Ordering
+- Advised to order any **potentially needed components early** (e.g., cable extensions).
+- Rationale:
+  - Avoid delays during integration/testing phase.
+  - Easier to justify small additions than delay the schedule later.
+
+---
+
+#### 6) Mechanical / 3D Printing Progress
+- Several enclosure components already printed (PiTrak structure).
+- Remaining items:
+  - Outer enclosure shell
+  - Additional camera mount
+- Recommendation:
+  - Complete all 3D printing **shortly after Spring Break** to avoid makerspace congestion.
+
+---
+
+#### 7) PCB Assembly Plan (Critical)
+- Team will receive hands-on guidance for PCB assembly:
+  - Use of **microscope in VanLeer Lab**
+  - Practice soldering on a sample board before actual boards
+
+- **Scheduled Session:**
+  - **Date:** March 25  
+  - **Time:** 2:30 PM  
+  - **Location:** VanLeer Lab  
+  - **Duration:** ~1 hour  
+
+- Notes:
+  - Team ordered exactly the required components (no extras), so careful assembly is critical.
+  - Reflow oven is available but:
+    - Requires stencil/template for proper use
+    - Plan: hand-solder first, optionally test reflow method if time allows
+
+---
+
+#### 8) Lab Access and Workflow
+- After training:
+  - Team will receive lab access/code for continued work
+  - Recommended to solder/work during **off-hours (evenings)** for lab availability
+
+---
+
+### Action Items
+- **Team:** Pick up remaining components and confirm all parts received by Spring Break end.
+- **Software Team:** Resolve PiTrak → Web App communication.
+- **Hardware Team:** Research and order ribbon cable extension if needed.
+- **Mechanical Team:** Complete remaining 3D prints immediately after Spring Break.
+- **All Members:** Attend PCB soldering session on March 25 at 2:30 PM.
+- **Team Lead:** Create and distribute calendar invite for PCB session.
+
+---
+
+### Risks / Watch Items
+- Backordered components could delay integration.
+- Limited ribbon cable length may restrict mechanical design.
+- No spare components increases risk during PCB assembly.
+- Makerspace congestion post–Spring Break.
+- Tight timeline between subsystem and full system deadlines.
