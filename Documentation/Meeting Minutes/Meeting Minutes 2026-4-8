@@ -1,0 +1,95 @@
+## Meeting Summary (Business Only)
+
+**Purpose:** Review readiness for the upcoming minimal functional prototype, clarify poster and experimental analysis deliverables, and identify remaining technical tasks.
+
+---
+
+### Key Points Discussed
+
+#### 1) Prototype Deadline and Immediate Priorities
+- The **minimal functional prototype** is due **next Wednesday**.
+- Team agreed the primary focus for the next several days is completing the remaining integration work.
+- Main remaining technical tasks:
+  - Push code to the microcontroller
+  - Finish wireless communication functionality
+  - Complete final microcontroller/display integration
+
+---
+
+#### 2) Current Technical Status
+- The team made progress on the code and hardware interface.
+- One board under test is functioning well enough to continue using as the current development platform.
+- Current workaround plan:
+  - Use the known-working board
+  - Jump from the transmitting pins where needed
+  - Continue software testing on that platform
+- Some pin updates still need to be made in code.
+
+---
+
+#### 3) Poster Deadline
+- The **poster** is due earlier than the final presentation and is considered a **hard deadline**.
+- Poster must be submitted in the correct format/resolution so it can be printed by the department in time.
+- Team needs to begin poster preparation soon rather than waiting until the last week.
+
+---
+
+#### 4) Experimental Analysis Planning
+- The **experimental analysis** deliverable is due about **two weeks from now**.
+- Team discussed possible evaluation metrics for the project, including:
+  - **Battery life / runtime**
+  - **Accuracy**
+  - **Reliability**
+  - **Wireless transfer success**
+  - **Power measurements** such as voltage/current under load
+- Battery testing may require active use conditions rather than leaving the system powered on idle.
+- Reliability metric may focus on whether the system successfully detects and transmits each shot/event.
+
+---
+
+#### 5) Validation / Comparison Testing
+- Team discussed using an external launch monitor or golf simulator setup as a comparison reference for accuracy testing.
+- Follow-up needed to identify the correct contact/person to request access to the golf simulator or cube space.
+- One team member plans to reach out through an existing contact to identify the correct access path.
+
+---
+
+#### 6) Power / Measurement Testing
+- Power subsystem testing may include:
+  - Voltage readings
+  - Current readings
+  - Performance under actual operating load
+- These measurements could be included as part of the experimental analysis section.
+
+---
+
+#### 7) Final Report / Documentation
+- Team noted that, in addition to prototype and poster work, the **final report** will likely require combining prior material into one larger document.
+- This should be tracked so it does not become a last-minute task.
+
+---
+
+#### 8) Work Plan for the Next Few Days
+- Team expects to be working heavily from **Monday through Wednesday** to finish the minimal functional prototype.
+- Main blockers remain:
+  - Wireless communication
+  - Final microcontroller integration
+- Once those are completed, the rest of the system should be more straightforward to assemble and demonstrate.
+
+---
+
+### Action Items
+- **Software Team:** Finish microcontroller code upload and wireless communication integration.
+- **Team Lead / Documentation:** Start poster preparation and confirm submission requirements.
+- **Team:** Define final experimental analysis metrics and assign who will test each one.
+- **Team Contact:** Reach out about access to the golf simulator / launch monitor comparison setup.
+- **Power Team:** Prepare voltage/current/load measurements for experimental analysis.
+- **All Members:** Continue focused build and integration work leading up to prototype deadline.
+
+---
+
+### Risks / Watch Items
+- Tight timeline before the minimal functional prototype deadline.
+- Wireless communication still needs to be fully validated.
+- Poster has a firm submission deadline and formatting requirements.
+- Experimental analysis may require access to external comparison equipment.
