@@ -1,0 +1,85 @@
+## Meeting Summary (Business Only)
+
+**Purpose:** Discuss poster preparation, experimental analysis metrics, and coordination for team photo.
+
+---
+
+### Key Discussion Points
+
+#### 1) Poster Photo Planning
+- The team discussed taking a **group photo for the poster**.
+- Ideas included:
+  - Taking the photo with the **visor on display**
+  - Using a wider-angle shot to include all team members
+- Plan:
+  - Take the photo later once all members are available
+  - Ask someone nearby (or a team member not in the shot) to take the picture
+
+---
+
+#### 2) Experimental Analysis Metrics
+
+- The team reviewed and finalized key **metrics for experimental analysis**.
+
+**Power Subsystem Metrics:**
+- Measured vs. expected **voltage values**
+- **Idle current**
+- **Current during Bluetooth communication and display usage**
+- **Maximum current draw**
+- **Battery life estimation**
+- **Temperature measurements:**
+  - PCB surface temperature
+  - Metal component temperature
+
+- It was agreed that startup current variation is **not necessary** for inclusion.
+
+---
+
+#### 3) Data Organization
+
+- Metrics will be presented clearly (table format optional).
+- Focus is on:
+  - Clear comparison between **measured vs. expected values**
+  - Showing that results meet or are close to design requirements
+
+- Some values (such as temperature limits) may be compared against reasonable expected thresholds.
+
+---
+
+#### 4) Data Visualization / Graphs
+
+- Discussion included improving graphs for clarity:
+  - Ensuring error values are represented correctly (no misleading negatives)
+  - Adjusting plots so data trends are easier to interpret
+- Some variation in data is expected due to:
+  - Noise in measurements
+  - User/environmental variability
+
+---
+
+#### 5) Coordination / Next Steps
+
+- Share key data between team members:
+  - Bluetooth communication data
+  - Display current data
+  - Idle current measurements
+- Finalize which metrics each person is responsible for including
+- Continue refining experimental analysis section
+
+---
+
+### Action Items
+
+- **All Members:** Coordinate time to take group photo for poster
+- **Power Team:** Finalize voltage, current, temperature, and battery metrics
+- **Team:** Share relevant data across subsystems for consistency
+- **Documentation Lead:** Ensure experimental analysis is clearly presented and aligned with requirements
+- **All Members:** Review graphs and adjust for clarity and accuracy
+
+---
+
+### Notes
+
+- Emphasis is on **clear, simple presentation of results**, not overcomplicating analysis.
+- Minor measurement noise and variation are acceptable if explained.
+- Team is close to completing the experimental analysis section.
